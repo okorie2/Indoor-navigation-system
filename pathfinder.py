@@ -1,0 +1,61 @@
+import json
+import heapq
+import math
+
+# Load the retrofitted JSON
+data = json.loads(open("uon.json").read())
+
+nodes = data["nodes"]
+graph = data["graph"]
+
+
+def heuristic(node, goal):
+    if node in nodes and goal in nodes:
+        nx, ny = nodes[node]["x"], nodes[node]["y"]
+        gx, gy = nodes[goal]["x"], nodes[goal]["y"]
+        return math.sqrt((nx - gx) ** 2 + (ny - gy) ** 2)
+    return 0
+
+
+def a_star(graph, start, goal):
+    open_set = []
+    heapq.heappush(open_set, (0, start))
+    came_from = {}
+
+    g_score = {node: float("inf") for node in graph}
+    g_score[start] = 0  # giving the start a goal score of 0
+
+    f_score = {node: float("inf") for node in graph}
+    f_score[start] = heuristic(start, goal)  # why?
+
+    while open_set:
+        _, current = heapq.heappop(open_set)
+
+        if current == goal:
+            # reconstruct path
+            path = [current]
+            while current in came_from:
+                current = came_from[current]
+                path.append(current)
+            return path[::-1]
+
+        # considering the edges of the current node
+        for neighbor_info in graph.get(current, []):
+            neighbor = neighbor_info["to"]
+            weight = neighbor_info["weight"]
+            # on first iteration, g_score[current] is 0, so tentative_g is just the weight of the edge
+            tentative_g = g_score[current] + weight
+            # comparing tentative_g with the current g_score of the neighbor. on first iteration, g_score[neighbor] is inf
+            if tentative_g < g_score.get(neighbor, float("inf")):
+                # print(current, "current")
+                came_from[neighbor] = current
+                g_score[neighbor] = tentative_g
+                f_score[neighbor] = tentative_g + heuristic(neighbor, goal)
+                heapq.heappush(open_set, (f_score[neighbor], neighbor))
+                # print(came_from, "came_from")
+
+    return None
+
+
+# Example run
+print(a_star(graph, "northEntrance", "lift_F0_West"))
