@@ -26,1375 +26,1609 @@
     }
   },
   "graph": {
-      "northEntrance": [
-        {
-          "to": "toilets",
-          "weight": 1
-        },
-        {
-          "to": "cafeBar",
-          "weight": 1
-        },
+    "northEntrance": [
+      {
+        "to": "toilets",
+        "weight": 1
+      },
+      {
+        "to": "cafeBar",
+        "weight": 1
+      },
 
-        {
-          "to": "catering",
-          "weight": 1
-        },
-        {
-          "to": "lift_F0_North",
-          "weight": 1
-        },
+      {
+        "to": "catering",
+        "weight": 1
+      },
+      {
+        "to": "lift_F0_North",
+        "weight": 1
+      },
 
-        {
-          "to": "SN002",
-          "weight": 1
-        },
-        {
-          "to": "Research & Enterprise",
-          "weight": 2
-        },
-        {
-          "to": "SN001(Bloomberg Finance Lab)",
-          "weight": 2
-        },
-        {
-          "to": "SN003",
-          "weight": 2
-        },
+      {
+        "to": "SN002",
+        "weight": 1
+      },
+      {
+        "to": "Research & Enterprise",
+        "weight": 2
+      },
+      {
+        "to": "SN001(Bloomberg Finance Lab)",
+        "weight": 2
+      },
+      {
+        "to": "SN003",
+        "weight": 2
+      },
 
-        {
-          "to": "Reception",
-          "weight": 2
-        },
-        {
-            "to": "staircase_F0_east_path",
-            "weight": 1
-        },
-        {
-          "to": "southEnthrance",
-          "weight": 2
-        }
-      ],
-      "staircase_F0_east_path": [
-        {
-          "to": "staircase_F0_east",
-          "weight": 1
-        },
-        {
-          "to": "emrgencyExit",
-          "weight": 1
-        }
-      ],
-      "staircase_F0_west_path": [
-        {
-          "to": "lift_F0_West",
-          "weight": 1
-        },
-        {
-          "to": "plantRoom SN005",
-          "weight": 1
-        },
-        {
-          "to": "foodPreparationArea",
-          "weight": 1
-        },
-        {
-          "to": "staircase_F0_west",
-          "weight": 1
-        },
-        {
-          "to": "emrgencyExit",
-          "weight": 1
-        }
-      ],
-      "southEnthrance": [
-        {
-          "to": "Reception",
-          "weight": 1
-        },
-        {
-          "to": "Research & Enterprise",
-          "weight": 1
-        },
-        {
-          "to": "lift_F0_North",
-          "weight": 2
-        },
-        {
-          "to": "lift_F0_West",
-          "weight": 2
-        },
-        {
-          "to": "toilets",
-          "weight": 2
-        },
+      {
+        "to": "Reception",
+        "weight": 2
+      },
+      {
+        "to": "staircase_F0_east_path",
+        "weight": 1
+      },
+      {
+        "to": "southEnthrance",
+        "weight": 2
+      }
+    ],
 
-        {
-          "to": "SN001(Bloomberg Finance Lab)",
-          "weight": 1
-        },
-        {
-          "to": "SN002",
-          "weight": 1
-        },
-        {
-          "to": "SN003",
-          "weight": 1
-        }
-      ],
+    "toilets": [
+      { "to": "northEntrance", "weight": 1 },
+      { "to": "cafeBar", "weight": 1 },
+      { "to": "catering", "weight": 1 },
+      { "to": "lift_F0_North", "weight": 1 },
+      { "to": "SN002", "weight": 1 },
+      { "to": "Research & Enterprise", "weight": 2 },
+      { "to": "SN001(Bloomberg Finance Lab)", "weight": 2 },
+      { "to": "SN003", "weight": 2 },
+      { "to": "Reception", "weight": 2 },
+      { "to": "staircase_F0_east_path", "weight": 1 },
+      { "to": "southEnthrance", "weight": 2 }
+    ],
+    "cafeBar": [
+      { "to": "northEntrance", "weight": 1 },
+      { "to": "toilets", "weight": 1 },
+      { "to": "catering", "weight": 1 },
+      { "to": "lift_F0_North", "weight": 1 },
+      { "to": "SN002", "weight": 1 },
+      { "to": "Research & Enterprise", "weight": 2 },
+      { "to": "SN001(Bloomberg Finance Lab)", "weight": 2 },
+      { "to": "SN003", "weight": 2 },
+      { "to": "Reception", "weight": 2 },
+      { "to": "staircase_F0_east_path", "weight": 1 },
+      { "to": "southEnthrance", "weight": 2 }
+    ],
+    "catering": [
+      { "to": "northEntrance", "weight": 1 },
+      { "to": "toilets", "weight": 1 },
+      { "to": "cafeBar", "weight": 1 },
+      { "to": "lift_F0_North", "weight": 1 },
+      { "to": "SN002", "weight": 1 },
+      { "to": "Research & Enterprise", "weight": 2 },
+      { "to": "SN001(Bloomberg Finance Lab)", "weight": 2 },
+      { "to": "SN003", "weight": 2 },
+      { "to": "Reception", "weight": 2 },
+      { "to": "staircase_F0_east_path", "weight": 1 },
+      { "to": "southEnthrance", "weight": 2 }
+    ],
+    "lift_F0_North": [
+      { "to": "northEntrance", "weight": 1 },
+      { "to": "toilets", "weight": 1 },
+      { "to": "cafeBar", "weight": 1 },
+      { "to": "catering", "weight": 1 },
+      { "to": "SN002", "weight": 1 },
+      { "to": "Research & Enterprise", "weight": 2 },
+      { "to": "SN001(Bloomberg Finance Lab)", "weight": 2 },
+      { "to": "SN003", "weight": 2 },
+      { "to": "Reception", "weight": 2 },
+      { "to": "staircase_F0_east_path", "weight": 1 },
+      { "to": "southEnthrance", "weight": 2 }
+    ],
+    "SN002": [
+      { "to": "northEntrance", "weight": 1 },
+      { "to": "toilets", "weight": 1 },
+      { "to": "cafeBar", "weight": 1 },
+      { "to": "catering", "weight": 1 },
+      { "to": "lift_F0_North", "weight": 1 },
+      { "to": "Research & Enterprise", "weight": 2 },
+      { "to": "SN001(Bloomberg Finance Lab)", "weight": 2 },
+      { "to": "SN003", "weight": 2 },
+      { "to": "Reception", "weight": 2 },
+      { "to": "staircase_F0_east_path", "weight": 1 },
+      { "to": "southEnthrance", "weight": 2 }
+    ],
+    "Research & Enterprise": [
+      { "to": "northEntrance", "weight": 2 },
+      { "to": "toilets", "weight": 2 },
+      { "to": "cafeBar", "weight": 2 },
+      { "to": "catering", "weight": 2 },
+      { "to": "lift_F0_North", "weight": 2 },
+      { "to": "SN002", "weight": 2 },
+      { "to": "SN001(Bloomberg Finance Lab)", "weight": 2 },
+      { "to": "SN003", "weight": 2 },
+      { "to": "Reception", "weight": 2 },
+      { "to": "staircase_F0_east_path", "weight": 2 },
+      { "to": "southEnthrance", "weight": 2 }
+    ],
+    "SN001(Bloomberg Finance Lab)": [
+      { "to": "northEntrance", "weight": 2 },
+      { "to": "toilets", "weight": 2 },
+      { "to": "cafeBar", "weight": 2 },
+      { "to": "catering", "weight": 2 },
+      { "to": "lift_F0_North", "weight": 2 },
+      { "to": "SN002", "weight": 2 },
+      { "to": "Research & Enterprise", "weight": 2 },
+      { "to": "SN003", "weight": 2 },
+      { "to": "Reception", "weight": 2 },
+      { "to": "staircase_F0_east_path", "weight": 2 },
+      { "to": "southEnthrance", "weight": 2 }
+    ],
+    "SN003": [
+      { "to": "northEntrance", "weight": 2 },
+      { "to": "toilets", "weight": 2 },
+      { "to": "cafeBar", "weight": 2 },
+      { "to": "catering", "weight": 2 },
+      { "to": "lift_F0_North", "weight": 2 },
+      { "to": "SN002", "weight": 2 },
+      { "to": "Research & Enterprise", "weight": 2 },
+      { "to": "SN001(Bloomberg Finance Lab)", "weight": 2 },
+      { "to": "Reception", "weight": 2 },
+      { "to": "staircase_F0_east_path", "weight": 2 },
+      { "to": "southEnthrance", "weight": 2 }
+    ],
+    "Reception": [
+      { "to": "northEntrance", "weight": 2 },
+      { "to": "toilets", "weight": 2 },
+      { "to": "cafeBar", "weight": 2 },
+      { "to": "catering", "weight": 2 },
+      { "to": "lift_F0_North", "weight": 2 },
+      { "to": "SN002", "weight": 2 },
+      { "to": "Research & Enterprise", "weight": 2 },
+      { "to": "SN001(Bloomberg Finance Lab)", "weight": 2 },
+      { "to": "SN003", "weight": 2 },
+      { "to": "staircase_F0_east_path", "weight": 2 },
+      { "to": "southEnthrance", "weight": 2 }
+    ],
 
-      "lift_F0": [
-        {
-          "to": "balcony_F1",
-          "weight": 1
-        }
-      ],
-  
-      "lift_F1_West": [
-        {
-          "to": "passage_F1_west",
-          "weight": 1
-        }
-      ],
+    "staircase_F0_east_path": [
+      {
+        "to": "staircase_F0_east",
+        "weight": 1
+      },
+      {
+        "to": "emrgencyExit",
+        "weight": 1
+      },
+      {
+        "to": "northEntrance",
+        "weight": 1
+      }
+    ],
+    "staircase_F0_west_path": [
+      {
+        "to": "lift_F0_West",
+        "weight": 1
+      },
+      {
+        "to": "plantRoom SN005",
+        "weight": 1
+      },
+      {
+        "to": "foodPreparationArea",
+        "weight": 1
+      },
+      {
+        "to": "staircase_F0_west",
+        "weight": 1
+      },
+      {
+        "to": "emrgencyExit",
+        "weight": 1
+      }
+    ],
+    "southEnthrance": [
+      {
+        "to": "Reception",
+        "weight": 1
+      },
+      {
+        "to": "Research & Enterprise",
+        "weight": 1
+      },
+      {
+        "to": "lift_F0_North",
+        "weight": 2
+      },
+      {
+        "to": "lift_F0_West",
+        "weight": 2
+      },
+      {
+        "to": "toilets",
+        "weight": 2
+      },
 
-      "passage_F1_west": [
-        {
-          "to": "lift_F1_West",
-          "weight": 1
-        },
-        {
-          "to": "staircase_F1_west",
-          "weight": 1
-        },
-        {
-          "to": "balcony_F1",
-          "weight": 1
-        },
-        {
-          "to": "toilets",
-          "weight": 1
-        },
-        {
-          "to": "SN101 (Morley room)",
-          "weight": 1
-        },
-        {
-          "to": "SN111",
-          "weight": 1
-        },
-        {
-          "to": "SN111.1",
-          "weight": 1
-        },
-        {
-          "to": "SN112",
-          "weight": 1
-        },
-        {
-          "to": "SN109",
-          "weight": 1
-        },
-        {
-          "to": "SN108",
-          "weight": 1
-        },
-        {
-          "to": "SN107",
-          "weight": 1
-        },
-        {
-          "to": "SN106",
-          "weight": 2
-        },
-        {
-          "to": "SN105",
-          "weight": 2
-        },
-        {
-          "to": "SN104",
-          "weight": 2
-        },
-        {
-          "to": "SN103",
-          "weight": 2
-        },
-        {
-          "to": "passage_F1_east",
-          "weight": 2
-        }
-      ],
+      {
+        "to": "SN001(Bloomberg Finance Lab)",
+        "weight": 1
+      },
+      {
+        "to": "SN002",
+        "weight": 1
+      },
+      {
+        "to": "SN003",
+        "weight": 1
+      }
+    ],
+    "lift_F0_West": [
+      {
+        "to": "staircase_F0_west_path",
+        "weight": 1
+      },
+      {
+        "to": "southEnthrance",
+        "weight": 1
+      },
+      {
+        "to": "plantRoom SN005",
+        "weight": 1
+      },
+      {
+        "to": "foodPreparationArea",
+        "weight": 1
+      }
+    ],
 
-      "lift_F1_North": [
-        {
-          "to": "balcony_F1",
-          "weight": 1
-        }
-      ],
+    "lift_F1_West": [
+      {
+        "to": "passage_F1_west",
+        "weight": 1
+      }
+    ],
 
-      "balcony_F1": [
-        {
-          "to": "lift_F1_North",
-          "weight": 1
-        },
-        {
-          "to": "passage_F1_east",
-          "weight": 1
-        },
-        {
-          "to": "passage_F1_west",
-          "weight": 1
-        },
-        {
-          "to": "staircase_F1_north",
-          "weight": 1
-        }
-      ],
-      "passage_F1_east": [
-        {
-          "to": "balcony_F1",
-          "weight": 1
-        },
-        {
-          "to": "SN113",
-          "weight": 1
-        },
-        {
-          "to": "SN114",
-          "weight": 1
-        },
+    "passage_F1_west": [
+      {
+        "to": "lift_F1_West",
+        "weight": 1
+      },
+      {
+        "to": "staircase_F1_west",
+        "weight": 1
+      },
+      {
+        "to": "balcony_F1",
+        "weight": 1
+      },
+      {
+        "to": "toilets",
+        "weight": 1,
+        "description": "Toilets on Senate F1"
+      },
+      {
+        "to": "SN101 (Morley room)",
+        "weight": 1
+      },
+      {
+        "to": "SN111",
+        "weight": 1
+      },
+      {
+        "to": "SN111.1",
+        "weight": 1
+      },
+      {
+        "to": "SN112",
+        "weight": 1
+      },
+      {
+        "to": "SN109",
+        "weight": 1
+      },
+      {
+        "to": "SN108",
+        "weight": 1
+      },
+      {
+        "to": "SN107",
+        "weight": 1
+      },
+      {
+        "to": "SN106",
+        "weight": 2
+      },
+      {
+        "to": "SN105",
+        "weight": 2
+      },
+      {
+        "to": "SN104",
+        "weight": 2
+      },
+      {
+        "to": "SN103",
+        "weight": 2
+      },
+      {
+        "to": "passage_F1_east",
+        "weight": 2
+      }
+    ],
 
-        {
-          "to": "staircase_F1_east",
-          "weight": 1
-        },
-        {
-          "to": "toilets",
-          "weight": 2
-        },
+    "lift_F1_North": [
+      {
+        "to": "balcony_F1",
+        "weight": 1
+      }
+    ],
 
-        {
-          "to": "SN103",
-          "weight": 1
-        },
-        {
-          "to": "SN104",
-          "weight": 1
-        },
-        {
-          "to": "SN105",
-          "weight": 1
-        },
-        {
-          "to": "SN106",
-          "weight": 1
-        },
-        {
-          "to": "SN107",
-          "weight": 2
-        },
-        {
-          "to": "SN108",
-          "weight": 2
-        },
-        {
-          "to": "SN109",
-          "weight": 2
-        },
-        {
-          "to": "SN110",
-          "weight": 2
-        }
-      ],
+    "balcony_F1": [
+      {
+        "to": "lift_F1_North",
+        "weight": 1
+      },
+      {
+        "to": "passage_F1_east",
+        "weight": 1
+      },
+      {
+        "to": "passage_F1_west",
+        "weight": 1
+      },
+      {
+        "to": "staircase_F1_north",
+        "weight": 1
+      }
+    ],
+    "passage_F1_east": [
+      {
+        "to": "passage_F1_west",
+        "weight": 2
+      },
+      {
+        "to": "balcony_F1",
+        "weight": 1
+      },
+      {
+        "to": "SN113",
+        "weight": 1
+      },
+      {
+        "to": "SN114",
+        "weight": 1
+      },
 
-      "lift_F2_West": [
-        {
-          "to": "passage_F2_west",
-          "weight": 1
-        }
-      ],
-      "lift_F2_North": [
-        {
-          "to": "balcony_F2",
-          "weight": 1
-        }
-      ],
-      "balcony_F2": [
-        {
-          "to": "passage_F2_east",
-          "weight": 1
-        },
+      {
+        "to": "staircase_F1_east",
+        "weight": 1
+      },
+      {
+        "to": "toilets",
+        "weight": 2
+      },
 
-        {
-          "to": "passage_F2_west",
-          "weight": 1
-        },
+      {
+        "to": "SN103",
+        "weight": 1
+      },
+      {
+        "to": "SN104",
+        "weight": 1
+      },
+      {
+        "to": "SN105",
+        "weight": 1
+      },
+      {
+        "to": "SN106",
+        "weight": 1
+      },
+      {
+        "to": "SN107",
+        "weight": 2
+      },
+      {
+        "to": "SN108",
+        "weight": 2
+      },
+      {
+        "to": "SN109",
+        "weight": 2
+      },
+      {
+        "to": "SN110",
+        "weight": 2
+      }
+    ],
+    "SN101 (Morley room)": [{ "to": "passage_F1_west", "weight": 1 }],
+    "SN111": [{ "to": "passage_F1_west", "weight": 1 }],
+    "SN111.1": [{ "to": "passage_F1_west", "weight": 1 }],
+    "SN112": [
+      { "to": "passage_F1_west", "weight": 1 },
+      { "to": "passage_F1_east", "weight": 2 }
+    ],
+    "SN109": [
+      { "to": "passage_F1_west", "weight": 1 },
+      { "to": "passage_F1_east", "weight": 2 }
+    ],
+    "SN108": [
+      { "to": "passage_F1_west", "weight": 1 },
+      { "to": "passage_F1_east", "weight": 2 }
+    ],
+    "SN107": [
+      { "to": "passage_F1_west", "weight": 1 },
+      { "to": "passage_F1_east", "weight": 2 }
+    ],
+    "SN106": [
+      { "to": "passage_F1_west", "weight": 2 },
+      { "to": "passage_F1_east", "weight": 1 }
+    ],
+    "SN105": [
+      { "to": "passage_F1_west", "weight": 2 },
+      { "to": "passage_F1_east", "weight": 1 }
+    ],
+    "SN104": [
+      { "to": "passage_F1_west", "weight": 2 },
+      { "to": "passage_F1_east", "weight": 1 }
+    ],
+    "SN103": [
+      { "to": "passage_F1_west", "weight": 2 },
+      { "to": "passage_F1_east", "weight": 1 }
+    ],
 
-        {
-          "to": "lift_F2_North",
-          "weight": 1
-        }
-      ],
-      "passage_F2_east": [
-        {
-          "to": "balcony_F2",
-          "weight": 1
-        },
+    "lift_F2_West": [
+      {
+        "to": "passage_F2_west",
+        "weight": 1
+      },
+      {
+        "to": "staircase_F2_west",
+        "weight": 1
+      }
+    ],
+    "lift_F2_North": [
+      {
+        "to": "balcony_F2",
+        "weight": 1
+      }
+    ],
+    "balcony_F2": [
+      {
+        "to": "passage_F2_east",
+        "weight": 1
+      },
 
-        {
-          "to": "SN205",
-          "weight": 1
-        },
-        {
-          "to": "SN206",
-          "weight": 1
-        },
-        {
-          "to": "SN207",
-          "weight": 1
-        },
-        {
-          "to": "SN208",
-          "weight": 1
-        },
-        {
-          "to": "SN209",
-          "weight": 1
-        },
-        {
-          "to": "SN210",
-          "weight": 1
-        },
-        {
-          "to": "SN211",
-          "weight": 1
-        },
-        {
-          "to": "SN212",
-          "weight": 2
-        },
-        {
-          "to": "SN213",
-          "weight": 2
-        },
-        {
-          "to": "SN214",
-          "weight": 2
-        },
-        {
-          "to": "SN215",
-          "weight": 2
-        },
-        {
-          "to": "toilets",
-          "weight": 2
-        }
-      ],
-      "staircase_F2_east": [
-        {
-          "to": "passage_F2_east",
-          "weight": 1
-        }
-      ],
+      {
+        "to": "passage_F2_west",
+        "weight": 1
+      },
 
-      "passage_F2_west": [
-        {
-          "to": "toilets",
-          "weight": 1
-        },
-        {
-          "to": "lift_F2_West",
-          "weight": 1
-        },
-        {
-          "to": "staircase_F2_west",
-          "weight": 1
-        },
-        {
-          "to": "SN201",
-          "weight": 1
-        },
-        {
-          "to": "SN202",
-          "weight": 1
-        },
-        {
-          "to": "SN203",
-          "weight": 1
-        },
-        {
-          "to": "SN204",
-          "weight": 1
-        },
-        {
-          "to": "SN215",
-          "weight": 1
-        },
-        {
-          "to": "SN214",
-          "weight": 1
-        },
-        {
-          "to": "SN213",
-          "weight": 1
-        },
-        {
-          "to": "SN212",
-          "weight": 1
-        },
-        {
-          "to": "SN211",
-          "weight": 2
-        },
-        {
-          "to": "SN210",
-          "weight": 2
-        },
-        {
-          "to": "SN209",
-          "weight": 2
-        },
-        {
-          "to": "SN208",
-          "weight": 2
-        }
-      ],
-      "staircase_F2_west": [
-        {
-          "to": "lift_F2_West",
-          "weight": 1
-        },
-        {
-          "to": "passage_F2_west",
-          "weight": 1
-        },
-        {
-          "to": "balcony_F2",
-          "weight": 1
-        }
-      ],
+      {
+        "to": "lift_F2_North",
+        "weight": 1
+      },
+      {
+        "to": "staircase_F2_west",
+        "weight": 1
+      }
+    ],
+    "passage_F2_east": [
+      {
+        "to": "balcony_F2",
+        "weight": 1
+      },
 
-      "SN201": [
-        {
-          "to": "Terrace",
-          "weight": 1
-        }
-      ],
-      "SN202": [
-        {
-          "to": "Terrace",
-          "weight": 1
-        }
-      ],
-      "SN208": [
-        {
-          "to": "SN209",
-          "weight": 1
-        }
-      ],
-      "SN209": [
-        {
-          "to": "SN208",
-          "weight": 1
-        }
-      ],
+      {
+        "to": "SN205",
+        "weight": 1
+      },
+      {
+        "to": "SN206",
+        "weight": 1
+      },
+      {
+        "to": "SN207",
+        "weight": 1
+      },
+      {
+        "to": "SN208",
+        "weight": 1
+      },
+      {
+        "to": "SN209",
+        "weight": 1
+      },
+      {
+        "to": "SN210",
+        "weight": 1
+      },
+      {
+        "to": "SN211",
+        "weight": 1
+      },
+      {
+        "to": "SN212",
+        "weight": 2
+      },
+      {
+        "to": "SN213",
+        "weight": 2
+      },
+      {
+        "to": "SN214",
+        "weight": 2
+      },
+      {
+        "to": "SN215",
+        "weight": 2
+      },
+      {
+        "to": "toilets",
+        "weight": 2,
+        "description": "Toilets on Senate F2"
+      },
+      {
+        "to": "staircase_F2_east",
+        "weight": 1
+      }
+    ],
+    "SN203": [{ "to": "passage_F2_west", "weight": 1 }],
+    "SN204": [{ "to": "passage_F2_west", "weight": 1 }],
+    "SN201": [
+      {
+        "to": "Terrace",
+        "weight": 1
+      },
+      {
+        "to": "passage_F2_west",
+        "weight": 1
+      }
+    ],
+    "SN202": [
+      {
+        "to": "Terrace",
+        "weight": 1
+      },
+      {
+        "to": "passage_F2_west",
+        "weight": 1
+      }
+    ],
+    "SN208": [
+      {
+        "to": "SN209",
+        "weight": 1
+      },
+      {
+        "to": "passage_F2_east",
+        "weight": 1
+      }
+    ],
+    "SN209": [
+      {
+        "to": "SN208",
+        "weight": 1
+      },
+      {
+        "to": "passage_F2_east",
+        "weight": 1
+      }
+    ],
+    "SN205": [{ "to": "passage_F2_east", "weight": 1 }],
+    "SN206": [{ "to": "passage_F2_east", "weight": 1 }],
+    "SN207": [{ "to": "passage_F2_east", "weight": 1 }],
 
-      "lift_F3_West": [
-        {
-          "to": "passage_F3_west",
-          "weight": 1
-        }
-      ],
-      "passage_F3_west": [
-        {
-          "to": "balcony_F3",
-          "weight": 1
-        },
-        {
-          "to": "toilets",
-          "weight": 1
-        },
-        {
-          "to": "staircase_F3_west",
-          "weight": 1
-        },
-        {
-          "to": "lift_F3_West",
-          "weight": 1
-        },
-        {
-          "to": "SN301",
-          "weight": 1
-        },
-        {
-          "to": "SN302",
-          "weight": 1
-        },
-        {
-          "to": "SN303",
-          "weight": 1
-        },
-        {
-          "to": "SN304",
-          "weight": 1
-        },
-        {
-          "to": "Faculty_of_education_humanity(Store 1)",
-          "weight": 1
-        },
-        {
-          "to": "SN315",
-          "weight": 1
-        },
-        {
-          "to": "SN314",
-          "weight": 1
-        },
-        {
-          "to": "SN313",
-          "weight": 1
-        },
-        {
-          "to": "SN312",
-          "weight": 1
-        },
-        {
-          "to": "SN311",
-          "weight": 2
-        },
-        {
-          "to": "SN310",
-          "weight": 2
-        },
-        {
-          "to": "SN309",
-          "weight": 2
-        },
-        {
-          "to": "SN308",
-          "weight": 2
-        }
-      ],
+    "SN210": [
+      { "to": "passage_F2_east", "weight": 1 },
+      { "to": "passage_F2_west", "weight": 2 }
+    ],
+    "SN211": [
+      { "to": "passage_F2_east", "weight": 1 },
+      { "to": "passage_F2_west", "weight": 2 }
+    ],
+    "SN212": [
+      { "to": "passage_F2_east", "weight": 2 },
+      { "to": "passage_F2_west", "weight": 1 }
+    ],
+    "SN213": [
+      { "to": "passage_F2_east", "weight": 2 },
+      { "to": "passage_F2_west", "weight": 1 }
+    ],
+    "SN214": [
+      { "to": "passage_F2_east", "weight": 2 },
+      { "to": "passage_F2_west", "weight": 1 }
+    ],
+    "SN215": [
+      { "to": "passage_F2_east", "weight": 2 },
+      { "to": "passage_F2_west", "weight": 1 }
+    ],
+    "staircase_F2_east": [
+      {
+        "to": "passage_F2_east",
+        "weight": 1
+      }
+    ],
 
-      "lift_F3_North": [
-        {
-          "to": "balcony_F3",
-          "weight": 1
-        }
-      ],
-      "staircase_F3_east": [
-        {
-          "to": "passage_F3_east",
-          "weight": 1
-        }
-      ],
-      "staircase_F3_west": [
-        {
-          "to": "passage_F3_west",
-          "weight": 1
-        }
-      ],
-      "balcony_F3": [
-        {
-          "to": "passage_F3_east",
-          "weight": 1
-        },
-        {
-          "to": "passage_F3_west",
-          "weight": 1
-        },
+    "passage_F2_west": [
+      { "to": "balcony_F2", "weight": 1 },
+      {
+        "to": "toilets",
+        "weight": 1
+      },
+      {
+        "to": "lift_F2_West",
+        "weight": 1
+      },
+      {
+        "to": "staircase_F2_west",
+        "weight": 1
+      },
+      {
+        "to": "SN201",
+        "weight": 1
+      },
+      {
+        "to": "SN202",
+        "weight": 1
+      },
+      {
+        "to": "SN203",
+        "weight": 1
+      },
+      {
+        "to": "SN204",
+        "weight": 1
+      },
+      {
+        "to": "SN215",
+        "weight": 1
+      },
+      {
+        "to": "SN214",
+        "weight": 1
+      },
+      {
+        "to": "SN213",
+        "weight": 1
+      },
+      {
+        "to": "SN212",
+        "weight": 1
+      },
+      {
+        "to": "SN211",
+        "weight": 2
+      },
+      {
+        "to": "SN210",
+        "weight": 2
+      },
+      {
+        "to": "SN209",
+        "weight": 2
+      },
+      {
+        "to": "SN208",
+        "weight": 2
+      }
+    ],
 
-        {
-          "to": "lift_F3_North",
-          "weight": 1
-        }
-      ],
-      "passage_F3_east": [
-        {
-          "to": "balcony_F3",
-          "weight": 1
-        },
-        {
-          "to": "staircase_F3_east",
-          "weight": 1
-        },
+    "staircase_F2_west": [
+      {
+        "to": "lift_F2_West",
+        "weight": 1
+      },
+      {
+        "to": "passage_F2_west",
+        "weight": 1
+      },
+      {
+        "to": "balcony_F2",
+        "weight": 1
+      }
+    ],
 
-        {
-          "to": "SN305",
-          "weight": 1
-        },
-        {
-          "to": "SN306",
-          "weight": 1
-        },
-        {
-          "to": "SN307",
-          "weight": 1
-        },
-        {
-          "to": "SN308",
-          "weight": 1
-        },
-        {
-          "to": "SN309",
-          "weight": 1
-        },
-        {
-          "to": "SN310",
-          "weight": 1
-        },
-        {
-          "to": "SN311",
-          "weight": 1
-        },
-        {
-          "to": "SN312",
-          "weight": 2
-        },
-        {
-          "to": "SN313",
-          "weight": 2
-        },
-        {
-          "to": "SN314",
-          "weight": 2
-        },
-        {
-          "to": "SN315",
-          "weight": 2
-        },
-        {
-          "to": "toilets",
-          "weight": 2
-        }
-      ],
+    "lift_F3_West": [
+      {
+        "to": "passage_F3_west",
+        "weight": 1
+      }
+    ],
+    "passage_F3_west": [
+      {
+        "to": "balcony_F3",
+        "weight": 1
+      },
+      {
+        "to": "toilets",
+        "weight": 1,
+        "description": "Toilets on Senate F3"
+      },
+      {
+        "to": "staircase_F3_west",
+        "weight": 1
+      },
+      {
+        "to": "lift_F3_West",
+        "weight": 1
+      },
+      {
+        "to": "SN301",
+        "weight": 1
+      },
+      {
+        "to": "SN302",
+        "weight": 1
+      },
+      {
+        "to": "SN303",
+        "weight": 1
+      },
+      {
+        "to": "SN304",
+        "weight": 1
+      },
+      {
+        "to": "Faculty_of_education_humanity(Store 1)",
+        "weight": 1
+      },
+      {
+        "to": "SN315",
+        "weight": 1
+      },
+      {
+        "to": "SN314",
+        "weight": 1
+      },
+      {
+        "to": "SN313",
+        "weight": 1
+      },
+      {
+        "to": "SN312",
+        "weight": 1
+      },
+      {
+        "to": "SN311",
+        "weight": 2
+      },
+      {
+        "to": "SN310",
+        "weight": 2
+      },
+      {
+        "to": "SN309",
+        "weight": 2
+      },
+      {
+        "to": "SN308",
+        "weight": 2
+      }
+    ],
 
-      "SN308": [
-        {
-          "to": "S3209",
-          "weight": 1
-        }
-      ],
-      "SN309": [
-        {
-          "to": "SN308",
-          "weight": 1
-        }
-      ],
-  
-      "lift_F4_West": [
-        {
-          "to": "seating_F4_west",
-          "weight": 1
-        },
-        {
-          "to": "staircase_F4_west",
-          "weight": 1
-        },
-        {
-          "to": "SN402",
-          "weight": 1
-        }
-      ],
-      "lift_F4_North": [
-        {
-          "to": "lounge_fF4",
-          "weight": 1
-        }
-      ],
-      "lounge_F4": [
-        {
-          "to": "SN401(committee room)",
-          "weight": 1
-        },
-        {
-          "to": "passage_F1_west",
-          "weight": 1
-        }
-      ],
-      "passage_F4_west": [
-        {
-          "to": "lift_F4_West",
-          "weight": 1
-        },
-        {
-          "to": "breakout space",
-          "weight": 1
-        },
-        {
-          "to": "office of the vc",
-          "weight": 1
-        }
-      ],
-  
-      "northEntance_CH": [
-        {
-          "to": "southEntrance",
-          "weight": 1
-        },
-        {
-          "to": "staircase_east_path",
-          "weight": 1
-        },
+    "lift_F3_North": [
+      {
+        "to": "balcony_F3",
+        "weight": 1
+      }
+    ],
+    "staircase_F3_east": [
+      {
+        "to": "passage_F3_east",
+        "weight": 1
+      }
+    ],
+    "staircase_F3_west": [
+      {
+        "to": "passage_F3_west",
+        "weight": 1
+      }
+    ],
+    "balcony_F3": [
+      {
+        "to": "passage_F3_east",
+        "weight": 1
+      },
+      {
+        "to": "passage_F3_west",
+        "weight": 1
+      },
 
-        {
-          "to": "SeatingArea_F0_east",
-          "weight": 1
-        },
-        {
-          "to": "staircase_center",
-          "weight": 1
-        },
-        {
-          "to": "passengerLift",
-          "weight": 1
-        }
-      ],
+      {
+        "to": "lift_F3_North",
+        "weight": 1
+      }
+    ],
+    "passage_F3_east": [
+      {
+        "to": "balcony_F3",
+        "weight": 1
+      },
+      {
+        "to": "staircase_F3_east",
+        "weight": 1
+      },
 
-      "staircase_east_path": [
-        {
-          "to": "emergencyExit",
-          "weight": 1
-        },
-        {
-          "to": "staircase_east",
-          "weight": 1
-        },
-        {
-          "to": "lift_east",
-          "weight": 1
-        }
-      ],
-      "SeatingArea_F0_east": [
-        {
-          "to": "electronics & computer lab",
-          "weight": 1
-        },
+      {
+        "to": "SN305",
+        "weight": 1
+      },
+      {
+        "to": "SN306",
+        "weight": 1
+      },
+      {
+        "to": "SN307",
+        "weight": 1
+      },
+      {
+        "to": "SN308",
+        "weight": 1
+      },
+      {
+        "to": "SN309",
+        "weight": 1
+      },
+      {
+        "to": "SN310",
+        "weight": 1
+      },
+      {
+        "to": "SN311",
+        "weight": 1
+      },
+      {
+        "to": "SN312",
+        "weight": 2
+      },
+      {
+        "to": "SN313",
+        "weight": 2
+      },
+      {
+        "to": "SN314",
+        "weight": 2
+      },
+      {
+        "to": "SN315",
+        "weight": 2
+      },
+      {
+        "to": "toilets",
+        "weight": 2
+      }
+    ],
 
-        {
-          "to": "toilets",
-          "weight": 1
-        },
-        {
-          "to": "CH001",
-          "weight": 1
-        },
-        {
-          "to": "CH004",
-          "weight": 1
-        },
-        {
-          "to": "CH008",
-          "weight": 1
-        },
-        {
-          "to": "staircase",
-          "weight": 1
-        }
-      ],
-      "CH001": [
-        {
-          "to": "CH002",
-          "weight": 1
-        },
-        {
-          "to": "CH003",
-          "weight": 1
-        },
-        {
-          "to": "SeatingArea_F0_east",
-          "weight": 1
-        }
-      ],
-      "CH002": [
-        {
-          "to": "CH001",
-          "weight": 1
-        },
-        {
-          "to": "CH003",
-          "weight": 1
-        }
-      ],
-      "CH003": [
-        {
-          "to": "CH001",
-          "weight": 1
-        },
-        {
-          "to": "CH002",
-          "weight": 1
-        }
-      ],
-      "CH004": [
-        {
-          "to": "CH005",
-          "weight": 1
-        },
-        {
-          "to": "CH006",
-          "weight": 1
-        },
-        {
-          "to": "CH007",
-          "weight": 1
-        },
+    "SN308": [
+      {
+        "to": "S3209",
+        "weight": 1
+      }
+    ],
+    "SN309": [
+      {
+        "to": "SN308",
+        "weight": 1
+      }
+    ],
 
-        {
-          "to": "SeatingArea_F0_east",
-          "weight": 1
-        }
-      ],
-      "CH005": [
-        {
-          "to": "CH004",
-          "weight": 1
-        },
-        {
-          "to": "CH006",
-          "weight": 1
-        }
-      ],
+    "lift_F4_West": [
+      {
+        "to": "seating_F4_west",
+        "weight": 1
+      },
+      {
+        "to": "staircase_F4_west",
+        "weight": 1
+      },
+      {
+        "to": "SN402",
+        "weight": 1
+      }
+    ],
+    "lift_F4_North": [
+      {
+        "to": "lounge_fF4",
+        "weight": 1
+      }
+    ],
+    "lounge_F4": [
+      {
+        "to": "SN401(committee room)",
+        "weight": 1
+      },
+      {
+        "to": "passage_F1_west",
+        "weight": 1
+      }
+    ],
+    "passage_F4_west": [
+      {
+        "to": "lift_F4_West",
+        "weight": 1
+      },
+      {
+        "to": "breakout space",
+        "weight": 1
+      },
+      {
+        "to": "office of the vc",
+        "weight": 1
+      }
+    ],
 
-      "CH006": [
-        {
-          "to": "CH004",
-          "weight": 1
-        },
-        {
-          "to": "CH005",
-          "weight": 1
-        }
-      ],
-      "CH007": [
-        {
-          "to": "CH004",
-          "weight": 1
-        }
-      ],
-      "CH008": [
-        {
-          "to": "SeatingArea_F0_east",
-          "weight": 1
-        },
-        {
-          "to": "CH009",
-          "weight": 1
-        }
-      ],
-      "CH009": [
-        {
-          "to": "CH008",
-          "weight": 1
-        }
-      ],
-      "passengerLift_F1": [
-        { "to": "toilets", "weight": 1 },
-        {
-          "to": "CH105",
-          "weight": 1
-        },
-        {
-          "to": "CH101",
-          "weight": 1
-        },
-        {
-          "to": "CH102",
-          "weight": 1
-        },
-        {
-          "to": "CH104",
-          "weight": 1
-        },
-        {
-          "to": "CH103",
-          "weight": 2
-        },
-        {
-          "to": "CH123",
-          "weight": 1
-        },
-        {
-          "to": "CH122",
-          "weight": 2
-        },
-        {
-          "to": "CH121",
-          "weight": 2
-        },
-        {
-          "to": "CH108",
-          "weight": 2
-        },
-        {
-          "to": "goodsLift",
-          "weight": 2
-        },
-        {
-          "to": "northEastStairs",
-          "weight": 2
-        }
-      ],
-      "CH105": [
-        {
-          "to": "CH106",
-          "weight": 1
-        },
-        {
-          "to": "CH107",
-          "weight": 1
-        },
-        {
-          "to": "passengerLift_F1",
-          "weight": 1
-        },
-        {
-          "to": "staircase_center",
-          "weight": 1
-        },
-        {
-          "to": "goodsLift",
-          "weight": 1
-        }
-      ],
-      "CH106": [
-        {
-          "to": "CH105",
-          "weight": 1
-        }
-      ],
-      "CH107": [
-        {
-          "to": "CH105",
-          "weight": 1
-        }
-      ],
-      "CH108": [
-        {
-          "to": "staircase_center",
-          "weight": 2
-        },
-        {
-          "to": "passengerLift_F1",
-          "weight": 2
-        },
-        {
-          "to": "goodsLift",
-          "weight": 1
-        }
-      ],
+    "northEntance_CH": [
+      {
+        "to": "southEntrance",
+        "weight": 1
+      },
+      {
+        "to": "staircase_east_path",
+        "weight": 1
+      },
 
-      "CH123": [
-        {
-          "to": "CH124",
-          "weight": 1
-        },
-        {
-          "to": "CH125",
-          "weight": 1
-        },
-        {
-          "to": "CH126",
-          "weight": 1
-        },
-        {
-          "to": "passengerLift_F1",
-          "weight": 1
-        },
-        {
-          "to": "staircase_center",
-          "weight": 1
-        },
-        {
-          "to": "goodsLift",
-          "weight": 2
-        }
-      ],
-      "goodsLift_F1": [
-        {
-          "to": "CH109",
-          "weight": 1
-        },
-        {
-          "to": "CH117",
-          "weight": 1
-        },
-        {
-          "to": "CH116",
-          "weight": 1
-        },
-        {
-          "to": "CH115",
-          "weight": 1
-        },
-        {
-          "to": "CH110",
-          "weight": 1
-        },
-        {
-          "to": "CH111",
-          "weight": 1
-        },
-        {
-          "to": "CH112",
-          "weight": 1
-        },
-        {
-          "to": "CH113",
-          "weight": 1
-        },
-        {
-          "to": "CH114",
-          "weight": 1
-        },
+      {
+        "to": "SeatingArea_F0_east",
+        "weight": 1
+      },
+      {
+        "to": "staircase_center",
+        "weight": 1
+      },
+      {
+        "to": "passengerLift",
+        "weight": 1
+      }
+    ],
 
-        {
-          "to": "northEastStairs",
-          "weight": 1
-        },
-        {
-          "to": "passengerLift_F1",
-          "weight": 1
-        }
-      ],
-      "northEastStairs_F1": [
-        {
-          "to": "CH118",
-          "weight": 1
-        },
-        {
-          "to": "CH119",
-          "weight": 1
-        },
-        {
-          "to": "goodsLift",
-          "weight": 1
-        },
-        {
-          "to": "passengerLift",
-          "weight": 1
-        }
-      ],
-      "staircase_east_path_F1": [
-        {
-          "to": "staircase_east_F1",
-          "weight": 1
-        },
-        {
-          "to": "lift_east_F1",
-          "weight": 1
-        },
-        {
-          "to": "CH103",
-          "weight": 1
-        }
-      ],
+    "staircase_east_path": [
+      {
+        "to": "emergencyExit",
+        "weight": 1
+      },
+      {
+        "to": "staircase_east",
+        "weight": 1
+      },
+      {
+        "to": "lift_east",
+        "weight": 1
+      }
+    ],
+    "SeatingArea_F0_east": [
+      {
+        "to": "electronics & computer lab",
+        "weight": 1
+      },
 
-      "passengerLift_F2": [
-        { "to": "toilets", "weight": 1 },
-        {
-          "to": "CH203",
-          "weight": 2
-        },
-        {
-          "to": "CH204",
-          "weight": 2
-        },
-        {
-          "to": "CH201",
-          "weight": 1
-        },
-        {
-          "to": "CH202",
-          "weight": 1
-        },
-        {
-          "to": "CH205",
-          "weight": 1
-        },
-        {
-          "to": "CH206",
-          "weight": 1
-        },
-        {
-          "to": "CH211",
-          "weight": 2
-        },
-        {
-          "to": "CH210.1",
-          "weight": 2
-        },
-        {
-          "to": "CH210.2",
-          "weight": 2
-        },
-        {
-          "to": "CH209",
-          "weight": 2
-        },
-        {
-          "to": "goodsLift",
-          "weight": 1
-        },
-        {
-          "to": "northEastStairs",
-          "weight": 2
-        }
-      ],
+      {
+        "to": "toilets",
+        "weight": 1
+      },
+      {
+        "to": "CH001",
+        "weight": 1
+      },
+      {
+        "to": "CH004",
+        "weight": 1
+      },
+      {
+        "to": "CH008",
+        "weight": 1
+      },
+      {
+        "to": "staircase",
+        "weight": 1
+      }
+    ],
+    "CH001": [
+      {
+        "to": "CH002",
+        "weight": 1
+      },
+      {
+        "to": "CH003",
+        "weight": 1
+      },
+      {
+        "to": "SeatingArea_F0_east",
+        "weight": 1
+      }
+    ],
+    "CH002": [
+      {
+        "to": "CH001",
+        "weight": 1
+      },
+      {
+        "to": "CH003",
+        "weight": 1
+      }
+    ],
+    "CH003": [
+      {
+        "to": "CH001",
+        "weight": 1
+      },
+      {
+        "to": "CH002",
+        "weight": 1
+      }
+    ],
+    "CH004": [
+      {
+        "to": "CH005",
+        "weight": 1
+      },
+      {
+        "to": "CH006",
+        "weight": 1
+      },
+      {
+        "to": "CH007",
+        "weight": 1
+      },
 
-      "goodsLift_F2": [
-        {
-          "to": "CH207",
-          "weight": 1
-        },
-        {
-          "to": "CH208",
-          "weight": 1
-        },
+      {
+        "to": "SeatingArea_F0_east",
+        "weight": 1
+      }
+    ],
+    "CH005": [
+      {
+        "to": "CH004",
+        "weight": 1
+      },
+      {
+        "to": "CH006",
+        "weight": 1
+      }
+    ],
 
-        {
-          "to": "northEastStairs",
-          "weight": 1
-        },
-        {
-          "to": "passengerLift_F2",
-          "weight": 1
-        },
-        {}
-      ],
-      "northEastStairs_F2": [
-        {
-          "to": "CH210.1",
-          "weight": 1
-        },
-        {
-          "to": "CH210.2",
-          "weight": 1
-        },
-        {
-          "to": "CH209",
-          "weight": 1
-        },
-        {
-          "to": "CH211",
-          "weight": 1
-        },
-        {
-          "to": "goodsLift",
-          "weight": 1
-        },
-        {
-          "to": "passengerLift",
-          "weight": 1
-        },
-        {
-          "to": "staircase_east_path_F2",
-          "weight": 2
-        }
-      ],
-      "staircase_east_path_F2": [
-        {
-          "to": "staircase_east_F2",
-          "weight": 1
-        },
-        {
-          "to": "lift_east_F2",
-          "weight": 1
-        },
-        {
-          "to": "CH203",
-          "weight": 1
-        },
-        {
-          "to": "CH204",
-          "weight": 1
-        }
-      ],
+    "CH006": [
+      {
+        "to": "CH004",
+        "weight": 1
+      },
+      {
+        "to": "CH005",
+        "weight": 1
+      }
+    ],
+    "CH007": [
+      {
+        "to": "CH004",
+        "weight": 1
+      }
+    ],
+    "CH008": [
+      {
+        "to": "SeatingArea_F0_east",
+        "weight": 1
+      },
+      {
+        "to": "CH009",
+        "weight": 1
+      }
+    ],
+    "CH009": [
+      {
+        "to": "CH008",
+        "weight": 1
+      }
+    ],
+    "passengerLift_F1": [
+      { "to": "toilets", "weight": 1 },
+      {
+        "to": "CH105",
+        "weight": 1
+      },
+      {
+        "to": "CH101",
+        "weight": 1
+      },
+      {
+        "to": "CH102",
+        "weight": 1
+      },
+      {
+        "to": "CH104",
+        "weight": 1
+      },
+      {
+        "to": "CH103",
+        "weight": 2
+      },
+      {
+        "to": "CH123",
+        "weight": 1
+      },
+      {
+        "to": "CH122",
+        "weight": 2
+      },
+      {
+        "to": "CH121",
+        "weight": 2
+      },
+      {
+        "to": "CH108",
+        "weight": 2
+      },
+      {
+        "to": "goodsLift",
+        "weight": 2
+      },
+      {
+        "to": "northEastStairs",
+        "weight": 2
+      }
+    ],
+    "CH105": [
+      {
+        "to": "CH106",
+        "weight": 1
+      },
+      {
+        "to": "CH107",
+        "weight": 1
+      },
+      {
+        "to": "passengerLift_F1",
+        "weight": 1
+      },
+      {
+        "to": "staircase_center",
+        "weight": 1
+      },
+      {
+        "to": "goodsLift",
+        "weight": 1
+      }
+    ],
+    "CH106": [
+      {
+        "to": "CH105",
+        "weight": 1
+      }
+    ],
+    "CH107": [
+      {
+        "to": "CH105",
+        "weight": 1
+      }
+    ],
+    "CH108": [
+      {
+        "to": "staircase_center",
+        "weight": 2
+      },
+      {
+        "to": "passengerLift_F1",
+        "weight": 2
+      },
+      {
+        "to": "goodsLift",
+        "weight": 1
+      }
+    ],
 
-      "passengerLift_F3": [
-        { "to": "toilets", "weight": 1 },
-        {
-          "to": "CH305",
-          "weight": 2
-        },
-        {
-          "to": "CH306",
-          "weight": 2
-        },
-        {
-          "to": "CH306.1",
-          "weight": 2
-        },
-        {
-          "to": "CH302",
-          "weight": 1
-        },
-        {
-          "to": "CH303",
-          "weight": 1
-        },
-        {
-          "to": "CH304",
-          "weight": 1
-        },
-        {
-          "to": "CH307",
-          "weight": 1
-        },
-        {
-          "to": "CH308",
-          "weight": 1
-        },
-        {
-          "to": "CH310",
-          "weight": 1
-        },
-        {
-          "to": "CH301",
-          "weight": 1
-        },
-        {
-          "to": "CH322",
-          "weight": 2
-        },
-        {
-          "to": "CH321",
-          "weight": 2
-        },
-        {
-          "to": "CH316",
-          "weight": 2
-        },
+    "CH123": [
+      {
+        "to": "CH124",
+        "weight": 1
+      },
+      {
+        "to": "CH125",
+        "weight": 1
+      },
+      {
+        "to": "CH126",
+        "weight": 1
+      },
+      {
+        "to": "passengerLift_F1",
+        "weight": 1
+      },
+      {
+        "to": "staircase_center",
+        "weight": 1
+      },
+      {
+        "to": "goodsLift",
+        "weight": 2
+      }
+    ],
+    "goodsLift_F1": [
+      {
+        "to": "CH109",
+        "weight": 1
+      },
+      {
+        "to": "CH117",
+        "weight": 1
+      },
+      {
+        "to": "CH116",
+        "weight": 1
+      },
+      {
+        "to": "CH115",
+        "weight": 1
+      },
+      {
+        "to": "CH110",
+        "weight": 1
+      },
+      {
+        "to": "CH111",
+        "weight": 1
+      },
+      {
+        "to": "CH112",
+        "weight": 1
+      },
+      {
+        "to": "CH113",
+        "weight": 1
+      },
+      {
+        "to": "CH114",
+        "weight": 1
+      },
 
-        {
-          "to": "CH317",
-          "weight": 2
-        },
+      {
+        "to": "northEastStairs",
+        "weight": 1
+      },
+      {
+        "to": "passengerLift_F1",
+        "weight": 1
+      }
+    ],
+    "northEastStairs_F1": [
+      {
+        "to": "CH118",
+        "weight": 1
+      },
+      {
+        "to": "CH119",
+        "weight": 1
+      },
+      {
+        "to": "goodsLift",
+        "weight": 1
+      },
+      {
+        "to": "passengerLift",
+        "weight": 1
+      }
+    ],
+    "staircase_east_path_F1": [
+      {
+        "to": "staircase_east_F1",
+        "weight": 1
+      },
+      {
+        "to": "lift_east_F1",
+        "weight": 1
+      },
+      {
+        "to": "CH103",
+        "weight": 1
+      }
+    ],
 
-        {
-          "to": "CH314",
-          "weight": 2
-        },
+    "passengerLift_F2": [
+      { "to": "toilets", "weight": 1 },
+      {
+        "to": "CH203",
+        "weight": 2
+      },
+      {
+        "to": "CH204",
+        "weight": 2
+      },
+      {
+        "to": "CH201",
+        "weight": 1
+      },
+      {
+        "to": "CH202",
+        "weight": 1
+      },
+      {
+        "to": "CH205",
+        "weight": 1
+      },
+      {
+        "to": "CH206",
+        "weight": 1
+      },
+      {
+        "to": "CH211",
+        "weight": 2
+      },
+      {
+        "to": "CH210.1",
+        "weight": 2
+      },
+      {
+        "to": "CH210.2",
+        "weight": 2
+      },
+      {
+        "to": "CH209",
+        "weight": 2
+      },
+      {
+        "to": "goodsLift",
+        "weight": 1
+      },
+      {
+        "to": "northEastStairs",
+        "weight": 2
+      }
+    ],
 
-        {
-          "to": "CH315",
-          "weight": 2
-        },
-        {
-          "to": "goodsLift",
-          "weight": 1
-        },
-        {
-          "to": "northEastStairs",
-          "weight": 2
-        }
-      ],
-      "CH317": [
-        {
-          "to": "CH318",
-          "weight": 1
-        },
-        {
-          "to": "CH319",
-          "weight": 1
-        },
-        {
-          "to": "CH320",
-          "weight": 1
-        }
-      ],
+    "goodsLift_F2": [
+      {
+        "to": "CH207",
+        "weight": 1
+      },
+      {
+        "to": "CH208",
+        "weight": 1
+      },
 
-      "CH315": [
-        {
-          "to": "CH313",
-          "weight": 1
-        }
-      ],
-      "CH313": [
-        {
-          "to": "CH315",
-          "weight": 1
-        }
-      ],
-      "CH309": [
-        {
-          "to": "CH310",
-          "weight": 1
-        }
-      ],
-      "CH310": [
-        {
-          "to": "CH309",
-          "weight": 1
-        }
-      ],
-      "goodsLift_F3": [
-        {
-          "to": "CH313",
-          "weight": 1
-        },
-        {
-          "to": "CH314",
-          "weight": 1
-        },
+      {
+        "to": "northEastStairs",
+        "weight": 1
+      },
+      {
+        "to": "passengerLift_F2",
+        "weight": 1
+      },
+      {}
+    ],
+    "northEastStairs_F2": [
+      {
+        "to": "CH210.1",
+        "weight": 1
+      },
+      {
+        "to": "CH210.2",
+        "weight": 1
+      },
+      {
+        "to": "CH209",
+        "weight": 1
+      },
+      {
+        "to": "CH211",
+        "weight": 1
+      },
+      {
+        "to": "goodsLift",
+        "weight": 1
+      },
+      {
+        "to": "passengerLift",
+        "weight": 1
+      },
+      {
+        "to": "staircase_east_path_F2",
+        "weight": 2
+      }
+    ],
+    "staircase_east_path_F2": [
+      {
+        "to": "staircase_east_F2",
+        "weight": 1
+      },
+      {
+        "to": "lift_east_F2",
+        "weight": 1
+      },
+      {
+        "to": "CH203",
+        "weight": 1
+      },
+      {
+        "to": "CH204",
+        "weight": 1
+      }
+    ],
 
-        {
-          "to": "northEastStairs",
-          "weight": 1
-        },
-        {
-          "to": "passengerLift_F2",
-          "weight": 1
-        },
-        {}
-      ],
-      "northEastStairs_F3": [
-        {
-          "to": "CH210.1",
-          "weight": 1
-        },
-        {
-          "to": "CH210.2",
-          "weight": 1
-        },
-        {
-          "to": "CH209",
-          "weight": 1
-        },
-        {
-          "to": "CH211",
-          "weight": 1
-        },
-        {
-          "to": "goodsLift",
-          "weight": 1
-        },
-        {
-          "to": "passengerLift",
-          "weight": 1
-        },
-        {
-          "to": "staircase_east_path_F2",
-          "weight": 2
-        }
-      ],
-      "staircase_east_path_F3": [
-        {
-          "to": "staircase_east_F2",
-          "weight": 1
-        },
-        {
-          "to": "lift_east_F2",
-          "weight": 1
-        },
-        {
-          "to": "CH203",
-          "weight": 1
-        },
-        {
-          "to": "CH204",
-          "weight": 1
-        }
-      ]
-  
+    "passengerLift_F3": [
+      { "to": "toilets", "weight": 1 },
+      {
+        "to": "CH305",
+        "weight": 2
+      },
+      {
+        "to": "CH306",
+        "weight": 2
+      },
+      {
+        "to": "CH306.1",
+        "weight": 2
+      },
+      {
+        "to": "CH302",
+        "weight": 1
+      },
+      {
+        "to": "CH303",
+        "weight": 1
+      },
+      {
+        "to": "CH304",
+        "weight": 1
+      },
+      {
+        "to": "CH307",
+        "weight": 1
+      },
+      {
+        "to": "CH308",
+        "weight": 1
+      },
+      {
+        "to": "CH310",
+        "weight": 1
+      },
+      {
+        "to": "CH301",
+        "weight": 1
+      },
+      {
+        "to": "CH322",
+        "weight": 2
+      },
+      {
+        "to": "CH321",
+        "weight": 2
+      },
+      {
+        "to": "CH316",
+        "weight": 2
+      },
+
+      {
+        "to": "CH317",
+        "weight": 2
+      },
+
+      {
+        "to": "CH314",
+        "weight": 2
+      },
+
+      {
+        "to": "CH315",
+        "weight": 2
+      },
+      {
+        "to": "goodsLift",
+        "weight": 1
+      },
+      {
+        "to": "northEastStairs",
+        "weight": 2
+      }
+    ],
+    "CH317": [
+      {
+        "to": "CH318",
+        "weight": 1
+      },
+      {
+        "to": "CH319",
+        "weight": 1
+      },
+      {
+        "to": "CH320",
+        "weight": 1
+      }
+    ],
+
+    "CH315": [
+      {
+        "to": "CH313",
+        "weight": 1
+      }
+    ],
+    "CH313": [
+      {
+        "to": "CH315",
+        "weight": 1
+      }
+    ],
+    "CH309": [
+      {
+        "to": "CH310",
+        "weight": 1
+      }
+    ],
+    "CH310": [
+      {
+        "to": "CH309",
+        "weight": 1
+      }
+    ],
+    "goodsLift_F3": [
+      {
+        "to": "CH313",
+        "weight": 1
+      },
+      {
+        "to": "CH314",
+        "weight": 1
+      },
+
+      {
+        "to": "northEastStairs",
+        "weight": 1
+      },
+      {
+        "to": "passengerLift_F2",
+        "weight": 1
+      },
+      {}
+    ],
+    "northEastStairs_F3": [
+      {
+        "to": "CH210.1",
+        "weight": 1
+      },
+      {
+        "to": "CH210.2",
+        "weight": 1
+      },
+      {
+        "to": "CH209",
+        "weight": 1
+      },
+      {
+        "to": "CH211",
+        "weight": 1
+      },
+      {
+        "to": "goodsLift",
+        "weight": 1
+      },
+      {
+        "to": "passengerLift",
+        "weight": 1
+      },
+      {
+        "to": "staircase_east_path_F2",
+        "weight": 2
+      }
+    ],
+    "staircase_east_path_F3": [
+      {
+        "to": "staircase_east_F2",
+        "weight": 1
+      },
+      {
+        "to": "lift_east_F2",
+        "weight": 1
+      },
+      {
+        "to": "CH203",
+        "weight": 1
+      },
+      {
+        "to": "CH204",
+        "weight": 1
+      }
+    ]
   }
 }

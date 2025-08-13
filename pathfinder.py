@@ -58,4 +58,4 @@ def a_star(graph, start, goal):
 
 
 # Example run
-print(a_star(graph, "northEntrance", "lift_F0_West"))
+print(a_star(graph, "cafeBar", "southEntrance"))
