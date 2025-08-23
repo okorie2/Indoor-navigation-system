@@ -57,4 +57,4 @@ def a_star(graph, start, goal):
     return None
 
 
-print(a_star(graph, "SN211", "SN203"))
+print(a_star(graph, "SN211", "office of the vc"))

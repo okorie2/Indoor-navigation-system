@@ -29,25 +29,71 @@
     "northEntrance": [
       {
         "to": "toilets",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 2.19
+          },
+          {
+            "dir": "west",
+            "distance": 2.61
+          }
+        ]
       },
       {
         "to": "cafeBar",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 7.95
+          }
+        ]
       },
 
       {
         "to": "catering",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 5.58
+          }
+        ]
       },
       {
         "to": "lift_F0_North",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 10.2
+          },
+          {
+            "dir": "west",
+            "distance": 1.56
+          },
+          {
+            "dir": "south",
+            "distance": 1.11
+          }
+        ]
       },
 
       {
         "to": "SN002",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 10.47
+          },
+          {
+            "dir": "east",
+            "distance": 1.11
+          }
+        ]
       },
       {
         "to": "Research & Enterprise",
@@ -55,43 +101,242 @@
       },
       {
         "to": "SN001(Bloomberg Finance Lab)",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 12.84
+          },
+          {
+            "dir": "east",
+            "distance": 1.71
+          }
+        ]
       },
       {
         "to": "SN003",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 17.22
+          },
+          {
+            "dir": "east",
+            "distance": 3.6
+          }
+        ]
       },
 
       {
         "to": "Reception",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 15.45
+          }
+        ]
       },
       {
         "to": "staircase_F0_east_path",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 8.61
+          },
+          {
+            "dir": "east",
+            "distance": 3.12
+          }
+        ]
       },
       {
         "to": "southEnthrance",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 19.62
+          }
+        ]
       }
     ],
 
     "toilets": [
-      { "to": "northEntrance", "weight": 1 },
-      { "to": "cafeBar", "weight": 1 },
-      { "to": "catering", "weight": 1 },
-      { "to": "lift_F0_North", "weight": 1 },
-      { "to": "SN002", "weight": 1 },
+      {
+        "to": "northEntrance",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 2.61
+          },
+          {
+            "dir": "south",
+            "distance": 2.19
+          }
+        ]
+      },
+      {
+        "to": "cafeBar",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 2.13
+          },
+          {
+            "dir": "west",
+            "distance": 5.43
+          }
+        ]
+      },
+      {
+        "to": "catering",
+        "weight": 1,
+         "path": [
+          {
+            "dir": "north",
+            "distance": 2.13
+          },
+          {
+            "dir": "west",
+            "distance": 3.24
+          }
+        ]
+      },
+      {
+        "to": "lift_F0_North",
+        "weight": 1,
+         "path": [
+          {
+            "dir": "north",
+            "distance": 2.13
+          },
+          {
+            "dir": "west",
+            "distance": 7.5
+          },
+            {
+            "dir": "north",
+            "distance": 2.1
+          }
+        ]
+      },
+      {
+        "to": "SN002",
+        "weight": 1,
+           "path": [
+          {
+            "dir": "north",
+            "distance": 2.13
+          },
+          {
+            "dir": "west",
+            "distance": 7.86
+          },
+            {
+            "dir": "north",
+            "distance": 1.35
+          }
+        ]
+      },
       { "to": "Research & Enterprise", "weight": 2 },
-      { "to": "SN001(Bloomberg Finance Lab)", "weight": 2 },
-      { "to": "SN003", "weight": 2 },
-      { "to": "Reception", "weight": 2 },
-      { "to": "staircase_F0_east_path", "weight": 1 },
-      { "to": "southEnthrance", "weight": 2 }
+      {
+        "to": "SN001(Bloomberg Finance Lab)",
+        "weight": 2,
+         "path": [
+          {
+            "dir": "north",
+            "distance": 2.13
+          },
+          {
+            "dir": "west",
+            "distance": 10.95
+          },
+            {
+            "dir": "north",
+            "distance": 1.77
+          }
+        ]
+      },
+      {
+        "to": "SN003",
+        "weight": 2,
+         "path": [
+          {
+            "dir": "north",
+            "distance": 2.13
+          },
+          {
+            "dir": "west",
+            "distance": 14.97
+          },
+            {
+            "dir": "south",
+            "distance": 3.51
+          }
+        ]
+      },
+      {
+        "to": "Reception",
+        "weight": 2,
+        "path": [
+            {
+            "dir": "north",
+            "distance": 2.13
+          },
+          {
+            "dir": "west",
+            "distance": 12.96
+          }
+        ]
+      },
+      {
+        "to": "staircase_F0_east_path",
+        "weight": 1,
+        "path": [
+            {
+            "dir": "north",
+            "distance": 2.13
+          },
+          {
+            "dir": "west",
+            "distance": 5.97
+          }
+        ]
+      },
+      { "to": "southEnthrance", "weight": 2 , "path": [
+           {
+            "dir": "north",
+            "distance": 2.13
+          },
+          {
+            "dir": "west",
+            "distance": 15.42
+          }
+        ]}
     ],
     "cafeBar": [
-      { "to": "northEntrance", "weight": 1 },
-      { "to": "toilets", "weight": 1 },
+      { "to": "northEntrance", "weight": 1,
+     "path": [
+          {
+            "dir": "east",
+            "distance": 7.95
+          }
+        ] },
+      { "to": "toilets", "weight": 1,     "path": [
+        {
+          "dir": "east",
+          "distance": 5.43
+        },
+          {
+            "dir": "south",
+            "distance": 2.13
+          }
+        ] },
       { "to": "catering", "weight": 1 },
       { "to": "lift_F0_North", "weight": 1 },
       { "to": "SN002", "weight": 1 },
@@ -460,52 +705,118 @@
     "lift_F1_West": [
       {
         "to": "passage_F1_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1.5
+          }
+        ]
       },
       {
         "to": "lift_F0_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F1_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F2_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
 
       {
         "to": "lift_F3_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F4_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       }
     ],
 
     "passage_F1_west": [
       {
         "to": "lift_F1_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "south",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "staircase_F1_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "balcony_F1",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "south",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "toilets",
         "weight": 1,
-        "description": "Toilets on Senate F1"
+        "description": "Toilets on Senate F1",
+        "path": [
+          {
+            "dir": "north",
+            "distance": 4.75
+          }
+        ]
       },
       {
         "to": "SN101 (Morley room)",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 2.13
+          }
+        ]
       },
       {
         "to": "SN111",
@@ -521,108 +832,292 @@
       },
       {
         "to": "SN109",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 4.65
+          }
+        ]
       },
       {
         "to": "SN108",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 7.5
+          }
+        ]
       },
       {
         "to": "SN107",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 7.98
+          }
+        ]
       },
       {
         "to": "SN106",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 7.98
+          },
+          {
+            "dir": "south",
+            "distance": 5.64
+          }
+        ]
       },
       {
         "to": "SN105",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 7.98
+          },
+          {
+            "dir": "south",
+            "distance": 5.64
+          }
+        ]
       },
       {
         "to": "SN104",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 7.98
+          },
+          {
+            "dir": "south",
+            "distance": 5.64
+          },
+          {
+            "dir": "east",
+            "distance": 3.45
+          }
+        ]
       },
       {
         "to": "SN103",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 7.98
+          },
+          {
+            "dir": "south",
+            "distance": 5.64
+          },
+          {
+            "dir": "east",
+            "distance": 4.14
+          }
+        ]
       },
       {
         "to": "passage_F1_east",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 7.98
+          },
+          {
+            "dir": "south",
+            "distance": 5.64
+          },
+          {
+            "dir": "east",
+            "distance": 6.48
+          }
+        ]
       }
     ],
     "staircase_F1_west": [
       {
         "to": "staircase_F3_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "staircase_F2_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "staircase_F0_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "staircase_F4_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "passage_F1_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       }
     ],
     "lift_F1_North": [
       {
         "to": "balcony_F1",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F3_North",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F2_North",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F4_North",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F0_North",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       }
     ],
 
     "balcony_F1": [
       {
         "to": "lift_F1_North",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "passage_F1_east",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 3.75
+          }
+        ]
       },
       {
         "to": "passage_F1_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 3.75
+          }
+        ]
       },
       {
         "to": "staircase_F1_north",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       }
     ],
     "passage_F1_east": [
       {
         "to": "passage_F1_west",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 6.48
+          },
+          {
+            "dir": "south",
+            "distance": 5.94
+          },
+          {
+            "dir": "east",
+            "distance": 6.48
+          }
+        ]
       },
       {
         "to": "balcony_F1",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 3.75
+          }
+        ]
       },
       {
         "to": "SN113",
@@ -635,47 +1130,154 @@
 
       {
         "to": "staircase_F1_east",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 2.16
+          }
+        ]
       },
       {
         "to": "toilets",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 10.83
+          },
+          {
+            "dir": "north",
+            "distance": 7.56
+          },
+          {
+            "dir": "east",
+            "distance": 3.54
+          }
+        ]
       },
 
       {
         "to": "SN103",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 2.28
+          }
+        ]
       },
       {
         "to": "SN104",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 3.09
+          }
+        ]
       },
       {
         "to": "SN105",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 6
+          }
+        ]
       },
       {
         "to": "SN106",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 6.45
+          }
+        ]
       },
       {
         "to": "SN107",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 6.45
+          },
+          {
+            "dir": "north",
+            "distance": 5.94
+          }
+        ]
       },
       {
         "to": "SN108",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 6.45
+          },
+          {
+            "dir": "north",
+            "distance": 5.94
+          },
+          {
+            "dir": "east",
+            "distance": 0.63
+          }
+        ]
       },
       {
         "to": "SN109",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 6.45
+          },
+          {
+            "dir": "north",
+            "distance": 5.94
+          },
+          {
+            "dir": "east",
+            "distance": 3.42
+          }
+        ]
       },
       {
         "to": "SN110",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 6.45
+          },
+          {
+            "dir": "north",
+            "distance": 5.94
+          },
+          {
+            "dir": "east",
+            "distance": 4.2
+          }
+        ]
       }
     ],
-    "SN101 (Morley room)": [{ "to": "passage_F1_west", "weight": 1 }],
+    "SN101 (Morley room)": [
+      {
+        "to": "passage_F1_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 2.13
+          }
+        ]
+      }
+    ],
     "SN111": [{ "to": "passage_F1_west", "weight": 1 }],
     "SN111.1": [{ "to": "passage_F1_west", "weight": 1 }],
     "SN112": [
@@ -683,32 +1285,198 @@
       { "to": "passage_F1_east", "weight": 2 }
     ],
     "SN109": [
-      { "to": "passage_F1_west", "weight": 1 },
-      { "to": "passage_F1_east", "weight": 2 }
+      {
+        "to": "passage_F1_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 4.65
+          }
+        ]
+      },
+      {
+        "to": "passage_F1_east",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 3.42
+          },
+          {
+            "dir": "north",
+            "distance": 5.94
+          },
+          {
+            "dir": "west",
+            "distance": 6.45
+          }
+        ]
+      }
     ],
     "SN108": [
-      { "to": "passage_F1_west", "weight": 1 },
-      { "to": "passage_F1_east", "weight": 2 }
+      {
+        "to": "passage_F1_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 7.5
+          }
+        ]
+      },
+      {
+        "to": "passage_F1_east",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 5.94
+          },
+          {
+            "dir": "west",
+            "distance": 6.45
+          }
+        ]
+      }
     ],
     "SN107": [
-      { "to": "passage_F1_west", "weight": 1 },
-      { "to": "passage_F1_east", "weight": 2 }
+      {
+        "to": "passage_F1_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 7.98
+          }
+        ]
+      },
+      {
+        "to": "passage_F1_east",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 5.94
+          },
+          {
+            "dir": "north",
+            "distance": 6.45
+          }
+        ]
+      }
     ],
     "SN106": [
-      { "to": "passage_F1_west", "weight": 2 },
-      { "to": "passage_F1_east", "weight": 1 }
+      {
+        "to": "passage_F1_west",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 5.64
+          },
+          {
+            "dir": "south",
+            "distance": 7.98
+          }
+        ]
+      },
+      {
+        "to": "passage_F1_east",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 6.45
+          }
+        ]
+      }
     ],
     "SN105": [
-      { "to": "passage_F1_west", "weight": 2 },
-      { "to": "passage_F1_east", "weight": 1 }
+      {
+        "to": "passage_F1_west",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 5.64
+          },
+          {
+            "dir": "east",
+            "distance": 7.98
+          }
+        ]
+      },
+      {
+        "to": "passage_F1_east",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 6
+          }
+        ]
+      }
     ],
     "SN104": [
-      { "to": "passage_F1_west", "weight": 2 },
-      { "to": "passage_F1_east", "weight": 1 }
+      {
+        "to": "passage_F1_west",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 3.45
+          },
+          {
+            "dir": "north",
+            "distance": 5.64
+          },
+          {
+            "dir": "east",
+            "distance": 7.98
+          }
+        ]
+      },
+      {
+        "to": "passage_F1_east",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 3.09
+          }
+        ]
+      }
     ],
     "SN103": [
-      { "to": "passage_F1_west", "weight": 2 },
-      { "to": "passage_F1_east", "weight": 1 }
+      {
+        "to": "passage_F1_west",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 4.14
+          },
+          {
+            "dir": "north",
+            "distance": 5.64
+          },
+          {
+            "dir": "east",
+            "distance": 7.98
+          }
+        ]
+      },
+      {
+        "to": "passage_F1_east",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 2.28
+          }
+        ]
+      }
     ],
 
     "lift_F2_West": [
@@ -949,10 +1717,6 @@
           {
             "dir": "east",
             "distance": 10.83
-          },
-          {
-            "dir": "north",
-            "distance": 0.72
           }
         ]
       },
@@ -1050,6 +1814,201 @@
           {
             "dir": "north",
             "distance": 2.16
+          }
+        ]
+      }
+    ],
+
+    "passage_F2_west": [
+      {
+        "to": "balcony_F2",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "south",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "toilets",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 6.42
+          }
+        ]
+      },
+      {
+        "to": "lift_F2_West",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "staircase_F2_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "SN201",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 5.25
+          }
+        ]
+      },
+      {
+        "to": "SN202",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 6.36
+          }
+        ]
+      },
+      {
+        "to": "SN203",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 10.2
+          }
+        ]
+      },
+      {
+        "to": "SN204",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 10.2
+          }
+        ]
+      },
+      {
+        "to": "SN215",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 5.25
+          }
+        ]
+      },
+      {
+        "to": "SN214",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 6.24
+          }
+        ]
+      },
+      {
+        "to": "SN213",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 10.08
+          }
+        ]
+      },
+      {
+        "to": "SN212",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 10.29
+          },
+          {
+            "dir": "south",
+            "distance": 0.66
+          }
+        ]
+      },
+      {
+        "to": "SN211",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 10.29
+          },
+          {
+            "dir": "south",
+            "distance": 7.14
+          }
+        ]
+      },
+      {
+        "to": "SN210",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 10.29
+          },
+          {
+            "dir": "south",
+            "distance": 7.56
+          },
+          {
+            "dir": "west",
+            "distance": 0.63
+          }
+        ]
+      },
+      {
+        "to": "SN209",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 10.29
+          },
+          {
+            "dir": "south",
+            "distance": 7.56
+          },
+          {
+            "dir": "west",
+            "distance": 1.44
+          }
+        ]
+      },
+      {
+        "to": "SN208",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 10.29
+          },
+          {
+            "dir": "south",
+            "distance": 7.56
+          },
+          {
+            "dir": "west",
+            "distance": 5.34
           }
         ]
       }
@@ -1162,6 +2121,24 @@
           {
             "dir": "west",
             "distance": 9.39
+          }
+        ]
+      },
+      {
+        "to": "passage_F2_west",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 1.5
+          },
+          {
+            "dir": "north",
+            "distance": 7.17
+          },
+          {
+            "dir": "east",
+            "distance": 9.15
           }
         ]
       }
@@ -1372,9 +2349,136 @@
       }
     ],
 
-    "passage_F2_west": [
+    "staircase_F2_west": [
       {
-        "to": "balcony_F2",
+        "to": "lift_F2_West",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1.5
+          }
+        ]
+      },
+      {
+        "to": "passage_F2_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+
+      {
+        "to": "staircase_F3_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "staircase_F4_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "staircase_F1_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "staircase_F0_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      }
+    ],
+
+    "lift_F3_West": [
+      {
+        "to": "passage_F3_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1.5
+          }
+        ]
+      },
+      {
+        "to": "staircase_F3_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 2.4
+          }
+        ]
+      },
+      {
+        "to": "lift_F1_West",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "lift_F2_West",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+
+      {
+        "to": "lift_F0_West",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "lift_F4_West",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      }
+    ],
+    "passage_F3_west": [
+      {
+        "to": "balcony_F3",
         "weight": 1,
         "path": [
           {
@@ -1386,6 +2490,7 @@
       {
         "to": "toilets",
         "weight": 1,
+        "description": "Toilets on Senate F3",
         "path": [
           {
             "dir": "west",
@@ -1394,17 +2499,7 @@
         ]
       },
       {
-        "to": "lift_F2_West",
-        "weight": 1,
-        "path": [
-          {
-            "dir": "south",
-            "distance": 1
-          }
-        ]
-      },
-      {
-        "to": "staircase_F2_west",
+        "to": "staircase_F3_west",
         "weight": 1,
         "path": [
           {
@@ -1414,7 +2509,17 @@
         ]
       },
       {
-        "to": "SN201",
+        "to": "lift_F3_West",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "south",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "SN301",
         "weight": 1,
         "path": [
           {
@@ -1424,7 +2529,7 @@
         ]
       },
       {
-        "to": "SN202",
+        "to": "SN302",
         "weight": 1,
         "path": [
           {
@@ -1434,7 +2539,7 @@
         ]
       },
       {
-        "to": "SN203",
+        "to": "SN303",
         "weight": 1,
         "path": [
           {
@@ -1444,7 +2549,7 @@
         ]
       },
       {
-        "to": "SN204",
+        "to": "SN304",
         "weight": 1,
         "path": [
           {
@@ -1454,7 +2559,17 @@
         ]
       },
       {
-        "to": "SN215",
+        "to": "Faculty_of_education_humanity(Store 1)",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 10.2
+          }
+        ]
+      },
+      {
+        "to": "SN315",
         "weight": 1,
         "path": [
           {
@@ -1464,7 +2579,7 @@
         ]
       },
       {
-        "to": "SN214",
+        "to": "SN314",
         "weight": 1,
         "path": [
           {
@@ -1474,7 +2589,7 @@
         ]
       },
       {
-        "to": "SN213",
+        "to": "SN313",
         "weight": 1,
         "path": [
           {
@@ -1484,7 +2599,7 @@
         ]
       },
       {
-        "to": "SN212",
+        "to": "SN312",
         "weight": 1,
         "path": [
           {
@@ -1498,7 +2613,7 @@
         ]
       },
       {
-        "to": "SN211",
+        "to": "SN311",
         "weight": 2,
         "path": [
           {
@@ -1512,7 +2627,7 @@
         ]
       },
       {
-        "to": "SN210",
+        "to": "SN310",
         "weight": 2,
         "path": [
           {
@@ -1530,7 +2645,7 @@
         ]
       },
       {
-        "to": "SN209",
+        "to": "SN309",
         "weight": 2,
         "path": [
           {
@@ -1548,7 +2663,7 @@
         ]
       },
       {
-        "to": "SN208",
+        "to": "SN308",
         "weight": 2,
         "path": [
           {
@@ -1567,11 +2682,333 @@
       }
     ],
 
-    "staircase_F2_west": [
+    "SN301": [
       {
-        "to": "lift_F2_West",
+        "to": "passage_F3_west",
         "weight": 1,
-          "path": [
+        "path": [
+          {
+            "dir": "east",
+            "distance": 4.14
+          }
+        ]
+      }
+    ],
+    "SN302": [
+      {
+        "to": "passage_F3_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 3.81
+          }
+        ]
+      }
+    ],
+    "SN303": [
+      {
+        "to": "passage_F3_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 8.94
+          }
+        ]
+      }
+    ],
+    "SN304": [
+      {
+        "to": "passage_F3_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 8.94
+          }
+        ]
+      }
+    ],
+    "Faculty_of_education_humanity(Store 1)": [
+      {
+        "to": "passage_F3_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 8.94
+          }
+        ]
+      }
+    ],
+    "SN315": [
+      {
+        "to": "passage_F3_east",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 5.37
+          },
+          {
+            "dir": "north",
+            "distance": 7.56
+          },
+          {
+            "dir": "west",
+            "distance": 10.83
+          }
+        ]
+      },
+      {
+        "to": "passage_F3_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 5.25
+          }
+        ]
+      }
+    ],
+    "SN314": [
+      {
+        "to": "passage_F3_east",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 4.29
+          },
+          {
+            "dir": "north",
+            "distance": 7.56
+          },
+          {
+            "dir": "west",
+            "distance": 10.83
+          }
+        ]
+      },
+      {
+        "to": "passage_F3_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 6.24
+          }
+        ]
+      }
+    ],
+    "SN313": [
+      {
+        "to": "passage_F3_east",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 7.56
+          },
+          {
+            "dir": "west",
+            "distance": 10.83
+          }
+        ]
+      },
+      {
+        "to": "passage_F3_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 10.08
+          }
+        ]
+      }
+    ],
+    "SN312": [
+      {
+        "to": "passage_F3_east",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 7.17
+          },
+          {
+            "dir": "north",
+            "distance": 10.83
+          }
+        ]
+      },
+      {
+        "to": "passage_F3_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 10.95
+          }
+        ]
+      }
+    ],
+    "SN311": [
+      {
+        "to": "passage_F3_east",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 11.5
+          }
+        ]
+      },
+      {
+        "to": "passage_F3_west",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 7.14
+          },
+          {
+            "dir": "north",
+            "distance": 10.29
+          }
+        ]
+      }
+    ],
+    "SN310": [
+      {
+        "to": "passage_F3_east",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 10.32
+          }
+        ]
+      },
+      {
+        "to": "passage_F3_west",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 0.63
+          },
+          {
+            "dir": "north",
+            "distance": 7.56
+          },
+          {
+            "dir": "east",
+            "distance": 10.29
+          }
+        ]
+      }
+    ],
+    "SN309": [
+      {
+        "to": "passage_F3_east",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 9.39
+          }
+        ]
+      },
+      {
+        "to": "SN308",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 3.85
+          }
+        ]
+      },
+      {
+        "to": "passage_F3_west",
+        "weight": 2,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 1.5
+          },
+          {
+            "dir": "north",
+            "distance": 7.17
+          },
+          {
+            "dir": "east",
+            "distance": 9.15
+          }
+        ]
+      }
+    ],
+
+    "lift_F3_North": [
+      {
+        "to": "balcony_F3",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "lift_F4_North",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "lift_F2_North",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "lift_F1_North",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "lift_F0_North",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      }
+    ],
+
+    "staircase_F3_west": [
+      {
+        "to": "lift_F3_West",
+        "weight": 1,
+        "path": [
           {
             "dir": "north",
             "distance": 1.5
@@ -1579,451 +3016,631 @@
         ]
       },
       {
-        "to": "passage_F2_west",
-        "weight": 1,
-          "path": [
-          {
-            "dir": "north",
-            "distance": 1
-          }
-        ]
-      },
-      {
-        "to": "balcony_F2",
+        "to": "passage_F3_west",
         "weight": 1,
         "path": [
           {
-            "dir": "east",
-            "distance": 4.59
-          }
-        ]
-      },
-      {
-        "to": "staircase_F3_west",
-        "weight": 1,
-          "path": [
-          {
             "dir": "north",
             "distance": 1
           }
         ]
-        
       },
       {
         "to": "staircase_F4_west",
         "weight": 1,
-          "path": [
+        "path": [
           {
             "dir": "north",
             "distance": 1
           }
         ]
-      },
-      {
-        "to": "staircase_F1_west",
-        "weight": 1,
-          "path": [
-          {
-            "dir": "north",
-            "distance": 1
-          }
-        ]
-      },
-      {
-        "to": "staircase_F0_west",
-        "weight": 1,
-          "path": [
-          {
-            "dir": "north",
-            "distance": 1
-          }
-        ]
-      }
-    ],
-
-    "lift_F3_West": [
-      {
-        "to": "passage_F3_west",
-        "weight": 1
-      },
-      {
-        "to": "lift_F1_West",
-        "weight": 1
-      },
-      {
-        "to": "lift_F2_West",
-        "weight": 1
-      },
-
-      {
-        "to": "lift_F0_West",
-        "weight": 1
-      },
-      {
-        "to": "lift_F4_West",
-        "weight": 1
-      }
-    ],
-    "passage_F3_west": [
-      {
-        "to": "balcony_F3",
-        "weight": 1
-      },
-      {
-        "to": "toilets",
-        "weight": 1,
-        "description": "Toilets on Senate F3"
-      },
-      {
-        "to": "staircase_F3_west",
-        "weight": 1
-      },
-      {
-        "to": "lift_F3_West",
-        "weight": 1
-      },
-      {
-        "to": "SN301",
-        "weight": 1
-      },
-      {
-        "to": "SN302",
-        "weight": 1
-      },
-      {
-        "to": "SN303",
-        "weight": 1
-      },
-      {
-        "to": "SN304",
-        "weight": 1
-      },
-      {
-        "to": "Faculty_of_education_humanity(Store 1)",
-        "weight": 1
-      },
-      {
-        "to": "SN315",
-        "weight": 1
-      },
-      {
-        "to": "SN314",
-        "weight": 1
-      },
-      {
-        "to": "SN313",
-        "weight": 1
-      },
-      {
-        "to": "SN312",
-        "weight": 1
-      },
-      {
-        "to": "SN311",
-        "weight": 2
-      },
-      {
-        "to": "SN310",
-        "weight": 2
-      },
-      {
-        "to": "SN309",
-        "weight": 2
-      },
-      {
-        "to": "SN308",
-        "weight": 2
-      }
-    ],
-
-    "SN301": [{ "to": "passage_F3_west", "weight": 1 }],
-    "SN302": [{ "to": "passage_F3_west", "weight": 1 }],
-    "SN303": [{ "to": "passage_F3_west", "weight": 1 }],
-    "SN304": [{ "to": "passage_F3_west", "weight": 1 }],
-    "Faculty_of_education_humanity(Store 1)": [
-      { "to": "passage_F3_west", "weight": 1 }
-    ],
-    "SN315": [{ "to": "passage_F3_west", "weight": 1 }],
-    "SN314": [{ "to": "passage_F3_west", "weight": 1 }],
-    "SN313": [{ "to": "passage_F3_west", "weight": 1 }],
-    "SN312": [{ "to": "passage_F3_west", "weight": 1 }],
-    "SN311": [{ "to": "passage_F3_west", "weight": 2 }],
-    "SN310": [{ "to": "passage_F3_west", "weight": 2 }],
-    "SN309": [
-      { "to": "passage_F3_west", "weight": 2 },
-      {
-        "to": "SN308",
-        "weight": 1
-      }
-    ],
-
-    "lift_F3_North": [
-      {
-        "to": "balcony_F3",
-        "weight": 1
-      },
-      {
-        "to": "lift_F4_North",
-        "weight": 1
-      },
-      {
-        "to": "lift_F2_North",
-        "weight": 1
-      },
-      {
-        "to": "lift_F1_North",
-        "weight": 1
-      },
-      {
-        "to": "lift_F0_North",
-        "weight": 1
-      }
-    ],
-
-    "staircase_F3_west": [
-      {
-        "to": "passage_F3_west",
-        "weight": 1
-      },
-      {
-        "to": "staircase_F4_west",
-        "weight": 1
       },
       {
         "to": "staircase_F2_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "staircase_F1_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "staircase_F0_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       }
     ],
     "balcony_F3": [
       {
         "to": "passage_F3_east",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 3.75
+          }
+        ]
       },
       {
         "to": "passage_F3_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 3.75
+          }
+        ]
       },
 
       {
         "to": "lift_F3_North",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
+      },
+      {
+        "to": "staircase_F3_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 4.59
+          }
+        ]
       }
     ],
     "passage_F3_east": [
       {
         "to": "balcony_F3",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 3.75
+          }
+        ]
       },
       {
         "to": "staircase_F3_east",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 2.16
+          }
+        ]
       },
 
       {
         "to": "SN305",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 9.57
+          }
+        ]
       },
       {
         "to": "SN306",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 6.03
+          }
+        ]
       },
       {
         "to": "SN307",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 4.77
+          }
+        ]
       },
       {
         "to": "SN308",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 5.46
+          }
+        ]
       },
       {
         "to": "SN309",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 9.39
+          }
+        ]
       },
       {
         "to": "SN310",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 10.32
+          }
+        ]
       },
       {
         "to": "SN311",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 10.83
+          }
+        ]
       },
       {
         "to": "SN312",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 10.83
+          },
+          {
+            "dir": "north",
+            "distance": 7.17
+          }
+        ]
       },
       {
         "to": "SN313",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 10.83
+          },
+          {
+            "dir": "north",
+            "distance": 7.56
+          },
+          {
+            "dir": "east",
+            "distance": 0.54
+          }
+        ]
       },
       {
         "to": "SN314",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 10.83
+          },
+          {
+            "dir": "north",
+            "distance": 7.56
+          },
+          {
+            "dir": "east",
+            "distance": 4.29
+          }
+        ]
       },
       {
         "to": "SN315",
-        "weight": 2
+        "weight": 2,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 10.83
+          },
+          {
+            "dir": "north",
+            "distance": 7.56
+          },
+          {
+            "dir": "east",
+            "distance": 5.37
+          }
+        ]
       },
       {
         "to": "toilets",
         "weight": 2,
-        "description": "Toilets on Senate F3"
+        "description": "Toilets on Senate F3",
+        "path": [
+          {
+            "dir": "east",
+            "distance": 10.83
+          },
+          {
+            "dir": "north",
+            "distance": 7.56
+          },
+          {
+            "dir": "east",
+            "distance": 3.54
+          }
+        ]
       }
     ],
 
-    "SN305": [{ "to": "passage_F3_east", "weight": 1 }],
-    "SN306": [{ "to": "passage_F3_east", "weight": 1 }],
-    "SN307": [{ "to": "passage_F3_east", "weight": 1 }],
+    "SN305": [
+      {
+        "to": "passage_F3_east",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 9.57
+          }
+        ]
+      }
+    ],
+    "SN306": [
+      {
+        "to": "passage_F3_east",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 6.03
+          }
+        ]
+      }
+    ],
+    "SN307": [
+      {
+        "to": "passage_F3_east",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 4.77
+          }
+        ]
+      }
+    ],
 
     "SN308": [
       {
         "to": "S3209",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 3.85
+          }
+        ]
       },
-      { "to": "passage_F3_east", "weight": 1 }
+      {
+        "to": "passage_F3_east",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 5.46
+          }
+        ]
+      }
     ],
 
     "lift_F4_West": [
       {
         "to": "passage_F4_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 1.5
+          }
+        ]
       },
       {
         "to": "staircase_F4_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 2.4
+          }
+        ]
       },
       {
         "to": "SN402",
-        "weight": 1
+        "weight": 1,
+
+        "path": [
+          {
+            "dir": "east",
+            "distance": 2.64
+          }
+        ]
       },
       {
         "to": "lift_F0_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F1_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F2_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
 
       {
         "to": "lift_F3_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       }
     ],
 
     "staircase_F4_west": [
       {
         "to": "lift_F4_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1.5
+          }
+        ]
       },
       {
-        "to": "seating_F4_west",
-        "weight": 1
+        "to": "passage_F4_west",
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
-      {
-        "to": "SN402",
-        "weight": 1
-      },
+
       {
         "to": "staircase_F3_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "staircase_F2_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "staircase_F1_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "staircase_F0_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       }
     ],
 
     "lift_F4_North": [
       {
         "to": "lounge_F4",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F3_North",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F2_North",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F1_North",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "lift_F0_North",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       }
     ],
     "lounge_F4": [
       {
         "to": "SN401(committee room)",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "east",
+            "distance": 1
+          }
+        ]
       },
-      {
-        "to": "passage_F1_west",
-        "weight": 1
-      },
+
       {
         "to": "lift_F4_North",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       }
     ],
     "SN401(committee room)": [
       {
         "to": "lounge_F4",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "staircase_F4_east",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       }
     ],
     "passage_F4_west": [
       {
         "to": "lift_F4_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1.5
+          }
+        ]
       },
       {
         "to": "breakout space",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 2.91
+          }
+        ]
       },
       {
         "to": "office of the vc",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 2.73
+          }
+        ]
       }
     ],
 
     "office of the vc": [
       {
         "to": "passage_F4_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 2.73
+          }
+        ]
       }
     ],
     "breakout space": [
       {
         "to": "passage_F4_west",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "west",
+            "distance": 2.91
+          }
+        ]
       }
     ],
 
