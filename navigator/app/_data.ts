@@ -195,3 +195,37 @@ export const pathToFollow: Connection[] = [
     ],
   },
 ];
+
+export const testWestPath: Connection[] = [
+  {
+    to: "SN209",
+    weight: 2,
+    path: [
+      {
+        dir: "south",
+        distance: 8.34,
+      },
+      {
+        dir: "east",
+        distance: 6.06,
+      },
+      {
+        dir: "north",
+        distance: 1.05,
+      },
+    ],
+  },
+];
+
+export const testEastPath: Connection[] = [
+  {
+    to: "SN209",
+    weight: 1,
+    path: [
+      {
+        dir: "south",
+        distance: 7.35,
+      },
+    ],
+  },
+];

@@ -36,7 +36,12 @@ import {
   Connection,
   PathStep,
 } from "./_types";
-import { floorPlanData, pathToFollow } from "./_data";
+import {
+  floorPlanData,
+  pathToFollow,
+  testEastPath,
+  testWestPath,
+} from "./_data";
 
 const { width: screenWidth } = Dimensions.get("window");
 const PX_SCALE = 20; //20 pixels per meter
@@ -77,6 +82,9 @@ export default function NavigationScreen() {
     start: { x: number; y: number },
     path: PathStep[]
   ) => {
+    //the position of the every node in the path  would be it's aggregate
+    //direction-distance + the position of the previous node
+    //the previous node is the start position
     let { x, y } = start;
     path.forEach((edge) => {
       const { dx, dy } = getXYPosition(edge);
@@ -88,18 +96,20 @@ export default function NavigationScreen() {
 
   const getBasePosition = (pathToFollow: Connection[]) => {
     const positions = [{ x: 0, y: 0 }];
-    pathToFollow.map((step, index) => {
+    return pathToFollow.map((step, index) => {
       const start = positions[index];
       const aggregatedPos = getAggregatedEdgePositions(start, step.path);
       positions.push(aggregatedPos);
       return {
-        [step.to]: {
-          x: aggregatedPos.x,
-          y: aggregatedPos.y,
-        },
+        to: step.to,
+        x: aggregatedPos.x,
+        y: aggregatedPos.y,
       };
     });
   };
+  console.log("west paths:", getBasePosition(testWestPath));
+  console.log("east paths:", getBasePosition(testEastPath));
+
   // Generate node positions based on a simple layout algorithm
   const nodePositions = useMemo(() => {
     return getBasePosition(pathToFollow);
@@ -116,8 +126,8 @@ export default function NavigationScreen() {
     };
     const scale = 4;
 
-    Object.entries(floorPlanData).forEach(([fromNode, connections]) => {
-      const startPos = nodePositions[fromNode];
+    Object.entries(floorPlanData).forEach(([fromNode, connections], index) => {
+      const startPos = nodePositions[index];
       if (!startPos) return;
 
       connections.forEach((connection, connIndex) => {
@@ -137,7 +147,7 @@ export default function NavigationScreen() {
                 : undefined,
           };
           pathCoords.push(newPos);
-          currentPos = newPos;
+          //   currentPos = newPos;
         });
 
         paths.push({
@@ -472,17 +482,17 @@ export default function NavigationScreen() {
             })}
 
             {/* All Nodes */}
-            {Object.entries(nodePositions).map(([nodeId, position]) => {
-              const isCurrentNode = nodeId === userRoute[currentStep];
-              const isDestination = nodeId === userRoute[userRoute.length - 1];
-              const isOnUserRoute = userRoute.includes(nodeId);
+            {nodePositions.map((node) => {
+              const isCurrentNode = node.to === userRoute[currentStep];
+              const isDestination = node.to === userRoute[userRoute.length - 1];
+              const isOnUserRoute = userRoute.includes(node.to);
 
               return (
-                <G key={`node-${nodeId}`}>
+                <G key={`node-${node.to}`}>
                   {/* Node Circle */}
                   <Circle
-                    cx={position.x}
-                    cy={position.y}
+                    cx={node.x}
+                    cy={node.y}
                     r={isCurrentNode ? 18 : isOnUserRoute ? 15 : 12}
                     fill={
                       isCurrentNode
@@ -500,8 +510,8 @@ export default function NavigationScreen() {
                   {/* Pulsing animation for current node */}
                   {isCurrentNode && (
                     <Circle
-                      cx={position.x}
-                      cy={position.y}
+                      cx={node.x}
+                      cy={node.y}
                       r="25"
                       fill="none"
                       stroke="#3b82f6"
@@ -512,14 +522,14 @@ export default function NavigationScreen() {
 
                   {/* Node Label */}
                   <SvgText
-                    x={position.x}
-                    y={position.y - 25}
+                    x={node.x}
+                    y={node.y - 25}
                     textAnchor="middle"
                     fontSize="12"
                     fontWeight="600"
                     fill={isOnUserRoute ? "white" : "#9CA3AF"}
                   >
-                    {nodeId}
+                    {node.to}
                   </SvgText>
                 </G>
               );
