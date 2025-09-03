@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import {
   View,
   Text,
@@ -19,32 +19,14 @@ import {
   EyeOff,
   ArrowLeft,
 } from "lucide-react-native";
-import Svg, {
-  Line,
-  Circle,
-  Text as SvgText,
-  Rect,
-  Defs,
-  Pattern,
-  Path,
-  G,
-} from "react-native-svg";
-import {
-  Position,
-  GeneratedPath,
-  PathCoordinate,
-  Connection,
-  PathStep,
-} from "./_types";
-import {
-  floorPlanData,
-  pathToFollow,
-  testEastPath,
-  testWestPath,
-} from "./_data";
+
+import { Connection, PathStep } from "./_types";
+import { floorPlanData, pathToFollow } from "./_data";
+import InfiniteGrid from "@/components/InfiniteGrid";
+import Compass from "@/components/Compass";
 
 const { width: screenWidth } = Dimensions.get("window");
-const PX_SCALE = 20; //20 pixels per meter
+const PX_SCALE = 1; //5 pixels per centimeter
 const CM_SCALE = 210; // 210 cm per meter
 const angleMap = {
   east: 0,
@@ -61,13 +43,15 @@ export default function NavigationScreen() {
       destination: string;
     }>();
 
-  // Complete sample data structure
-
   // User's specific route
   const userRoute = ["SN211", "passage_F2_east", "SN214", "passage_F2_west"];
 
   const [showAllPaths, setShowAllPaths] = useState(true);
   const [showWeights, setShowWeights] = useState(false);
+  const [userCurrentLocation, setUserCurrentLocation] = useState({
+    x: 0,
+    y: 0,
+  });
   const [currentStep, setCurrentStep] = useState(0);
 
   const getXYPosition = (edge: PathStep) => {
@@ -107,92 +91,98 @@ export default function NavigationScreen() {
       };
     });
   };
-  console.log("west paths:", getBasePosition(testWestPath));
-  console.log("east paths:", getBasePosition(testEastPath));
 
-  // Generate node positions based on a simple layout algorithm
   const nodePositions = useMemo(() => {
     return getBasePosition(pathToFollow);
   }, []);
 
-  // Generate all paths with coordinates
-  const allPaths = useMemo((): GeneratedPath[] => {
-    const paths: GeneratedPath[] = [];
-    const directions = {
-      north: { x: 0, y: -1 },
-      south: { x: 0, y: 1 },
-      east: { x: 1, y: 0 },
-      west: { x: -1, y: 0 },
+  const otherRelativePaths = useMemo(() => {
+    //paths relative to the anchor node
+    const anchorNode = floorPlanData["SN211"];
+    return getBasePosition(anchorNode);
+  }, []);
+
+  //   const simulateUserMovement = () => {
+  //     const getDisplacement = (
+  //       from: { x: number; y: number },
+  //       to: { x: number; y: number }
+  //     ) => {
+  //       return {
+  //         dx: to.x - from.x,
+  //         dy: to.y - from.y,
+  //       };
+  //     };
+
+  //     nodePositions.forEach((node, index) => {
+  //       const lastVisitedNode =
+  //         index === 0 ? { x: 0, y: 0 } : nodePositions[index - 1];
+  //       const displacement = getDisplacement(lastVisitedNode, node);
+  //       const pixelPerSecX = displacement.dx / 20;
+  //       const pixelPerSecY = displacement.dy / 20;
+
+  //       const animate = (timeStamp: number) => {
+  //         setUserCurrentLocation((prev) => ({
+  //           x: Math.min(prev.x + pixelPerSecX, node.x),
+  //           y: prev.y + pixelPerSecY,
+  //         }));
+  //         if (userCurrentLocation.x < node.x && userCurrentLocation.y < node.y) {
+  //           requestAnimationFrame(animate);
+  //         }
+  //       };
+  //       requestAnimationFrame(animate);
+  //     });
+  //   };
+
+  const SPEED = 50; // pixels per second
+
+  const simulateUserMovement = () => {
+    let segmentIndex = 0;
+    let startTime: number | null = null;
+
+    const moveAlongSegment = (timestamp: number) => {
+      if (segmentIndex >= nodePositions.length) return; // done
+
+      if (!startTime) startTime = timestamp;
+
+      const from =
+        segmentIndex === 0 ? { x: 0, y: 0 } : nodePositions[segmentIndex - 1];
+      const to = nodePositions[segmentIndex];
+
+      const dx = to.x - from.x;
+      const dy = to.y - from.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      // time elapsed
+      const elapsed = (timestamp - startTime) / 1000; // sec
+      const traveled = Math.min(elapsed * SPEED, dist);
+
+      // normalized direction
+      const nx = dx / dist;
+      const ny = dy / dist;
+
+      const newX = from.x + nx * traveled;
+      const newY = from.y + ny * traveled;
+
+      setUserCurrentLocation({ x: newX, y: newY });
+
+      if (traveled < dist) {
+        requestAnimationFrame(moveAlongSegment);
+      } else {
+        // reached this node → advance
+        segmentIndex++;
+        startTime = null;
+        requestAnimationFrame(moveAlongSegment);
+      }
     };
-    const scale = 4;
 
-    Object.entries(floorPlanData).forEach(([fromNode, connections], index) => {
-      const startPos = nodePositions[index];
-      if (!startPos) return;
+    requestAnimationFrame(moveAlongSegment);
+  };
 
-      connections.forEach((connection, connIndex) => {
-        const pathCoords: PathCoordinate[] = [{ ...startPos, node: fromNode }];
-        let currentPos = { ...startPos };
+  React.useEffect(() => {
+    simulateUserMovement();
+  }, []);
 
-        connection.path.forEach((step, stepIndex) => {
-          const dir = directions[step.dir];
-          const newPos: PathCoordinate = {
-            x: currentPos.x + dir.x * step.distance * scale,
-            y: currentPos.y + dir.y * step.distance * scale,
-            direction: step.dir,
-            distance: step.distance,
-            node:
-              stepIndex === connection.path.length - 1
-                ? connection.to
-                : undefined,
-          };
-          pathCoords.push(newPos);
-          //   currentPos = newPos;
-        });
-
-        paths.push({
-          id: `${fromNode}-${connection.to}-${connIndex}`,
-          from: fromNode,
-          to: connection.to,
-          weight: connection.weight,
-          coordinates: pathCoords,
-          isUserPath: false,
-        });
-      });
-    });
-
-    return paths;
-  }, [nodePositions]);
-
-  // Generate user's specific path
-  const userPath = useMemo((): GeneratedPath[] => {
-    const path: GeneratedPath[] = [];
-    for (let i = 0; i < userRoute.length - 1; i++) {
-      const from = userRoute[i];
-      const to = userRoute[i + 1];
-
-      const connection = floorPlanData[from]?.find((conn) => conn.to === to);
-      if (connection) {
-        const pathSegment = allPaths.find(
-          (p) => p.from === from && p.to === to
-        );
-        if (pathSegment) {
-          path.push({ ...pathSegment, isUserPath: true, stepIndex: i });
-        }
-      }
-    }
-    return path;
-  }, [allPaths]);
-
-  // Auto-advance simulation
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (currentStep < userPath.length - 1) {
-        setCurrentStep(currentStep + 1);
-      }
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [currentStep, userPath.length]);
+  console.log(userCurrentLocation, "user current location");
 
   const getNodeIcon = (
     nodeId: string,
@@ -209,24 +199,6 @@ export default function NavigationScreen() {
       return <Building size={size} color={color} />;
     return <MapPin size={size} color={color} />;
   };
-
-  const bounds = useMemo(() => {
-    const allCoords = Object.values(nodePositions);
-    if (allCoords.length === 0)
-      return { minX: 0, maxX: 500, minY: 0, maxY: 500 };
-
-    const xs = allCoords.map((p) => p.x);
-    const ys = allCoords.map((p) => p.y);
-    return {
-      minX: Math.min(...xs) - 100,
-      maxX: Math.max(...xs) + 100,
-      minY: Math.min(...ys) - 100,
-      maxY: Math.max(...ys) + 100,
-    };
-  }, [nodePositions]);
-
-  const viewBoxWidth = bounds.maxX - bounds.minX;
-  const viewBoxHeight = bounds.maxY - bounds.minY;
 
   const handleBackHome = () => {
     router.push("/(tabs)");
@@ -321,221 +293,18 @@ export default function NavigationScreen() {
           ))}
         </ScrollView>
       </View>
-
+      <Compass />
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Main Floor Plan */}
-        <View style={styles.floorPlanContainer}>
-          <Svg
-            width={screenWidth - 48}
-            height={400}
-            viewBox={`${bounds.minX} ${bounds.minY} ${viewBoxWidth} ${viewBoxHeight}`}
-            preserveAspectRatio="xMidYMid meet"
-          >
-            {/* Grid Background */}
-            <Defs>
-              <Pattern
-                id="grid"
-                patternUnits="userSpaceOnUse"
-                width="25"
-                height="25"
-              >
-                <Path
-                  d="M 25 0 L 0 0 0 25"
-                  fill="none"
-                  stroke="#374151"
-                  strokeWidth="0.5"
-                  opacity="0.3"
-                />
-              </Pattern>
-            </Defs>
-            <Rect width="100%" height="100%" fill="url(#grid)" />
-
-            {/* All Available Paths (Background) */}
-            {showAllPaths &&
-              allPaths.map((path) => {
-                if (userPath.find((up) => up.id === path.id)) return null;
-
-                return (
-                  <G key={path.id} opacity="0.3">
-                    {path.coordinates.slice(0, -1).map((coord, index) => {
-                      const nextCoord = path.coordinates[index + 1];
-                      return (
-                        <G key={`${path.id}-segment-${index}`}>
-                          <Line
-                            x1={coord.x}
-                            y1={coord.y}
-                            x2={nextCoord.x}
-                            y2={nextCoord.y}
-                            stroke="#6b7280"
-                            strokeWidth="2"
-                            strokeDasharray="3,3"
-                          />
-                          {nextCoord.distance && (
-                            <SvgText
-                              x={(coord.x + nextCoord.x) / 2}
-                              y={(coord.y + nextCoord.y) / 2 - 8}
-                              textAnchor="middle"
-                              fontSize="10"
-                              fill="#9CA3AF"
-                            >
-                              {nextCoord.distance}m
-                            </SvgText>
-                          )}
-                        </G>
-                      );
-                    })}
-
-                    {showWeights && (
-                      <SvgText
-                        x={
-                          (path.coordinates[0].x +
-                            path.coordinates[path.coordinates.length - 1].x) /
-                          2
-                        }
-                        y={
-                          (path.coordinates[0].y +
-                            path.coordinates[path.coordinates.length - 1].y) /
-                            2 +
-                          20
-                        }
-                        textAnchor="middle"
-                        fontSize="10"
-                        fill="#F59E0B"
-                        fontWeight="bold"
-                      >
-                        W:{path.weight}
-                      </SvgText>
-                    )}
-                  </G>
-                );
-              })}
-
-            {/* User's Path (Highlighted) */}
-            {userPath.map((path, pathIndex) => {
-              const isCurrentPath = pathIndex === currentStep;
-              const isCompletedPath = pathIndex < currentStep;
-
-              return (
-                <G key={`user-${path.id}`}>
-                  {path.coordinates.slice(0, -1).map((coord, index) => {
-                    const nextCoord = path.coordinates[index + 1];
-                    return (
-                      <G key={`user-${path.id}-segment-${index}`}>
-                        <Line
-                          x1={coord.x}
-                          y1={coord.y}
-                          x2={nextCoord.x}
-                          y2={nextCoord.y}
-                          stroke={
-                            isCompletedPath
-                              ? "#10b981"
-                              : isCurrentPath
-                              ? "#3b82f6"
-                              : "#f59e0b"
-                          }
-                          strokeWidth="4"
-                          opacity={isCurrentPath ? 1 : 0.8}
-                        />
-
-                        {/* Direction Arrows */}
-                        <Circle
-                          cx={(coord.x + nextCoord.x) / 2}
-                          cy={(coord.y + nextCoord.y) / 2}
-                          r="8"
-                          fill={
-                            isCompletedPath
-                              ? "#10b981"
-                              : isCurrentPath
-                              ? "#3b82f6"
-                              : "#f59e0b"
-                          }
-                        />
-                        <SvgText
-                          x={(coord.x + nextCoord.x) / 2}
-                          y={(coord.y + nextCoord.y) / 2 + 3}
-                          textAnchor="middle"
-                          fontSize="10"
-                          fontWeight="bold"
-                          fill="white"
-                        >
-                          {nextCoord.direction?.charAt(0).toUpperCase()}
-                        </SvgText>
-
-                        {/* Distance Labels */}
-                        {nextCoord.distance && (
-                          <SvgText
-                            x={(coord.x + nextCoord.x) / 2}
-                            y={(coord.y + nextCoord.y) / 2 - 15}
-                            textAnchor="middle"
-                            fontSize="12"
-                            fontWeight="600"
-                            fill="white"
-                          >
-                            {nextCoord.distance}m
-                          </SvgText>
-                        )}
-                      </G>
-                    );
-                  })}
-                </G>
-              );
-            })}
-
-            {/* All Nodes */}
-            {nodePositions.map((node) => {
-              const isCurrentNode = node.to === userRoute[currentStep];
-              const isDestination = node.to === userRoute[userRoute.length - 1];
-              const isOnUserRoute = userRoute.includes(node.to);
-
-              return (
-                <G key={`node-${node.to}`}>
-                  {/* Node Circle */}
-                  <Circle
-                    cx={node.x}
-                    cy={node.y}
-                    r={isCurrentNode ? 18 : isOnUserRoute ? 15 : 12}
-                    fill={
-                      isCurrentNode
-                        ? "#3b82f6"
-                        : isDestination
-                        ? "#ef4444"
-                        : isOnUserRoute
-                        ? "#10b981"
-                        : "#6b7280"
-                    }
-                    stroke="#1f2937"
-                    strokeWidth="2"
-                  />
-
-                  {/* Pulsing animation for current node */}
-                  {isCurrentNode && (
-                    <Circle
-                      cx={node.x}
-                      cy={node.y}
-                      r="25"
-                      fill="none"
-                      stroke="#3b82f6"
-                      strokeWidth="2"
-                      opacity="0.6"
-                    />
-                  )}
-
-                  {/* Node Label */}
-                  <SvgText
-                    x={node.x}
-                    y={node.y - 25}
-                    textAnchor="middle"
-                    fontSize="12"
-                    fontWeight="600"
-                    fill={isOnUserRoute ? "white" : "#9CA3AF"}
-                  >
-                    {node.to}
-                  </SvgText>
-                </G>
-              );
-            })}
-          </Svg>
-        </View>
+        <InfiniteGrid
+          widthPx={screenWidth - 48}
+          heightPx={400}
+          gridSize={25}
+          nodePositions={nodePositions}
+          otherRelativePaths={otherRelativePaths}
+          yUp={true} // since your data is in math coords
+          userPosition={userCurrentLocation}
+        />
 
         {/* Navigation Status Panel */}
         <View style={styles.statusPanel}>
@@ -667,7 +436,7 @@ export default function NavigationScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#111827",
@@ -774,7 +543,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1F2937",
     margin: 24,
     borderRadius: 16,
-    padding: 16,
+    // padding: 16,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
