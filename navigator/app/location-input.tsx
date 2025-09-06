@@ -49,7 +49,6 @@ export default function LocationInputScreen() {
   }, [destination]);
 
   const handleSelectDestination = (destinationName: string) => {
-    console.log(destinationName, "destname");
     setDestination(destinationName);
     setShowDropdown(false);
     setSelectedIndex(-1);

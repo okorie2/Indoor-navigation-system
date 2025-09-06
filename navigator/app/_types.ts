@@ -16,6 +16,7 @@ export interface FloorPlanData {
 export interface Position {
   x: number;
   y: number;
+  node?: string;
 }
 
 export interface PathCoordinate extends Position {

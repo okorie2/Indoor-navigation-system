@@ -657,7 +657,21 @@
       },
       {
         "to": "lift_F0_West",
-        "weight": 2
+        "weight": 2,
+        "path":[
+          {
+            "dir": "north",
+            "distance": 1
+          },
+          {
+            "dir": "west",
+            "distance": 1
+          },
+          {
+            "dir": "south",
+            "distance": 1
+          }
+        ]
       },
       {
         "to": "toilets",
@@ -709,7 +723,13 @@
       },
       {
         "to": "lift_F4_West",
-        "weight": 1
+        "weight": 1,
+        "path": [
+          {
+            "dir": "north",
+            "distance": 1
+          }
+        ]
       }
     ],
 

@@ -12,14 +12,14 @@ import Svg, {
 } from "react-native-svg";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { styles as navigationStyles } from "@/app/navigation";
-type Node = { to: string; x: number; y: number };
+import { Position } from "@/app/_types";
 
 type Props = {
   widthPx: number; // e.g. screenWidth - 48
   heightPx: number; // e.g. 400
   gridSize?: number; // world units per cell (default 25)
-  nodePositions: Node[]; // your main nodes
-  otherRelativePaths: Node[]; // extra nodes
+  nodePositions: Position[]; // your main nodes
+  otherRelativePaths: Position[]; // extra nodes
   yUp?: boolean; // set true if your data uses math coords (Y up)
   userPosition: { x: number; y: number };
 };
@@ -128,7 +128,7 @@ export default function InfiniteGrid({
   const Nodes = (
     <>
       {nodePositions.map((n) => (
-        <G key={`main-${n.to}`}>
+        <G key={`main-${n.node}`}>
           <Circle cx={n.x} cy={yUp ? -n.y : n.y} r={20} fill="tomato" />
           <SvgText
             x={n.x + 8}
@@ -137,12 +137,12 @@ export default function InfiniteGrid({
             fill="#fff"
             alignmentBaseline="middle"
           >
-            {n.to}
+            {n.node}
           </SvgText>
         </G>
       ))}
       {otherRelativePaths.map((n) => (
-        <G key={`rel-${n.to}`}>
+        <G key={`rel-${n.node}`}>
           <Circle cx={n.x} cy={yUp ? -n.y : n.y} r={20} fill="yellow" />
           <G transform={`scale(1, ${yUp ? -1 : 1})`}>
             <SvgText
@@ -152,7 +152,7 @@ export default function InfiniteGrid({
               fill="#111"
               alignmentBaseline="middle"
             >
-              {n.to}
+              {n.node}
             </SvgText>
           </G>
         </G>

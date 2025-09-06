@@ -9,87 +9,151 @@ import {
   Dimensions,
 } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
-import {
-  MapPin,
-  Navigation,
-  Users,
-  Building,
-  ArrowRight,
-  Eye,
-  EyeOff,
-  ArrowLeft,
-} from "lucide-react-native";
-
-import { Connection, PathStep } from "./_types";
+import { ArrowRight, Eye, EyeOff, ArrowLeft } from "lucide-react-native";
+import axios from "axios";
+import { Connection, PathStep, Position } from "./_types";
 import { floorPlanData, pathToFollow } from "./_data";
 import InfiniteGrid from "@/components/InfiniteGrid";
-import Compass from "@/components/Compass";
 
 const { width: screenWidth } = Dimensions.get("window");
 const PX_SCALE = 1; //5 pixels per centimeter
 const CM_SCALE = 210; // 210 cm per meter
-const angleMap = {
+const SVGAngleMap = {
   east: 0,
   south: 90,
   west: 180,
   north: 270,
 };
 export default function NavigationScreen() {
-  const { buildingId, buildingName, currentLocation, destination } =
-    useLocalSearchParams<{
-      buildingId: string;
-      buildingName: string;
-      currentLocation: string;
-      destination: string;
-    }>();
+  const { buildingName } = useLocalSearchParams<{
+    buildingId: string;
+    buildingName: string;
+    currentLocation: string;
+    destination: string;
+  }>();
 
   // User's specific route
   const userRoute = ["SN211", "passage_F2_east", "SN214", "passage_F2_west"];
-
+  const [mapData, setMapData] = useState<any>(null); // fetched map data
   const [showAllPaths, setShowAllPaths] = useState(true);
   const [showWeights, setShowWeights] = useState(false);
   const [userCurrentLocation, setUserCurrentLocation] = useState({
     x: 0,
     y: 0,
   });
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, _setCurrentStep] = useState(0);
+
+  const getFastestPath = async (startNode: string, endNode: string) => {
+    //fetch user path from backend
+    try {
+      const response = await axios.get(
+        "https://3f06988550e8.ngrok-free.app/pathfindingWithEdges",
+        {
+          params: {
+            start: startNode,
+            end: endNode,
+          },
+        }
+      );
+      const data = response.data;
+      return data;
+    } catch (error) {
+      console.error("Error fetching user path:", error);
+      return error;
+    }
+  };
+
+  const loadMapData = async () => {
+    console.log("loading map data");
+    try {
+      const res = await axios.get(
+        "https://3f06988550e8.ngrok-free.app/static/senate.json"
+      );
+      const data = res.data;
+      setMapData(data);
+    } catch (err) {
+      console.error("Error fetching JSON:", err);
+    }
+  };
 
   const getXYPosition = (edge: PathStep) => {
     //dx=cos(angleMap[edge.dir] * Math.pi/180) * edge.distance * SCALE
-    const rad = (angleMap[edge.dir] * Math.PI) / 180;
+    const rad = (SVGAngleMap[edge.dir] * Math.PI) / 180;
     const dx = Math.cos(rad) * edge.distance * PX_SCALE * CM_SCALE;
     const dy = Math.sin(rad) * edge.distance * PX_SCALE * CM_SCALE;
     return { dx, dy };
   };
 
   const getAggregatedEdgePositions = (
-    start: { x: number; y: number },
-    path: PathStep[]
+    start: Position | null,
+    path: PathStep[] | null
   ) => {
-    //the position of the every node in the path  would be it's aggregate
-    //direction-distance + the position of the previous node
-    //the previous node is the start position
-    let { x, y } = start;
-    path.forEach((edge) => {
-      const { dx, dy } = getXYPosition(edge);
-      x += dx;
-      y += dy;
-    });
-    return { x, y };
+    /*the position of the every node in the path would be its aggregate
+      *direction-distance + the position of the previous node.
+      The previous node is the start position*/
+    try {
+      if (!start || !path) return null;
+      let { x, y } = start;
+      path.forEach((edge) => {
+        const { dx, dy } = getXYPosition(edge);
+        x += dx;
+        y += dy;
+      });
+      return { x, y };
+    } catch (err) {
+      console.error("Error in getAggregatedEdgePositions:", err);
+      return null;
+    }
   };
 
-  const getBasePosition = (pathToFollow: Connection[]) => {
-    const positions = [{ x: 0, y: 0 }];
-    return pathToFollow.map((step, index) => {
-      const start = positions[index];
-      const aggregatedPos = getAggregatedEdgePositions(start, step.path);
-      positions.push(aggregatedPos);
-      return {
-        to: step.to,
-        x: aggregatedPos.x,
-        y: aggregatedPos.y,
-      };
-    });
+  const getBasePosition = (pathToFollow: Connection[]): Position[] => {
+    try {
+      const positions: (Position | null)[] = [{ x: 0, y: 0 }];
+      return pathToFollow.map((step, index) => {
+        const start = positions[index];
+        const aggregatedPos = getAggregatedEdgePositions(start, step.path);
+        positions.push(aggregatedPos);
+        if (!aggregatedPos) {
+          throw new Error(
+            "Failed to compute aggregated position because start position is null"
+          );
+        }
+        return {
+          node: step.to,
+          x: aggregatedPos.x,
+          y: aggregatedPos.y,
+        };
+      });
+    } catch (err) {
+      console.error("Error in getBasePosition:", err);
+      return [];
+    }
+  };
+
+  const getAllNodesRelativeToAnchor = async (anchorNode: string) => {
+    if (!mapData) return;
+    try {
+      const start = { x: 0, y: 0 };
+      const graph = mapData.graph;
+
+      const results = await Promise.all(
+        Object.keys(graph).map(async (edge, index) => {
+          if (index === 0) return null;
+          const { path } = await getFastestPath(anchorNode, edge);
+          if (!path) {
+            throw new Error(`No path found from ${anchorNode} to ${edge}`);
+          }
+          return path.map((element: Connection) => ({
+            ...getAggregatedEdgePositions(start, element.path),
+            node: edge,
+          }));
+        })
+      );
+      console.log(results.flat().filter(Boolean) as Position[]);
+      return results.flat().filter(Boolean) as Position[];
+    } catch (err) {
+      console.error("Error fetching all nodes relative to anchor:", err);
+    }
   };
 
   const nodePositions = useMemo(() => {
@@ -102,40 +166,12 @@ export default function NavigationScreen() {
     return getBasePosition(anchorNode);
   }, []);
 
-  //   const simulateUserMovement = () => {
-  //     const getDisplacement = (
-  //       from: { x: number; y: number },
-  //       to: { x: number; y: number }
-  //     ) => {
-  //       return {
-  //         dx: to.x - from.x,
-  //         dy: to.y - from.y,
-  //       };
-  //     };
-
-  //     nodePositions.forEach((node, index) => {
-  //       const lastVisitedNode =
-  //         index === 0 ? { x: 0, y: 0 } : nodePositions[index - 1];
-  //       const displacement = getDisplacement(lastVisitedNode, node);
-  //       const pixelPerSecX = displacement.dx / 20;
-  //       const pixelPerSecY = displacement.dy / 20;
-
-  //       const animate = (timeStamp: number) => {
-  //         setUserCurrentLocation((prev) => ({
-  //           x: Math.min(prev.x + pixelPerSecX, node.x),
-  //           y: prev.y + pixelPerSecY,
-  //         }));
-  //         if (userCurrentLocation.x < node.x && userCurrentLocation.y < node.y) {
-  //           requestAnimationFrame(animate);
-  //         }
-  //       };
-  //       requestAnimationFrame(animate);
-  //     });
-  //   };
-
   const SPEED = 50; // pixels per second
 
   const simulateUserMovement = () => {
+    /* Simulate user movement along the path for demo purposes. In a real app, this would be based on actual location data. */
+    /* We do this by increasing userCurrentlocation by 50 pixels every second */
+
     let segmentIndex = 0;
     let startTime: number | null = null;
 
@@ -179,26 +215,18 @@ export default function NavigationScreen() {
   };
 
   React.useEffect(() => {
-    simulateUserMovement();
+    // getFastestPath("northEntrance", "toilets");
+    loadMapData();
+    // getAllNodesRelativeToAnchor("northEntrance");
+    // simulateUserMovement();
   }, []);
 
-  console.log(userCurrentLocation, "user current location");
-
-  const getNodeIcon = (
-    nodeId: string,
-    isCurrent: boolean,
-    isDestination: boolean
-  ) => {
-    const size = isCurrent ? 24 : 20;
-    const color = isCurrent ? "#3B82F6" : isDestination ? "#EF4444" : "#10B981";
-
-    if (nodeId.startsWith("SN")) return <Users size={size} color={color} />;
-    if (nodeId.includes("passage"))
-      return <Navigation size={size} color={color} />;
-    if (nodeId.includes("staircase"))
-      return <Building size={size} color={color} />;
-    return <MapPin size={size} color={color} />;
-  };
+  React.useEffect(() => {
+    if (mapData) {
+      console.log("mapData is ready, running getAllNodesRelativeToAnchor...");
+      getAllNodesRelativeToAnchor("northEntrance");
+    }
+  }, [mapData]);
 
   const handleBackHome = () => {
     router.push("/(tabs)");
@@ -293,7 +321,6 @@ export default function NavigationScreen() {
           ))}
         </ScrollView>
       </View>
-      <Compass />
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Main Floor Plan */}
         <InfiniteGrid

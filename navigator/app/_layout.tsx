@@ -3,6 +3,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useFrameworkReady } from "@/hooks/useFrameworkReady";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import useHeading from "@/hooks/useHeading";
 
 export default function RootLayout() {
   useFrameworkReady();

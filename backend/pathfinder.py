@@ -1,12 +1,14 @@
 import json
 import heapq
 import math
+from pathlib import Path
 
 # Load the retrofitted JSON
-data = json.loads(open("uon.json").read())
+BASE_DIR = Path(__file__).resolve().parent
+with open(BASE_DIR / "static" / "senate.json") as f:
+    data = json.load(f)
 
 nodes = data["nodes"]
-graph = data["graph"]
 
 
 def heuristic(node, goal):
@@ -55,6 +57,3 @@ def a_star(graph, start, goal):
                 # print(came_from, "came_from")
 
     return None
-
-
-print(a_star(graph, "SN211", "office of the vc"))
