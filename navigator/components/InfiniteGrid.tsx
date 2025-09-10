@@ -1,6 +1,6 @@
 // InfiniteGrid.tsx
-import React, { useMemo, useRef, useState, useCallback } from "react";
-import { View } from "react-native";
+import React, { useMemo, useRef, useState } from "react";
+import { View, StyleSheet } from "react-native";
 import Svg, {
   Defs,
   Pattern,
@@ -11,16 +11,13 @@ import Svg, {
   Text as SvgText,
 } from "react-native-svg";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { styles as navigationStyles } from "@/app/navigation";
 import { Position } from "@/app/_types";
 
 type Props = {
   widthPx: number; // e.g. screenWidth - 48
   heightPx: number; // e.g. 400
   gridSize?: number; // world units per cell (default 25)
-  nodePositions: Position[]; // your main nodes
-  otherRelativePaths: Position[]; // extra nodes
-  yUp?: boolean; // set true if your data uses math coords (Y up)
+  nodePositions: Position[];
   userPosition: { x: number; y: number };
 };
 
@@ -29,32 +26,24 @@ export default function InfiniteGrid({
   heightPx,
   gridSize = 25,
   nodePositions,
-  otherRelativePaths,
-  yUp = true,
   userPosition,
 }: Props) {
-  // 1) Combine nodes, compute initial bounds with padding.
-  const allNodes = useMemo(
-    () => [...nodePositions, ...otherRelativePaths],
-    [nodePositions, otherRelativePaths]
-  );
-
   const PAD_CELLS = 4; // 4 grid cells of padding
   const pad = PAD_CELLS * gridSize;
 
   const initialBounds = useMemo(() => {
-    if (!allNodes.length) {
+    if (!nodePositions.length) {
       return { minX: -250, maxX: 250, minY: -250, maxY: 250 };
     }
-    const xs = allNodes.map((n) => n.x);
-    const ys = allNodes.map((n) => n.y);
+    const xs = nodePositions.map((n) => n.x);
+    const ys = nodePositions.map((n) => n.y);
     return {
       minX: Math.min(...xs) - pad,
       maxX: Math.max(...xs) + pad,
       minY: Math.min(...ys) - pad,
       maxY: Math.max(...ys) + pad,
     };
-  }, [allNodes, pad]);
+  }, [nodePositions, pad]);
 
   const baseWidth = initialBounds.maxX - initialBounds.minX || 500;
   const baseHeight = initialBounds.maxY - initialBounds.minY || 500;
@@ -66,7 +55,7 @@ export default function InfiniteGrid({
   const vw = baseWidth / scale;
   const vh = baseHeight / scale;
 
-  // 3) Convert pan deltas (px) to world units.
+  // Convert pan deltas (px) to world units.
   const pxToWorldX = (dxPx: number) => (dxPx * vw) / widthPx;
   const pxToWorldY = (dyPx: number) => (dyPx * vh) / heightPx;
 
@@ -122,39 +111,22 @@ export default function InfiniteGrid({
   // 6) Grid pattern: keep lines roughly same thickness across zoom
   //    (scale the stroke width by 1/scale so it stays crisp)
   const gridStroke = 1 / scale;
+  // console.log(camX, camY, vw, vh, BIG);
 
-  // 7) Optional: render nodes in math coords (Y up) by flipping a group.
-  //    Text is flipped back so it stays readable.
   const Nodes = (
     <>
-      {nodePositions.map((n) => (
-        <G key={`main-${n.node}`}>
-          <Circle cx={n.x} cy={yUp ? -n.y : n.y} r={20} fill="tomato" />
+      {nodePositions.map((n, i) => (
+        <G key={`main-${n.node}-${i}`}>
+          <Circle cx={n.x} cy={n.y} r={20} fill="tomato" />
           <SvgText
             x={n.x + 8}
-            y={yUp ? -n.y : n.y}
+            y={n.y}
             fontSize={12}
             fill="#fff"
             alignmentBaseline="middle"
           >
             {n.node}
           </SvgText>
-        </G>
-      ))}
-      {otherRelativePaths.map((n) => (
-        <G key={`rel-${n.node}`}>
-          <Circle cx={n.x} cy={yUp ? -n.y : n.y} r={20} fill="yellow" />
-          <G transform={`scale(1, ${yUp ? -1 : 1})`}>
-            <SvgText
-              x={n.x + 8}
-              y={yUp ? -n.y : n.y}
-              fontSize={12}
-              fill="#111"
-              alignmentBaseline="middle"
-            >
-              {n.node}
-            </SvgText>
-          </G>
         </G>
       ))}
     </>
@@ -204,10 +176,20 @@ export default function InfiniteGrid({
             fill="url(#grid)"
           />
 
-          {/* Flip to math coordinates if needed */}
-          {yUp ? <G transform="scale(1,-1)">{Nodes}</G> : Nodes}
+          {Nodes}
         </Svg>
       </View>
     </GestureDetector>
   );
 }
+const navigationStyles = StyleSheet.create({
+  floorPlanContainer: {
+    backgroundColor: "#1F2937",
+    borderRadius: 16,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+});

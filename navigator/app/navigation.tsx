@@ -1,22 +1,22 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
-  SafeAreaView,
   ScrollView,
   Dimensions,
+  StatusBar,
+  Modal,
 } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
-import { ArrowRight, Eye, EyeOff, ArrowLeft } from "lucide-react-native";
+import { ArrowRight, Eye, EyeOff, Menu, X } from "lucide-react-native";
 import axios from "axios";
 import { Connection, PathStep, Position } from "./_types";
-import { floorPlanData, pathToFollow } from "./_data";
 import InfiniteGrid from "@/components/InfiniteGrid";
 
-const { width: screenWidth } = Dimensions.get("window");
-const PX_SCALE = 1; //5 pixels per centimeter
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const PX_SCALE = 1;
 const CM_SCALE = 210; // 210 cm per meter
 const SVGAngleMap = {
   east: 0,
@@ -35,12 +35,10 @@ export default function NavigationScreen() {
   // User's specific route
   const userRoute = ["SN211", "passage_F2_east", "SN214", "passage_F2_west"];
   const [mapData, setMapData] = useState<any>(null); // fetched map data
+  const [allNodes, setAllNodes] = useState<Position[] | null>(null); // all nodes relative to anchor
   const [showAllPaths, setShowAllPaths] = useState(true);
   const [showWeights, setShowWeights] = useState(false);
-  const [userCurrentLocation, setUserCurrentLocation] = useState({
-    x: 0,
-    y: 0,
-  });
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentStep, _setCurrentStep] = useState(0);
 
   const getFastestPath = async (startNode: string, endNode: string) => {
@@ -86,15 +84,17 @@ export default function NavigationScreen() {
 
   const getAggregatedEdgePositions = (
     start: Position | null,
-    path: PathStep[] | null
+    pathSteps: PathStep[] | null
   ) => {
     /*the position of the every node in the path would be its aggregate
       *direction-distance + the position of the previous node.
       The previous node is the start position*/
     try {
-      if (!start || !path) return null;
+      if (!start || !pathSteps) return { x: 0, y: 0 };
+      // console.log("start", start);
       let { x, y } = start;
-      path.forEach((edge) => {
+
+      pathSteps.forEach((edge) => {
         const { dx, dy } = getXYPosition(edge);
         x += dx;
         y += dy;
@@ -106,32 +106,8 @@ export default function NavigationScreen() {
     }
   };
 
-  const getBasePosition = (pathToFollow: Connection[]): Position[] => {
-    try {
-      const positions: (Position | null)[] = [{ x: 0, y: 0 }];
-      return pathToFollow.map((step, index) => {
-        const start = positions[index];
-        const aggregatedPos = getAggregatedEdgePositions(start, step.path);
-        positions.push(aggregatedPos);
-        if (!aggregatedPos) {
-          throw new Error(
-            "Failed to compute aggregated position because start position is null"
-          );
-        }
-        return {
-          node: step.to,
-          x: aggregatedPos.x,
-          y: aggregatedPos.y,
-        };
-      });
-    } catch (err) {
-      console.error("Error in getBasePosition:", err);
-      return [];
-    }
-  };
-
   const getAllNodesRelativeToAnchor = async (anchorNode: string) => {
-    if (!mapData) return;
+    if (!mapData) return null;
     try {
       const start = { x: 0, y: 0 };
       const graph = mapData.graph;
@@ -140,85 +116,31 @@ export default function NavigationScreen() {
         Object.keys(graph).map(async (edge, index) => {
           if (index === 0) return null;
           const { path } = await getFastestPath(anchorNode, edge);
+
           if (!path) {
             throw new Error(`No path found from ${anchorNode} to ${edge}`);
           }
-          return path.map((element: Connection) => ({
-            ...getAggregatedEdgePositions(start, element.path),
-            node: edge,
-          }));
+
+          const edgePositionRelativeToAnchor = path.reduce(
+            (acc: Position, curr: Connection) => {
+              const pos = getAggregatedEdgePositions(acc, curr.path ?? []);
+
+              return { ...pos, node: curr.to };
+            },
+            { ...start, node: anchorNode }
+          );
+          return edgePositionRelativeToAnchor;
         })
       );
-      console.log(results.flat().filter(Boolean) as Position[]);
-      return results.flat().filter(Boolean) as Position[];
+      setAllNodes(results.filter(Boolean) as Position[]);
     } catch (err) {
       console.error("Error fetching all nodes relative to anchor:", err);
+      return null;
     }
   };
 
-  const nodePositions = useMemo(() => {
-    return getBasePosition(pathToFollow);
-  }, []);
-
-  const otherRelativePaths = useMemo(() => {
-    //paths relative to the anchor node
-    const anchorNode = floorPlanData["SN211"];
-    return getBasePosition(anchorNode);
-  }, []);
-
-  const SPEED = 50; // pixels per second
-
-  const simulateUserMovement = () => {
-    /* Simulate user movement along the path for demo purposes. In a real app, this would be based on actual location data. */
-    /* We do this by increasing userCurrentlocation by 50 pixels every second */
-
-    let segmentIndex = 0;
-    let startTime: number | null = null;
-
-    const moveAlongSegment = (timestamp: number) => {
-      if (segmentIndex >= nodePositions.length) return; // done
-
-      if (!startTime) startTime = timestamp;
-
-      const from =
-        segmentIndex === 0 ? { x: 0, y: 0 } : nodePositions[segmentIndex - 1];
-      const to = nodePositions[segmentIndex];
-
-      const dx = to.x - from.x;
-      const dy = to.y - from.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      // time elapsed
-      const elapsed = (timestamp - startTime) / 1000; // sec
-      const traveled = Math.min(elapsed * SPEED, dist);
-
-      // normalized direction
-      const nx = dx / dist;
-      const ny = dy / dist;
-
-      const newX = from.x + nx * traveled;
-      const newY = from.y + ny * traveled;
-
-      setUserCurrentLocation({ x: newX, y: newY });
-
-      if (traveled < dist) {
-        requestAnimationFrame(moveAlongSegment);
-      } else {
-        // reached this node → advance
-        segmentIndex++;
-        startTime = null;
-        requestAnimationFrame(moveAlongSegment);
-      }
-    };
-
-    requestAnimationFrame(moveAlongSegment);
-  };
-
   React.useEffect(() => {
-    // getFastestPath("northEntrance", "toilets");
     loadMapData();
-    // getAllNodesRelativeToAnchor("northEntrance");
-    // simulateUserMovement();
   }, []);
 
   React.useEffect(() => {
@@ -227,111 +149,112 @@ export default function NavigationScreen() {
       getAllNodesRelativeToAnchor("northEntrance");
     }
   }, [mapData]);
-
+  console.log("allNodes", allNodes);
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
   const handleBackHome = () => {
     router.push("/(tabs)");
   };
 
-  return (
-    <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.back()}
-        >
-          <ArrowLeft size={24} color="#2563EB" />
+  const renderModalContent = () => (
+    <View style={styles.modalContainer}>
+      <StatusBar barStyle="light-content" backgroundColor="#111827" />
+
+      {/* Modal Header */}
+      <View style={styles.modalHeader}>
+        <View style={styles.modalHeaderInfo}>
+          <Text style={styles.modalTitle}>Floor Plan Navigation</Text>
+          <Text style={styles.modalSubtitle}>Floor 2 - {buildingName}</Text>
+        </View>
+        <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
+          <X size={24} color="#ffffff" />
         </TouchableOpacity>
-        <View style={styles.headerInfo}>
-          <Text style={styles.title}>Floor Plan Navigation</Text>
-          <Text style={styles.subtitle}>Floor 2 - {buildingName}</Text>
-        </View>
-        <View style={styles.headerControls}>
-          <TouchableOpacity
-            style={[
-              styles.controlButton,
-              showAllPaths && styles.controlButtonActive,
-            ]}
-            onPress={() => setShowAllPaths(!showAllPaths)}
-          >
-            {showAllPaths ? (
-              <Eye size={16} color="#ffffff" />
-            ) : (
-              <EyeOff size={16} color="#6B7280" />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.controlButton,
-              showWeights && styles.controlButtonActive,
-            ]}
-            onPress={() => setShowWeights(!showWeights)}
-          >
-            <Text
-              style={[
-                styles.controlButtonText,
-                showWeights && styles.controlButtonTextActive,
-              ]}
-            >
-              W
-            </Text>
-          </TouchableOpacity>
-        </View>
       </View>
 
-      {/* Route Progress */}
-      <View style={styles.routeProgress}>
-        <Text style={styles.routeLabel}>Route Progress:</Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.routeContainer}
-        >
-          {userRoute.map((node, index) => (
-            <View key={node} style={styles.routeItem}>
-              <View
+      <ScrollView
+        style={styles.modalContent}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Controls */}
+        <View style={styles.controlsContainer}>
+          <View style={styles.headerControls}>
+            <TouchableOpacity
+              style={[
+                styles.controlButton,
+                showAllPaths && styles.controlButtonActive,
+              ]}
+              onPress={() => setShowAllPaths(!showAllPaths)}
+            >
+              {showAllPaths ? (
+                <Eye size={16} color="#ffffff" />
+              ) : (
+                <EyeOff size={16} color="#6B7280" />
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.controlButton,
+                showWeights && styles.controlButtonActive,
+              ]}
+              onPress={() => setShowWeights(!showWeights)}
+            >
+              <Text
                 style={[
-                  styles.routeNode,
-                  index <= currentStep && styles.routeNodeCompleted,
-                  index === currentStep && styles.routeNodeCurrent,
-                  index === userRoute.length - 1 && styles.routeNodeDestination,
+                  styles.controlButtonText,
+                  showWeights && styles.controlButtonTextActive,
                 ]}
               >
-                <Text
+                W
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Route Progress */}
+        <View style={styles.routeProgressModal}>
+          <Text style={styles.routeLabel}>Route Progress:</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.routeContainer}
+          >
+            {userRoute.map((node, index) => (
+              <View key={node} style={styles.routeItem}>
+                <View
                   style={[
-                    styles.routeNodeText,
-                    (index <= currentStep || index === userRoute.length - 1) &&
-                      styles.routeNodeTextActive,
+                    styles.routeNode,
+                    index <= currentStep && styles.routeNodeCompleted,
+                    index === currentStep && styles.routeNodeCurrent,
+                    index === userRoute.length - 1 &&
+                      styles.routeNodeDestination,
                   ]}
                 >
-                  {node
-                    .replace("SN", "")
-                    .replace("passage_F2_", "")
-                    .replace("staircase_F2_", "Stairs")}
-                </Text>
+                  <Text
+                    style={[
+                      styles.routeNodeText,
+                      (index <= currentStep ||
+                        index === userRoute.length - 1) &&
+                        styles.routeNodeTextActive,
+                    ]}
+                  >
+                    {node
+                      .replace("SN", "")
+                      .replace("passage_F2_", "")
+                      .replace("staircase_F2_", "Stairs")}
+                  </Text>
+                </View>
+                {index < userRoute.length - 1 && (
+                  <ArrowRight
+                    size={16}
+                    color="#6B7280"
+                    style={styles.routeArrow}
+                  />
+                )}
               </View>
-              {index < userRoute.length - 1 && (
-                <ArrowRight
-                  size={16}
-                  color="#6B7280"
-                  style={styles.routeArrow}
-                />
-              )}
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Main Floor Plan */}
-        <InfiniteGrid
-          widthPx={screenWidth - 48}
-          heightPx={400}
-          gridSize={25}
-          nodePositions={nodePositions}
-          otherRelativePaths={otherRelativePaths}
-          yUp={true} // since your data is in math coords
-          userPosition={userCurrentLocation}
-        />
+            ))}
+          </ScrollView>
+        </View>
 
         {/* Navigation Status Panel */}
         <View style={styles.statusPanel}>
@@ -349,57 +272,32 @@ export default function NavigationScreen() {
           <View style={styles.availablePathsContainer}>
             <Text style={styles.availablePathsLabel}>AVAILABLE PATHS</Text>
             <View style={styles.pathsList}>
-              {floorPlanData[userRoute[currentStep]]?.map(
-                (connection, index) => {
-                  const isUserChoice =
-                    currentStep < userRoute.length - 1 &&
-                    connection.to === userRoute[currentStep + 1];
-
-                  return (
-                    <View
-                      key={index}
-                      style={[
-                        styles.pathItem,
-                        isUserChoice && styles.pathItemSelected,
-                      ]}
-                    >
-                      <View style={styles.pathHeader}>
-                        <Text
-                          style={[
-                            styles.pathDestination,
-                            isUserChoice && styles.pathDestinationSelected,
-                          ]}
-                        >
-                          {connection.to}
-                        </Text>
-                        <Text
-                          style={[
-                            styles.pathWeight,
-                            isUserChoice && styles.pathWeightSelected,
-                          ]}
-                        >
-                          Weight: {connection.weight}
-                        </Text>
-                      </View>
-                      <Text
-                        style={[
-                          styles.pathDetails,
-                          isUserChoice && styles.pathDetailsSelected,
-                        ]}
-                      >
-                        {connection.path
-                          .map(
-                            (step, i) =>
-                              `${step.dir} ${step.distance}m${
-                                i < connection.path.length - 1 ? " → " : ""
-                              }`
-                          )
-                          .join("")}
-                      </Text>
-                    </View>
-                  );
-                }
-              )}
+              {/* Mock path data */}
+              <View style={styles.pathItem}>
+                <View style={styles.pathHeader}>
+                  <Text style={styles.pathDestination}>Next Location</Text>
+                  <Text style={styles.pathWeight}>Weight: 5</Text>
+                </View>
+                <Text style={styles.pathDetails}>east 10m → south 5m</Text>
+              </View>
+              <View style={[styles.pathItem, styles.pathItemSelected]}>
+                <View style={styles.pathHeader}>
+                  <Text
+                    style={[
+                      styles.pathDestination,
+                      styles.pathDestinationSelected,
+                    ]}
+                  >
+                    Recommended Path
+                  </Text>
+                  <Text style={[styles.pathWeight, styles.pathWeightSelected]}>
+                    Weight: 3
+                  </Text>
+                </View>
+                <Text style={[styles.pathDetails, styles.pathDetailsSelected]}>
+                  north 8m → east 12m
+                </Text>
+              </View>
             </View>
           </View>
 
@@ -447,56 +345,124 @@ export default function NavigationScreen() {
         {/* Demo Notice */}
         <View style={styles.demoNotice}>
           <Text style={styles.demoText}>
-            Demo: Auto-advancing every 3 seconds • Toggle controls to show/hide
-            paths and weights
+            Demo: Toggle controls to show/hide paths and weights
           </Text>
         </View>
       </ScrollView>
 
-      {/* Footer */}
-      <View style={styles.footer}>
+      {/* Modal Footer */}
+      <View style={styles.modalFooter}>
         <TouchableOpacity style={styles.endButton} onPress={handleBackHome}>
           <Text style={styles.endButtonText}>End Navigation</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
+  );
+
+  return (
+    <View style={styles.fullScreenContainer}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+
+      {/* Full Screen Infinite Grid */}
+      <InfiniteGrid
+        widthPx={screenWidth}
+        heightPx={screenHeight}
+        gridSize={25}
+        nodePositions={allNodes || []}
+        userPosition={{ x: 0, y: 0 }}
+      />
+
+      {/* Floating Action Button */}
+      <TouchableOpacity style={styles.floatingButton} onPress={toggleModal}>
+        <Menu size={24} color="#ffffff" />
+      </TouchableOpacity>
+
+      {/* Modal with Navigation Details */}
+      <Modal
+        visible={isModalVisible}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={toggleModal}
+      >
+        {renderModalContent()}
+      </Modal>
+    </View>
   );
 }
 
 export const styles = StyleSheet.create({
-  container: {
+  fullScreenContainer: {
     flex: 1,
     backgroundColor: "#111827",
   },
-  header: {
+  floatingButton: {
+    position: "absolute",
+    top: 60,
+    right: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: "#2563EB",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "#111827",
+  },
+  modalHeader: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 24,
     paddingVertical: 16,
+    paddingTop: 60,
     backgroundColor: "#1F2937",
     borderBottomWidth: 1,
     borderBottomColor: "#374151",
   },
-  backButton: {
-    marginRight: 16,
-    padding: 4,
-  },
-  headerInfo: {
+  modalHeaderInfo: {
     flex: 1,
   },
-  title: {
+  modalTitle: {
     fontSize: 18,
     fontWeight: "700",
     color: "#ffffff",
   },
-  subtitle: {
+  modalSubtitle: {
     fontSize: 14,
     color: "#9CA3AF",
     marginTop: 2,
   },
+  closeButton: {
+    padding: 4,
+  },
+  modalContent: {
+    flex: 1,
+  },
+  controlsContainer: {
+    backgroundColor: "#1F2937",
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#374151",
+  },
   headerControls: {
     flexDirection: "row",
     gap: 8,
+    justifyContent: "center",
   },
   controlButton: {
     backgroundColor: "#374151",
@@ -517,7 +483,7 @@ export const styles = StyleSheet.create({
   controlButtonTextActive: {
     color: "#ffffff",
   },
-  routeProgress: {
+  routeProgressModal: {
     backgroundColor: "#1F2937",
     paddingHorizontal: 24,
     paddingVertical: 12,
@@ -563,27 +529,10 @@ export const styles = StyleSheet.create({
   routeArrow: {
     marginRight: 8,
   },
-  content: {
-    flex: 1,
-  },
-  floorPlanContainer: {
-    backgroundColor: "#1F2937",
-    margin: 24,
-    borderRadius: 16,
-    // padding: 16,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
-  },
   statusPanel: {
     backgroundColor: "#1F2937",
     marginHorizontal: 24,
+    marginTop: 24,
     marginBottom: 24,
     borderRadius: 16,
     padding: 20,
@@ -716,7 +665,7 @@ export const styles = StyleSheet.create({
     color: "#6B7280",
     textAlign: "center",
   },
-  footer: {
+  modalFooter: {
     paddingHorizontal: 24,
     paddingVertical: 16,
     backgroundColor: "#1F2937",
