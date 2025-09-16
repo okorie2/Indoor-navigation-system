@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,10 +10,9 @@ import {
   Platform,
   KeyboardAvoidingView,
   ScrollView,
-  FlatList,
 } from "react-native";
-import { router, useLocalSearchParams } from "expo-router";
-import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
+import { router } from "expo-router";
+import { CameraView, useCameraPermissions } from "expo-camera";
 import {
   QrCode,
   MapPin,
@@ -21,38 +20,63 @@ import {
   Keyboard,
   Camera,
 } from "lucide-react-native";
-import { SAMPLE_DESTINATIONS } from "./_data";
 import { styles as destinationInputStyles } from "./destination-input";
+import axios from "axios";
+import debounce from "lodash/debounce";
 
 export default function LocationInputScreen() {
-  const { buildingId, buildingName } = useLocalSearchParams<{
-    buildingId: string;
-    buildingName: string;
-  }>();
-
   const [showCamera, setShowCamera] = useState(false);
   const [scannedData, setScannedData] = useState("");
   const [permission, requestPermission] = useCameraPermissions();
   const [showDropdown, setShowDropdown] = useState(false);
-  const [destination, setDestination] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [locSearchQuery, setLocSearchQuery] = useState("");
+  const [userLocation, setUserLocation] = useState("");
+  const [locationOptions, setLocationOptions] = useState<string[]>([]);
+  const [inputHelperText, setInputHelperText] = useState(
+    "Enter your current room or location within the building"
+  );
 
-  // Filter destinations based on search input
-  const filteredDestinations = useMemo(() => {
-    if (!destination.trim()) return [];
-    const searchTerm = destination.toLowerCase().trim();
-    return SAMPLE_DESTINATIONS.filter(
-      (dest) =>
-        dest.name.toLowerCase().includes(searchTerm) ||
-        dest.category.toLowerCase().includes(searchTerm)
-    ).slice(0, 5);
-  }, [destination]);
-
-  const handleSelectDestination = (destinationName: string) => {
-    setDestination(destinationName);
+  const handleSelectLocation = (destinationName: string) => {
+    setUserLocation(destinationName);
     setShowDropdown(false);
-    setSelectedIndex(-1);
   };
+
+  const handleNodeSearch = async (query: string) => {
+    setInputHelperText("Searching...");
+    try {
+      const response = await axios.get(
+        "https://7379110492f9.ngrok-free.app/searchNodes",
+        {
+          params: { query },
+        }
+      );
+
+      setLocationOptions(response.data.nodes || []);
+      setShowDropdown(true);
+      if (!response.data.nodes) {
+        setInputHelperText(response.data.message || "No locations found");
+      } else {
+        setInputHelperText("");
+      }
+    } catch (error: any) {
+      console.error("Error fetching nodes:", error);
+      setInputHelperText(error.message || "Error fetching locations");
+    }
+  };
+
+  // wrap it with debounce so it only fires after user stops typing
+  const debouncedSearch = React.useCallback(
+    debounce((q) => handleNodeSearch(q), 500), // 500ms delay
+    []
+  );
+
+  // handler for input change
+  const handleChange = (value: string) => {
+    setLocSearchQuery(value);
+    debouncedSearch(value);
+  };
+
+  //debounce handleNodeSearch using lodash deboucne
 
   const handleQRScan = async () => {
     if (Platform.OS === "web") {
@@ -78,12 +102,12 @@ export default function LocationInputScreen() {
 
   const handleBarcodeScanned = ({ data }: { data: string }) => {
     setScannedData(data);
-    setDestination(data);
+    setUserLocation(data);
     setShowCamera(false);
   };
 
   const handleContinue = () => {
-    if (!destination.trim()) {
+    if (!userLocation.trim()) {
       Alert.alert(
         "Location Required",
         "Please scan a QR code or enter your current location manually."
@@ -94,9 +118,7 @@ export default function LocationInputScreen() {
     router.push({
       pathname: "/destination-input",
       params: {
-        buildingId,
-        buildingName,
-        currentLocation: destination.trim(),
+        currentLocation: userLocation.trim(),
       },
     });
   };
@@ -132,34 +154,6 @@ export default function LocationInputScreen() {
     );
   }
 
-  const renderDropdownItem = ({
-    item,
-    index,
-  }: {
-    item: (typeof SAMPLE_DESTINATIONS)[0];
-    index: number;
-  }) => (
-    <TouchableOpacity
-      style={[
-        destinationInputStyles.dropdownItem,
-        index === selectedIndex && destinationInputStyles.dropdownItemSelected,
-      ]}
-      onPress={() => handleSelectDestination(item.name)}
-    >
-      <View style={destinationInputStyles.dropdownItemContent}>
-        <MapPin size={16} color="#6B7280" />
-        <View style={destinationInputStyles.dropdownItemText}>
-          <Text style={destinationInputStyles.dropdownItemName}>
-            {item.name}
-          </Text>
-          <Text style={destinationInputStyles.dropdownItemCategory}>
-            {item.category}
-          </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -180,7 +174,7 @@ export default function LocationInputScreen() {
             </TouchableOpacity>
             <View style={styles.headerInfo}>
               <Text style={styles.title}>Current Location</Text>
-              <Text style={styles.buildingName}>{buildingName}</Text>
+              <Text style={styles.buildingName}>{userLocation}</Text>
             </View>
           </View>
 
@@ -228,37 +222,62 @@ export default function LocationInputScreen() {
                   />
                   <TextInput
                     style={styles.textInput}
-                    placeholder="e.g., Senate Room 101"
-                    value={destination}
-                    onChangeText={(text) => {
-                      setDestination(text);
-                      setShowDropdown(text.length > 0);
-                    }}
+                    placeholder="e.g., SN201"
+                    value={locSearchQuery}
+                    onChangeText={handleChange}
                     placeholderTextColor="#9CA3AF"
-                    onFocus={() => setShowDropdown(destination.length > 0)}
                   />
                 </View>
-                {showDropdown && filteredDestinations.length > 0 && (
+                {showDropdown && locationOptions.length > 0 && (
                   <View style={destinationInputStyles.dropdown}>
-                    <FlatList
-                      data={filteredDestinations}
-                      renderItem={renderDropdownItem}
-                      keyExtractor={(item) => item.id}
-                      scrollEnabled={false}
-                      showsVerticalScrollIndicator={false}
-                    />
+                    <ScrollView
+                      style={{ maxHeight: 200 }}
+                      showsVerticalScrollIndicator={true}
+                    >
+                      {locationOptions.map((item, index) => (
+                        <TouchableOpacity
+                          key={index}
+                          style={destinationInputStyles.dropdownItem}
+                          onPress={() => {
+                            handleSelectLocation(item);
+                            setLocSearchQuery("");
+                            setShowDropdown(false);
+                          }}
+                        >
+                          <View
+                            style={destinationInputStyles.dropdownItemContent}
+                          >
+                            <MapPin size={16} color="#6B7280" />
+                            <View
+                              style={destinationInputStyles.dropdownItemText}
+                            >
+                              <Text
+                                style={destinationInputStyles.dropdownItemName}
+                              >
+                                {item}
+                              </Text>
+                              <Text
+                                style={
+                                  destinationInputStyles.dropdownItemCategory
+                                }
+                              >
+                                {item}
+                              </Text>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      ))}
+                    </ScrollView>
                   </View>
                 )}
-                <Text style={styles.inputHint}>
-                  Enter your current room or location within the building
-                </Text>
+                <Text style={styles.inputHint}>{inputHelperText}</Text>
               </View>
             </View>
 
-            {destination.trim() && (
+            {userLocation.trim() && (
               <View style={styles.locationPreview}>
                 <Text style={styles.previewLabel}>Current Location:</Text>
-                <Text style={styles.previewLocation}>{destination}</Text>
+                <Text style={styles.previewLocation}>{userLocation}</Text>
               </View>
             )}
           </View>
@@ -267,15 +286,15 @@ export default function LocationInputScreen() {
             <TouchableOpacity
               style={[
                 styles.continueButton,
-                !destination.trim() && styles.continueButtonDisabled,
+                !userLocation.trim() && styles.continueButtonDisabled,
               ]}
               onPress={handleContinue}
-              disabled={!destination.trim()}
+              disabled={!userLocation.trim()}
             >
               <Text
                 style={[
                   styles.continueButtonText,
-                  !destination.trim() && styles.continueButtonTextDisabled,
+                  !userLocation.trim() && styles.continueButtonTextDisabled,
                 ]}
               >
                 Continue

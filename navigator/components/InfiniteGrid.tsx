@@ -122,7 +122,7 @@ export default function InfiniteGrid({
             x={n.x + 8}
             y={n.y}
             fontSize={12}
-            fill="#fff"
+            fill="#111827"
             alignmentBaseline="middle"
           >
             {n.node}
@@ -158,7 +158,7 @@ export default function InfiniteGrid({
               <Path
                 d={`M ${gridSize} 0 L 0 0 0 ${gridSize}`}
                 fill="none"
-                stroke="#374151"
+                stroke="#D1D5DB"
                 strokeWidth={gridStroke}
                 opacity={0.35}
               />
@@ -184,7 +184,7 @@ export default function InfiniteGrid({
 }
 const navigationStyles = StyleSheet.create({
   floorPlanContainer: {
-    backgroundColor: "#1F2937",
+    backgroundColor: "#F9FAFB",
     borderRadius: 16,
     alignItems: "center",
     shadowColor: "#000",

@@ -59,4 +59,4 @@ def a_star(graph, start, goal):
     return None
 
 
-# print(a_star(data["graph"], "northEntrance", "SN314"))
+print(a_star(data["graph"], "northEntrance", "office of the vc"))

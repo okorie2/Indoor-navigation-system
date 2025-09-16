@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,45 +10,60 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  FlatList,
 } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
-import { ArrowLeft, MapPin, Navigation, Search } from "lucide-react-native";
-import { SAMPLE_DESTINATIONS } from "./_data";
+import { ArrowLeft, MapPin, Navigation, Keyboard } from "lucide-react-native";
+import axios from "axios";
+import { debounce } from "lodash";
 
 export default function DestinationInputScreen() {
-  const { buildingId, buildingName, currentLocation } = useLocalSearchParams<{
-    buildingId: string;
-    buildingName: string;
+  const { currentLocation } = useLocalSearchParams<{
     currentLocation: string;
   }>();
 
   const [destination, setDestination] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-
-  // Filter destinations based on search input
-  const filteredDestinations = useMemo(() => {
-    if (!destination.trim()) return [];
-
-    const searchTerm = destination.toLowerCase().trim();
-    return SAMPLE_DESTINATIONS.filter(
-      (dest) =>
-        dest.name.toLowerCase().includes(searchTerm) ||
-        dest.category.toLowerCase().includes(searchTerm)
-    ).slice(0, 5); // Limit to 5 results
-  }, [destination]);
-
-  const handleDestinationChange = (text: string) => {
-    setDestination(text);
-    setShowDropdown(text.length > 0);
-    setSelectedIndex(-1);
-  };
+  const [inputHelperText, setInputHelperText] = useState(
+    "Start typing to see suggestions or enter the room number/location name"
+  );
+  const [locSearchQuery, setLocSearchQuery] = useState("");
+  const [locationOptions, setLocationOptions] = useState<string[]>([]);
 
   const handleSelectDestination = (destinationName: string) => {
     setDestination(destinationName);
     setShowDropdown(false);
-    setSelectedIndex(-1);
+  };
+  const handleNodeSearch = async (query: string) => {
+    setInputHelperText("Searching...");
+    try {
+      const response = await axios.get(
+        "https://7379110492f9.ngrok-free.app/searchNodes",
+        {
+          params: { query },
+        }
+      );
+
+      setLocationOptions(response.data.nodes || []);
+      setShowDropdown(true);
+      if (!response.data.nodes) {
+        setInputHelperText(response.data.message || "No locations found");
+      }
+    } catch (error: any) {
+      console.error("Error fetching nodes:", error);
+      setInputHelperText(error.message || "Error fetching locations");
+    }
+  };
+
+  // wrap it with debounce so it only fires after user stops typing
+  const debouncedSearch = React.useCallback(
+    debounce((q) => handleNodeSearch(q), 500), // 500ms delay
+    []
+  );
+
+  // handler for input change
+  const handleChange = (value: string) => {
+    setLocSearchQuery(value);
+    debouncedSearch(value);
   };
 
   const handleStartNavigation = () => {
@@ -60,37 +75,11 @@ export default function DestinationInputScreen() {
     router.push({
       pathname: "/navigation",
       params: {
-        buildingId,
-        buildingName,
         currentLocation,
         destination: destination.trim(),
       },
     });
   };
-
-  const renderDropdownItem = ({
-    item,
-    index,
-  }: {
-    item: (typeof SAMPLE_DESTINATIONS)[0];
-    index: number;
-  }) => (
-    <TouchableOpacity
-      style={[
-        styles.dropdownItem,
-        index === selectedIndex && styles.dropdownItemSelected,
-      ]}
-      onPress={() => handleSelectDestination(item.name)}
-    >
-      <View style={styles.dropdownItemContent}>
-        <MapPin size={16} color="#6B7280" />
-        <View style={styles.dropdownItemText}>
-          <Text style={styles.dropdownItemName}>{item.name}</Text>
-          <Text style={styles.dropdownItemCategory}>{item.category}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -112,7 +101,7 @@ export default function DestinationInputScreen() {
             </TouchableOpacity>
             <View style={styles.headerInfo}>
               <Text style={styles.title}>Set Destination</Text>
-              <Text style={styles.buildingName}>{buildingName}</Text>
+              <Text style={styles.buildingName}>{destination}</Text>
             </View>
           </View>
 
@@ -134,54 +123,63 @@ export default function DestinationInputScreen() {
               </View>
 
               <Text style={styles.destinationDescription}>
-                Enter your destination within{" "}
-                {buildingName?.split(" - ")[0] || "the building"}
+                Enter your destination within {"the Senate building"}
               </Text>
 
               <View style={styles.inputContainer}>
                 <Text style={styles.inputLabel}>Destination</Text>
                 <View style={styles.searchContainer}>
-                  <View
-                    style={[
-                      styles.inputBox,
-                      showDropdown &&
-                        filteredDestinations.length > 0 &&
-                        styles.inputBoxWithDropdown,
-                    ]}
-                  >
-                    <Search
+                  <View style={styles.inputBox}>
+                    <Keyboard
                       size={20}
                       color="#6B7280"
                       style={styles.inputIcon}
                     />
                     <TextInput
                       style={styles.textInput}
-                      placeholder="e.g., Senate Room 401"
-                      value={destination}
-                      onChangeText={handleDestinationChange}
+                      placeholder="e.g., SN401"
+                      value={locSearchQuery}
+                      onChangeText={handleChange}
                       placeholderTextColor="#9CA3AF"
                       autoFocus={true}
-                      onFocus={() => setShowDropdown(destination.length > 0)}
                     />
                   </View>
 
-                  {showDropdown && filteredDestinations.length > 0 && (
+                  {showDropdown && locationOptions.length > 0 && (
                     <View style={styles.dropdown}>
-                      <FlatList
-                        data={filteredDestinations}
-                        renderItem={renderDropdownItem}
-                        keyExtractor={(item) => item.id}
-                        scrollEnabled={false}
-                        showsVerticalScrollIndicator={false}
-                      />
+                      <ScrollView
+                        style={{ maxHeight: 200 }}
+                        showsVerticalScrollIndicator={true}
+                      >
+                        {locationOptions.map((item, index) => (
+                          <TouchableOpacity
+                            key={index}
+                            style={styles.dropdownItem}
+                            onPress={() => {
+                              handleSelectDestination(item);
+                              setLocSearchQuery(item);
+                              setShowDropdown(false);
+                            }}
+                          >
+                            <View style={styles.dropdownItemContent}>
+                              <MapPin size={16} color="#6B7280" />
+                              <View style={styles.dropdownItemText}>
+                                <Text style={styles.dropdownItemName}>
+                                  {item}
+                                </Text>
+                                <Text style={styles.dropdownItemCategory}>
+                                  {item}
+                                </Text>
+                              </View>
+                            </View>
+                          </TouchableOpacity>
+                        ))}
+                      </ScrollView>
                     </View>
                   )}
                 </View>
 
-                <Text style={styles.inputHint}>
-                  Start typing to see suggestions or enter the room
-                  number/location name
-                </Text>
+                <Text style={styles.inputHint}>{inputHelperText}</Text>
               </View>
 
               <View style={styles.exampleContainer}>
