@@ -10,11 +10,12 @@ import {
 import { router, useLocalSearchParams } from "expo-router";
 import { Menu, ArrowLeft } from "lucide-react-native";
 import axios from "axios";
-import { Connection, PathStep, Position, UserRoute } from "../_types";
+import { Connection, PathStep, Position, Route } from "../_types";
 import InfiniteGrid from "@/components/InfiniteGrid";
 import { getCurrentFloor } from "@/utils/getCurrentfloor";
 import { useRouteSimulator } from "@/hooks/useRoutesimulation";
 import DestinationPathModal from "./destinationPathModal";
+import { useUserJourney } from "@/hooks/useUserJourney";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const PX_SCALE = 1;
@@ -35,9 +36,10 @@ export default function NavigationScreen() {
   const [mapData, setMapData] = useState<any>(null); // fetched map data
   const [allNodes, setAllNodes] = useState<Position[] | null>(null); // all nodes relative to anchor
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [currentStep, _setCurrentStep] = useState(0);
   const currentFloor = getCurrentFloor(currentLocation || "");
-  const [userRoute, setUserRoute] = useState<UserRoute>({} as UserRoute);
+  const [route, setRoute] = useState<Route>({} as Route);
+  const [isUserOnTrack, setIsUserOnTrack] = useState(true);
+  const [deviationDistance, setDeviationDistance] = useState(0);
 
   const getFastestPath = async (startNode: string, endNode: string) => {
     //fetch user path from backend
@@ -103,13 +105,13 @@ export default function NavigationScreen() {
     if (cross < 0) return "Right";
     return "Unknown";
   };
-  const getUserRouteXYPositions = (): Position[][] => {
+  const getRouteNodesXYPosition = (): Position[][] => {
     const positions: Position[][] = [];
-    if (!userRoute || !userRoute.edges) return positions;
-    const startNodePos = allNodes?.find((n) => n.node === userRoute.start);
+    if (!route || !route.edges) return positions;
+    const startNodePos = allNodes?.find((n) => n.node === route.start);
     if (!startNodePos) return positions;
     positions.push([startNodePos]);
-    userRoute.edges.forEach((edge) => {
+    route.edges.forEach((edge) => {
       const edgePositions: Position[] = [];
       edge.path.forEach((step) => {
         const { dx: x, dy: y } = getXYPosition(step);
@@ -137,7 +139,7 @@ export default function NavigationScreen() {
      * - Returns a 2D array of directions, grouped by edges in the route.
      */
     try {
-      const positions = getUserRouteXYPositions();
+      const positions = getRouteNodesXYPosition();
       if (positions.length === 0) return [];
       const directions: { meters: number; turn: string }[][] = [];
       positions.forEach((pos, mainIndex) => {
@@ -195,7 +197,6 @@ export default function NavigationScreen() {
       The previous node is the start position*/
     try {
       if (!start || !pathSteps) return { x: 0, y: 0 };
-      // console.log("start", start);
       let { x, y } = start;
 
       pathSteps.forEach((edge) => {
@@ -247,12 +248,14 @@ export default function NavigationScreen() {
     getTurnDirectionsThroughDestinationPath()
   );
 
-  console.log(
-    getUserRouteXYPositions().length,
-    getTurnDirectionsThroughDestinationPath().length,
+  const { userPosition } = useUserJourney(getRouteNodesXYPosition());
 
-    JSON.stringify(getTurnDirectionsThroughDestinationPath(), null, 2),
-    // JSON.stringify(getUserRouteXYPositions(), null, 2),
+  console.log(
+    // getRouteNodesXYPosition().length,
+    // getTurnDirectionsThroughDestinationPath().length,
+
+    JSON.stringify(getRouteNodesXYPosition(), null, 2),
+    // JSON.stringify(currentSteps, null, 2),
     "currentSteps"
   );
 
@@ -261,7 +264,7 @@ export default function NavigationScreen() {
   }, []);
   React.useEffect(() => {
     getFastestPath(currentLocation!, destination!).then((data) => {
-      setUserRoute(data);
+      setRoute(data);
     });
   }, []);
 
@@ -316,9 +319,8 @@ export default function NavigationScreen() {
           toggleModal={toggleModal}
           currentLocation={currentLocation!}
           currentFloor={currentFloor}
-          userRoute={userRoute}
+          userRoute={route}
           currentSteps={currentSteps}
-          currentStep={currentStep}
           handleGoBack={handleGoBack}
           currentPathIndex={currentIndex}
         />

@@ -20,11 +20,15 @@ export function useRouteSimulator(directions: Travelling[][]) {
       setIsComplete(true);
       return;
     }
-
+    if (currentIndex === 0) {
+      setDirectionsToNextNode(directions[0]);
+      setCurrentIndex(1);
+      return;
+    }
     const interval = setInterval(() => {
+      setDirectionsToNextNode(directions[currentIndex]);
       setCurrentIndex((prev) => {
         if (prev + 1 < directions.length) {
-          setDirectionsToNextNode(directions[prev + 1]);
           return prev + 1;
         } else {
           clearInterval(interval);

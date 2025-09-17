@@ -9,7 +9,7 @@ export interface Connection {
   path: PathStep[];
 }
 
-export interface UserRoute {
+export interface Route {
   start: string;
   edges: Connection[];
 }
