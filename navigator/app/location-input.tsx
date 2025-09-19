@@ -44,12 +44,9 @@ export default function LocationInputScreen() {
   const handleNodeSearch = async (query: string) => {
     setInputHelperText("Searching...");
     try {
-      const response = await axios.get(
-        "https://7379110492f9.ngrok-free.app/searchNodes",
-        {
-          params: { query },
-        }
-      );
+      const response = await axios.get("http://localhost:8000/searchNodes", {
+        params: { query },
+      });
 
       setLocationOptions(response.data.nodes || []);
       setShowDropdown(true);

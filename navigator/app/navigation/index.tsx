@@ -16,16 +16,13 @@ import { getCurrentFloor } from "@/utils/getCurrentfloor";
 import { useRouteSimulator } from "@/hooks/useRoutesimulation";
 import DestinationPathModal from "./destinationPathModal";
 import { useUserJourney } from "@/hooks/useUserJourney";
+import { getDistance } from "@/utils/getDistance";
+import { SVG_ANGLE_MAP, PX_SCALE, CM_SCALE } from "@/constants/navigation";
+import { normalize } from "@/utils/normalizeVector";
+import { getTurnDirection } from "@/utils/getTurnDirection";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-const PX_SCALE = 1;
-const CM_SCALE = 210; // 210 cm per meter
-const SVGAngleMap = {
-  east: 0,
-  south: 90,
-  west: 180,
-  north: 270,
-};
+
 export default function NavigationScreen() {
   const { currentLocation, destination } = useLocalSearchParams<{
     currentLocation: string;
@@ -38,14 +35,20 @@ export default function NavigationScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const currentFloor = getCurrentFloor(currentLocation || "");
   const [route, setRoute] = useState<Route>({} as Route);
-  const [isUserOnTrack, setIsUserOnTrack] = useState(true);
-  const [deviationDistance, setDeviationDistance] = useState(0);
+
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+  const handleGoBack = () => {
+    isModalVisible && setIsModalVisible(false);
+    router.back();
+  };
 
   const getFastestPath = async (startNode: string, endNode: string) => {
     //fetch user path from backend
     try {
       const response = await axios.get(
-        "https://7379110492f9.ngrok-free.app/pathfindingWithEdges",
+        "http://localhost:8000/pathfindingWithEdges",
         {
           params: {
             start: startNode,
@@ -64,9 +67,7 @@ export default function NavigationScreen() {
   const loadMapData = async () => {
     console.log("loading map data");
     try {
-      const res = await axios.get(
-        "https://7379110492f9.ngrok-free.app/static/senate.json"
-      );
+      const res = await axios.get("http://localhost:8000/static/senate.json");
       const data = res.data;
       setMapData(data);
     } catch (err) {
@@ -76,36 +77,13 @@ export default function NavigationScreen() {
 
   const getXYPosition = (edge: PathStep) => {
     //dx=cos(angleMap[edge.dir] * Math.pi/180) * edge.distance * SCALE
-    const rad = (SVGAngleMap[edge.dir] * Math.PI) / 180;
+    const rad = (SVG_ANGLE_MAP[edge.dir] * Math.PI) / 180;
     const dx = Math.cos(rad) * edge.distance * PX_SCALE * CM_SCALE;
     const dy = Math.sin(rad) * edge.distance * PX_SCALE * CM_SCALE;
     return { dx, dy };
   };
 
-  const getDistance = (p1: Position, p2: Position): number => {
-    const dx = p2.x - p1.x;
-    const dy = p2.y - p1.y;
-    return Math.sqrt(dx * dx + dy * dy);
-  };
-
-  const normalize = (x: number, y: number) => {
-    const length = Math.sqrt(x * x + y * y);
-    return { x: x / length, y: y / length };
-  };
-  const getTurnDirection = (
-    prev: { x: number; y: number },
-    curr: { x: number; y: number }
-  ) => {
-    const dot = prev.x * curr.x + prev.y * curr.y;
-    const cross = prev.x * curr.y - prev.y * curr.x;
-
-    if (dot > 0.99) return "Straight"; // nearly same direction
-    if (dot < -0.99) return "U-turn";
-    if (cross > 0) return "Left";
-    if (cross < 0) return "Right";
-    return "Unknown";
-  };
-  const getRouteNodesXYPosition = (): Position[][] => {
+  const getRouteNodesXYPosition = React.useCallback((): Position[][] => {
     const positions: Position[][] = [];
     if (!route || !route.edges) return positions;
     const startNodePos = allNodes?.find((n) => n.node === route.start);
@@ -120,9 +98,9 @@ export default function NavigationScreen() {
       positions.push(edgePositions);
     });
     return positions;
-  };
+  }, [allNodes, route]);
 
-  const getTurnDirectionsThroughDestinationPath = (): {
+  const getTurnDirectionsThroughDestinationPath = React.useCallback((): {
     meters: number;
     turn: string;
   }[][] => {
@@ -186,77 +164,79 @@ export default function NavigationScreen() {
       console.error("Error in getTurnDirectionsThroughDestinationPath:", err);
       return [];
     }
-  };
+  }, [getRouteNodesXYPosition]);
 
-  const getAggregatedEdgePositions = (
-    start: Position | null,
-    pathSteps: PathStep[] | null
-  ) => {
-    /*the position of the every node in the path would be its aggregate
+  const getAggregatedEdgePositions = React.useCallback(
+    (start: Position | null, pathSteps: PathStep[] | null) => {
+      /*the position of the every node in the path would be its aggregate
       *direction-distance + the position of the previous node.
       The previous node is the start position*/
-    try {
-      if (!start || !pathSteps) return { x: 0, y: 0 };
-      let { x, y } = start;
+      try {
+        if (!start || !pathSteps) return { x: 0, y: 0 };
+        let { x, y } = start;
 
-      pathSteps.forEach((edge) => {
-        const { dx, dy } = getXYPosition(edge);
-        x += dx;
-        y += dy;
-      });
-      return { x, y };
-    } catch (err) {
-      console.error("Error in getAggregatedEdgePositions:", err);
-      return null;
-    }
-  };
-
-  const getAllNodesRelativeToAnchor = async (anchorNode: string) => {
-    if (!mapData) return null;
-    try {
-      const start = { x: 0, y: 0 };
-      const graph = mapData.graph;
-
-      const results = await Promise.all(
-        Object.keys(graph).map(async (edge, index) => {
-          if (index === 0) return null;
-          const { edges } = await getFastestPath(anchorNode, edge);
-
-          if (!edges) {
-            throw new Error(`No path found from ${anchorNode} to ${edge}`);
-          }
-
-          const edgePositionRelativeToAnchor = edges.reduce(
-            (acc: Position, curr: Connection) => {
-              const pos = getAggregatedEdgePositions(acc, curr.path ?? []);
-
-              return { ...pos, node: curr.to };
-            },
-            { ...start, node: anchorNode }
-          );
-          return edgePositionRelativeToAnchor;
-        })
-      );
-      setAllNodes(results.filter(Boolean) as Position[]);
-    } catch (err) {
-      console.error("Error fetching all nodes relative to anchor:", err);
-      return null;
-    }
-  };
-
-  const { currentSteps, isComplete, currentIndex } = useRouteSimulator(
-    getTurnDirectionsThroughDestinationPath()
+        pathSteps.forEach((edge) => {
+          const { dx, dy } = getXYPosition(edge);
+          x += dx;
+          y += dy;
+        });
+        return { x, y };
+      } catch (err) {
+        console.error("Error in getAggregatedEdgePositions:", err);
+        return null;
+      }
+    },
+    []
   );
 
-  const { userPosition } = useUserJourney(getRouteNodesXYPosition());
+  const getAllNodesRelativeToAnchor = React.useCallback(
+    async (anchorNode: string) => {
+      if (!mapData) return null;
+      try {
+        const start = { x: 0, y: 0 };
+        const graph = mapData.graph;
 
-  console.log(
-    // getRouteNodesXYPosition().length,
-    // getTurnDirectionsThroughDestinationPath().length,
+        const results = await Promise.all(
+          Object.keys(graph).map(async (edge, index) => {
+            if (index === 0) return null;
+            const { edges } = await getFastestPath(anchorNode, edge);
 
-    JSON.stringify(getRouteNodesXYPosition(), null, 2),
-    // JSON.stringify(currentSteps, null, 2),
-    "currentSteps"
+            if (!edges) {
+              throw new Error(`No path found from ${anchorNode} to ${edge}`);
+            }
+
+            const edgePositionRelativeToAnchor = edges.reduce(
+              (acc: Position, curr: Connection) => {
+                const pos = getAggregatedEdgePositions(acc, curr.path ?? []);
+
+                return { ...pos, node: curr.to };
+              },
+              { ...start, node: anchorNode }
+            );
+            return edgePositionRelativeToAnchor;
+          })
+        );
+        setAllNodes(results.filter(Boolean) as Position[]);
+      } catch (err) {
+        console.error("Error fetching all nodes relative to anchor:", err);
+        return null;
+      }
+    },
+    [getAggregatedEdgePositions, mapData]
+  );
+
+  const { userPosition } = useUserJourney(getRouteNodesXYPosition);
+
+  const {
+    currentSteps,
+    turnMainIndex,
+    messaging,
+    isUserOnTrack,
+    deviationDistance,
+  } = useRouteSimulator(
+    getTurnDirectionsThroughDestinationPath,
+    userPosition!,
+    getRouteNodesXYPosition()
   );
 
   React.useEffect(() => {
@@ -274,13 +254,6 @@ export default function NavigationScreen() {
       getAllNodesRelativeToAnchor("northEntrance");
     }
   }, [mapData]);
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
-  };
-  const handleGoBack = () => {
-    isModalVisible && setIsModalVisible(false);
-    router.back();
-  };
 
   return (
     <View style={styles.fullScreenContainer}>
@@ -322,7 +295,10 @@ export default function NavigationScreen() {
           userRoute={route}
           currentSteps={currentSteps}
           handleGoBack={handleGoBack}
-          currentPathIndex={currentIndex}
+          currentPathIndex={turnMainIndex}
+          isOnTrack={isUserOnTrack}
+          deviationDistance={deviationDistance}
+          messaging={messaging}
         />
       </Modal>
     </View>

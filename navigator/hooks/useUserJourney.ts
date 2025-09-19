@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 
 type Position = { x: number; y: number; node?: string };
@@ -5,61 +6,78 @@ type Position = { x: number; y: number; node?: string };
 /**
  * useUserJourney
  *
- * Simulates a real user journey along a static route.
- * Behavior:
- * - First 5s: follows the first path position.
- * - Next 5s: "derails" by moving to an off-path coordinate.
- * - After that: resumes the given route until the end.
+ * Simulates a user walking along a fixed route.
+ * - First 5s: follows the route (first point).
+ * - Next 5s: derails to an off-path coordinate.
+ * - After 10s+: resumes the route until the end.
  *
- * This is meant for demo/UX purposes, not real navigation.
+ * For example/demo purposes only.
  */
-export function useUserJourney(route: Position[][]) {
-  const [userPosition, setUserPosition] = useState<Position>({ x: 0, y: 0 });
-  const [phase, setPhase] = useState<
-    "onPath" | "derailed" | "resumed" | "done"
-  >("onPath");
+const mstaticRoute: Position[][] = [
+  [{ x: -1549.8, y: -2118.9, node: "SN205" }],
+  [{ x: 1.230586336123218e-13, y: 2009.7 }],
+  [
+    { x: 2274.3, y: 0 },
+    { x: -2.9163738874895065e-13, y: -1587.6 },
+    { x: 1127.7, y: 0 },
+  ],
+];
+export function useUserJourney(getRouteNodesXYPosition: () => Position[][]) {
+  const [userPosition, setUserPosition] = useState<Position | null>(null);
+  const [phase, setPhase] = useState<"onPath" | "derailed" | "resumed">(
+    "onPath"
+  );
+  const [stepIndex, setStepIndex] = useState(0);
+  const staticRoute = React.useMemo(
+    () => getRouteNodesXYPosition(),
+    [getRouteNodesXYPosition]
+  );
+
+  // Flatten the route into a single sequence of positions
 
   useEffect(() => {
-    if (!route || route.length === 0) return;
+    if (staticRoute.length === 0) return;
+    const flatRoute = staticRoute.flat();
 
-    let timer1: ReturnType<typeof setTimeout>;
-    let timer2: ReturnType<typeof setTimeout>;
-    let timer3: ReturnType<typeof setTimeout>;
+    // Phase 1: Start on the path
+    setUserPosition(flatRoute[0]);
 
-    // Phase 1: follow the path (first 5s)
-    timer1 = setTimeout(() => {
-      setUserPosition(route[0][0]); // first path point
-      setPhase("onPath");
-    }, 5000);
+    const timers: ReturnType<typeof setTimeout>[] = [];
 
-    // Phase 2: derail (next 5s)
-    timer2 = setTimeout(() => {
-      setUserPosition({ x: route[0][0].x + 500, y: route[0][0].y + 500 }); // off-route point
-      setPhase("derailed");
-    }, 10000);
+    // Phase 2: After 5s, derail
+    timers.push(
+      setTimeout(() => {
+        setPhase("derailed");
+        setUserPosition({
+          x: flatRoute[0].x + 500, // arbitrary offset to simulate derail
+          y: flatRoute[0].y + 500,
+        });
+      }, 5000)
+    );
 
-    // Phase 3: resume path (rest of route)
-    timer3 = setTimeout(() => {
-      const allPoints = route.flat();
-      let i = 0;
-      const interval = setInterval(() => {
-        if (i < allPoints.length) {
-          setUserPosition(allPoints[i]);
-          setPhase("resumed");
-          i++;
-        } else {
-          clearInterval(interval);
-          setPhase("done");
-        }
-      }, 2000); // step every 2s once resuming
-    }, 15000);
+    // Phase 3: After 10s, resume route and continue
+    timers.push(
+      setTimeout(() => {
+        setPhase("resumed");
+        setStepIndex(1);
+        setUserPosition(flatRoute[1]);
+      }, 10000)
+    );
+
+    // Walk through the remaining steps every 5s after resuming
+    flatRoute.slice(2).forEach((pos, i) => {
+      timers.push(
+        setTimeout(() => {
+          setStepIndex(2 + i);
+          setUserPosition(pos);
+        }, 10000 + (i + 1) * 5000)
+      );
+    });
 
     return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
+      timers.forEach(clearTimeout);
     };
-  }, [route]);
+  }, [staticRoute]);
 
-  return { userPosition, phase };
+  return { userPosition, phase, stepIndex };
 }
