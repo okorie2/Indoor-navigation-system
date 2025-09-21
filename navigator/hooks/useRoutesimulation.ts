@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Position, Travelling } from "@/app/_types";
 import { getDistance } from "@/utils/getDistance";
 import {
@@ -14,6 +14,7 @@ import { getTurnDirection } from "@/utils/getTurnDirection";
 export function useRouteSimulator(
   getTurnDirectionsThroughDestinationPath: () => Travelling[][],
   userPosition: Position,
+  heading: Position,
   nodesXYPosition: Position[][]
 ) {
   const turnDirections = useMemo(
@@ -37,9 +38,23 @@ export function useRouteSimulator(
     nextSubIndex: number,
     normUser: Position
   ) => {
-    const nextNodeXY = getNodeXY(nextMainIndex, nextSubIndex);
-    const normNext = normalize(nextNodeXY.x, nextNodeXY.y);
-    return getTurnDirection(normUser, normNext);
+    const nextNode = getNodeXY(nextMainIndex, nextSubIndex);
+    const normNext = normalize(nextNode.x, nextNode.y);
+    const userVector = heading ?? { x: 0, y: 0 };
+    const nextVector = normalize(
+      nextNode.x - userPosition.x,
+      nextNode.y - userPosition.y
+    );
+    console.log(
+      "next node :",
+      normNext,
+      "user pos :",
+      normUser,
+      "direction :",
+      getTurnDirection(normUser, normNext)
+    );
+
+    return getTurnDirection(userVector, nextVector);
   };
 
   const handleMessaging = (turnDirection: string | null) => {
@@ -82,15 +97,14 @@ export function useRouteSimulator(
     const nodeXY = getNodeXY(nodeMainIndex, nodeSubIndex);
     const distanceToNode =
       getDistance(nodeXY, userPosition) / (PX_SCALE * CM_SCALE);
-    const normUser = normalize(userPosition.x, userPosition.y);
 
     if (distanceToNode < DISTANCE_TOLERANCE) {
-      setDeviationDistance(distanceToNode);
-
+      setDeviationDistance(0);
+      setIsUserOnTrack(true);
       if (nodeSubIndex + 1 < nodesXYPosition[nodeMainIndex].length) {
-        advanceSubNode(normUser);
+        advanceSubNode(userPosition);
       } else if (nodeMainIndex + 1 < nodesXYPosition.length) {
-        advanceMainNode(normUser);
+        advanceMainNode(userPosition);
       } else {
         console.log("Arrived at destination");
         setArrivedDestination(true);
@@ -102,7 +116,7 @@ export function useRouteSimulator(
     const turnDirection = handleNextNodeTurn(
       nodeMainIndex,
       nodeSubIndex,
-      normUser
+      userPosition
     );
 
     if (turnDirection !== "Straight") {
@@ -116,6 +130,11 @@ export function useRouteSimulator(
           `You are starting to deviate from course. Make a ${turnDirection} from where you are.`
         );
       }
+    } else {
+      setIsUserOnTrack(true);
+      setMessaging(
+        `You are right on track. Continue straight for ${distanceToNode} meters.`
+      );
     }
   }, [userPosition]);
 
