@@ -65,4 +65,6 @@ def reconstruct_path(came_from, start, goal, graph):
 
         current = prev
 
-    return path[::-1]  # reverse to get start -> goal order
+    path = path[::-1]  # correct order
+    return {"start": start, "edges": path}
+print(a_star(data["graph"], "northEntrance", "office of the vc"))

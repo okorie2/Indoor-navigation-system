@@ -44,3 +44,17 @@ def get_path_with_edges(start: str, end: str):
         return {"path": path, "message": "Path found successfully"}
     else:
         return {"path": None, "message": "No path found"}
+
+
+@app.get("/searchNodes")
+def search_nodes(query: str):
+    matches = [
+        node
+        for node in data["graph"]
+        if query.lower() in node.lower()  # like JS includes
+    ]
+
+    if matches:
+        print(f"Matches for '{query}': {matches}")
+        return {"nodes": matches}
+    return {"message": "Location not found"}

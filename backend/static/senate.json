@@ -1407,7 +1407,7 @@
             "distance": 5.64
           },
           {
-            "dir": "south",
+            "dir": "north",
             "distance": 7.98
           }
         ]
@@ -1429,11 +1429,11 @@
         "weight": 2,
         "path": [
           {
-            "dir": "north",
+            "dir": "west",
             "distance": 5.64
           },
           {
-            "dir": "east",
+            "dir": "north",
             "distance": 7.98
           }
         ]
@@ -2249,7 +2249,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "north",
+            "dir": "south",
             "distance": 9.57
           }
         ]

@@ -9,8 +9,18 @@ export interface Connection {
   path: PathStep[];
 }
 
+export interface Route {
+  start: string;
+  edges: Connection[];
+}
+
 export interface FloorPlanData {
   [key: string]: Connection[];
+}
+
+export interface Travelling {
+  meters: number;
+  turn: string;
 }
 
 export interface Position {

@@ -57,3 +57,6 @@ def a_star(graph, start, goal):
                 # print(came_from, "came_from")
 
     return None
+
+
+print(a_star(data["graph"], "northEntrance", "office of the vc"))
