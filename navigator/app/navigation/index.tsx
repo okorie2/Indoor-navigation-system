@@ -225,7 +225,7 @@ export default function NavigationScreen() {
     [getAggregatedEdgePositions, mapData]
   );
 
-  const { userPosition } = useUserJourney(getRouteNodesXYPosition);
+  const { userPosition, heading } = useUserJourney(getRouteNodesXYPosition);
 
   const {
     currentSteps,
@@ -238,6 +238,7 @@ export default function NavigationScreen() {
   } = useRouteSimulator(
     getTurnDirectionsThroughDestinationPath,
     userPosition!,
+    heading!,
     getRouteNodesXYPosition()
   );
 

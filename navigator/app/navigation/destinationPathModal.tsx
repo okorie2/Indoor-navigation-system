@@ -207,7 +207,7 @@ export default function DestinationPathModal(props: {
         {/* Enhanced Route Progress */}
         <View style={styles.routeProgressSection}>
           <View style={styles.progressHeader}>
-            <Text style={styles.sectionTitle}>Route Progress</Text>
+            <Text style={styles.sectionTitle}>Turn Steps</Text>
             <View style={styles.progressStats}>
               <Text style={styles.progressText}>
                 {completedSteps}/{props.currentSteps.length} steps
