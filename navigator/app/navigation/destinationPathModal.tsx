@@ -312,58 +312,119 @@ export default function DestinationPathModal(props: {
           <Text style={styles.sectionTitle}>Your Journey</Text>
           <View style={styles.journeyPath}>
             {journey?.map((path, index) => {
-              const isCompleted = index < props.nodeMainIndex;
-              const isCurrent = index === props.nodeMainIndex;
-              const isDestination = index === journey.length - 1;
+              const segmenetStatus = {
+                isStart: index === 0,
+                isDestination: index === journey.length - 1,
+                isCurrent:
+                  index === props.nodeMainIndex - 1 &&
+                  !props.arrivedDestination,
+                isCompleted:
+                  props.nodeMainIndex - 1 > index ||
+                  (index === props.nodeMainIndex - 1 &&
+                    props.arrivedDestination),
+                hasNext: index < journey.length - 1,
+              };
+
+              const renderDotIcon = () => {
+                if (segmenetStatus.isStart || segmenetStatus.isDestination) {
+                  return <MapPin size={12} color="#FFFFFF" />;
+                }
+                if (segmenetStatus.isCompleted) {
+                  return <CheckCircle size={12} color="#FFFFFF" />;
+                }
+                return null;
+              };
+
+              const pathLabel = segmenetStatus.isCompleted
+                ? "Path Completed"
+                : segmenetStatus.isCurrent
+                ? "Current Path"
+                : "";
 
               return (
-                <View key={path.to} style={styles.journeyStep}>
-                  <View style={styles.journeyStepIndicator}>
-                    <View
-                      style={[
-                        styles.journeyDot,
-                        isCompleted && styles.journeyDotCompleted,
-                        isCurrent && styles.journeyDotCurrent,
-                        isDestination && styles.journeyDotDestination,
-                      ]}
-                    >
-                      {isCompleted && <CheckCircle size={12} color="#FFFFFF" />}
-                      {isDestination && <MapPin size={12} color="#FFFFFF" />}
-                    </View>
-                    {index <= props.userRoute.edges.length - 1 && (
+                <React.Fragment key={path.to}>
+                  {/* Step Node */}
+                  <View style={styles.journeyStep}>
+                    <View style={styles.journeyStepIndicator}>
                       <View
                         style={[
-                          styles.journeyLine,
-                          isCompleted && styles.journeyLineCompleted,
+                          styles.journeyDot,
+                          segmenetStatus.isStart && styles.journeyDotStart,
+                          segmenetStatus.isDestination &&
+                            styles.journeyDotDestination,
+                          segmenetStatus.isCurrent &&
+                            !segmenetStatus.isStart &&
+                            !segmenetStatus.isDestination &&
+                            styles.journeyDotCurrent,
+                          segmenetStatus.isCompleted &&
+                            !segmenetStatus.isStart &&
+                            !segmenetStatus.isDestination &&
+                            !segmenetStatus.isCurrent &&
+                            styles.journeyDotCompleted,
                         ]}
-                      />
-                    )}
-                  </View>
-                  <View style={styles.journeyStepContent}>
-                    <Text
-                      style={[
-                        styles.journeyStepText,
-                        isCurrent && styles.journeyStepTextCurrent,
-                        isDestination && styles.journeyStepTextDestination,
-                      ]}
-                    >
-                      {path.to}
-                    </Text>
-                    {isDestination && (
-                      <Text style={styles.destinationLabel}>
-                        Final Destination
+                      >
+                        {renderDotIcon()}
+                      </View>
+                    </View>
+                    <View style={styles.journeyStepContent}>
+                      <Text
+                        style={[
+                          styles.journeyStepText,
+                          segmenetStatus.isStart && styles.journeyStepTextStart,
+                          segmenetStatus.isDestination &&
+                            styles.journeyStepTextDestination,
+                          segmenetStatus.isCurrent &&
+                            styles.journeyStepTextCurrent,
+                        ]}
+                      >
+                        {path.to}
                       </Text>
-                    )}
-                    {isCurrent && (
-                      <Text style={styles.currentLabel}>
-                        {props.arrivedDestination ? "Arrived" : "In Progress"}{" "}
-                      </Text>
-                    )}
-                    {isCompleted && (
-                      <Text style={styles.completedLabel}>Completed</Text>
-                    )}
+                      {segmenetStatus.isDestination && (
+                        <>
+                          <Text style={styles.destinationLabel}>
+                            Final Destination
+                          </Text>
+                          {props.arrivedDestination && (
+                            <Text style={styles.currentLabel}>Arrived</Text>
+                          )}
+                        </>
+                      )}
+                      {segmenetStatus.isStart && (
+                        <Text style={styles.startLabel}>Starting Point</Text>
+                      )}
+                    </View>
                   </View>
-                </View>
+
+                  {/* Segment Between Steps */}
+                  {segmenetStatus.hasNext && (
+                    <View style={styles.pathSegment}>
+                      <View style={styles.pathSegmentIndicator}>
+                        <View
+                          style={[
+                            styles.journeyLine,
+                            segmenetStatus.isCompleted &&
+                              styles.journeyLineCompleted,
+                            segmenetStatus.isCurrent &&
+                              styles.journeyLineCurrent,
+                          ]}
+                        />
+                      </View>
+                      <View style={styles.pathSegmentContent}>
+                        <Text
+                          style={
+                            segmenetStatus.isCompleted
+                              ? styles.completedLabel
+                              : segmenetStatus.isCurrent
+                              ? styles.currentLabel
+                              : styles.upcomingLabel
+                          }
+                        >
+                          {pathLabel}
+                        </Text>
+                      </View>
+                    </View>
+                  )}
+                </React.Fragment>
               );
             })}
           </View>
