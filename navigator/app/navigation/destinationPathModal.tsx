@@ -20,6 +20,7 @@ import {
 } from "lucide-react-native";
 import { Travelling, Route } from "../_types";
 import { styles } from "./styles/destinationParthStyles";
+import { CORRECTIBLE_DEVIATION } from "@/constants/navigation";
 
 export default function DestinationPathModal(props: {
   toggleModal: () => void;
@@ -28,26 +29,28 @@ export default function DestinationPathModal(props: {
   currentLocation: string;
   userRoute: Route;
   currentSteps: Travelling[];
-  currentPathIndex: number;
+  nodeMainIndex: number;
+  nodeSubIndex: number;
   isOnTrack: boolean;
   deviationDistance: number;
   messaging: string;
+  arrivedDestination: boolean;
 }) {
   // Mock states for demonstration - these would come from your navigation logic
 
-  const currentStep = props.currentSteps[0]; // Current navigation step
-  const completedSteps = Math.floor(props.currentPathIndex * 0.6); // Mock completion
+  const completedSteps = 0; // Mock completion
 
   // Course correction logic
-  const needsReplanning = props.deviationDistance >= 10;
+  const needsReplanning = props.deviationDistance >= CORRECTIBLE_DEVIATION;
   const correctionSteps = [
     { direction: "Turn left", distance: 3, icon: TurnLeft },
     { direction: "Walk straight", distance: 5, icon: ArrowUp },
     { direction: "Turn right", distance: 0, icon: TurnRight },
   ];
+  const journey = [{ to: props.userRoute.start }, ...props.userRoute.edges];
 
   const getNavigationMessage = () => {
-    if (props.isOnTrack && currentStep) {
+    if (props.isOnTrack) {
       return {
         type: "success",
         icon: CheckCircle,
@@ -230,9 +233,9 @@ export default function DestinationPathModal(props: {
             style={styles.stepsContainer}
           >
             {props.currentSteps.map((step, index) => {
-              const isCompleted = index < completedSteps;
-              const isCurrent = index === completedSteps;
-              const isUpcoming = index > completedSteps;
+              const isCompleted = index < props.nodeSubIndex;
+              const isCurrent = index === props.nodeSubIndex;
+              const isUpcoming = index > props.nodeSubIndex;
 
               return (
                 <View key={step.turn + index} style={styles.stepContainer}>
@@ -242,6 +245,9 @@ export default function DestinationPathModal(props: {
                         styles.stepNode,
                         isCompleted && styles.stepNodeCompleted,
                         isCurrent && styles.stepNodeCurrent,
+                        isCurrent &&
+                          props.arrivedDestination &&
+                          styles.stepNodeCompleted,
                         isUpcoming && styles.stepNodeUpcoming,
                       ]}
                     >
@@ -261,7 +267,9 @@ export default function DestinationPathModal(props: {
                     <Text
                       style={[
                         styles.stepDirection,
-                        isCurrent && styles.stepDirectionCurrent,
+                        isCurrent &&
+                          !props.arrivedDestination &&
+                          styles.stepDirectionCurrent,
                       ]}
                     >
                       {step.turn}
@@ -284,8 +292,7 @@ export default function DestinationPathModal(props: {
                 <MapPin size={16} color="#FFFFFF" />
               </View>
               <Text style={styles.destinationText}>
-                {props.userRoute?.edges?.[props.currentPathIndex]?.to ||
-                  "Destination"}
+                {journey?.[props.nodeMainIndex]?.to}
               </Text>
             </View>
           </ScrollView>
@@ -304,63 +311,61 @@ export default function DestinationPathModal(props: {
         <View style={styles.journeySection}>
           <Text style={styles.sectionTitle}>Your Journey</Text>
           <View style={styles.journeyPath}>
-            {[{ to: props.userRoute.start }, ...props.userRoute.edges]?.map(
-              (path, index) => {
-                const isCompleted = index < props.currentPathIndex;
-                const isCurrent = index === props.currentPathIndex;
-                const isDestination = index === props.userRoute.edges.length;
+            {journey?.map((path, index) => {
+              const isCompleted = index < props.nodeMainIndex;
+              const isCurrent = index === props.nodeMainIndex;
+              const isDestination = index === journey.length - 1;
 
-                return (
-                  <View key={path.to} style={styles.journeyStep}>
-                    <View style={styles.journeyStepIndicator}>
+              return (
+                <View key={path.to} style={styles.journeyStep}>
+                  <View style={styles.journeyStepIndicator}>
+                    <View
+                      style={[
+                        styles.journeyDot,
+                        isCompleted && styles.journeyDotCompleted,
+                        isCurrent && styles.journeyDotCurrent,
+                        isDestination && styles.journeyDotDestination,
+                      ]}
+                    >
+                      {isCompleted && <CheckCircle size={12} color="#FFFFFF" />}
+                      {isDestination && <MapPin size={12} color="#FFFFFF" />}
+                    </View>
+                    {index <= props.userRoute.edges.length - 1 && (
                       <View
                         style={[
-                          styles.journeyDot,
-                          isCompleted && styles.journeyDotCompleted,
-                          isCurrent && styles.journeyDotCurrent,
-                          isDestination && styles.journeyDotDestination,
+                          styles.journeyLine,
+                          isCompleted && styles.journeyLineCompleted,
                         ]}
-                      >
-                        {isCompleted && (
-                          <CheckCircle size={12} color="#FFFFFF" />
-                        )}
-                        {isDestination && <MapPin size={12} color="#FFFFFF" />}
-                      </View>
-                      {index < props.userRoute.edges.length - 1 && (
-                        <View
-                          style={[
-                            styles.journeyLine,
-                            isCompleted && styles.journeyLineCompleted,
-                          ]}
-                        />
-                      )}
-                    </View>
-                    <View style={styles.journeyStepContent}>
-                      <Text
-                        style={[
-                          styles.journeyStepText,
-                          isCurrent && styles.journeyStepTextCurrent,
-                          isDestination && styles.journeyStepTextDestination,
-                        ]}
-                      >
-                        {path.to}
-                      </Text>
-                      {isDestination && (
-                        <Text style={styles.destinationLabel}>
-                          Final Destination
-                        </Text>
-                      )}
-                      {isCurrent && (
-                        <Text style={styles.currentLabel}>In Progress</Text>
-                      )}
-                      {isCompleted && (
-                        <Text style={styles.completedLabel}>Completed</Text>
-                      )}
-                    </View>
+                      />
+                    )}
                   </View>
-                );
-              }
-            )}
+                  <View style={styles.journeyStepContent}>
+                    <Text
+                      style={[
+                        styles.journeyStepText,
+                        isCurrent && styles.journeyStepTextCurrent,
+                        isDestination && styles.journeyStepTextDestination,
+                      ]}
+                    >
+                      {path.to}
+                    </Text>
+                    {isDestination && (
+                      <Text style={styles.destinationLabel}>
+                        Final Destination
+                      </Text>
+                    )}
+                    {isCurrent && (
+                      <Text style={styles.currentLabel}>
+                        {props.arrivedDestination ? "Arrived" : "In Progress"}{" "}
+                      </Text>
+                    )}
+                    {isCompleted && (
+                      <Text style={styles.completedLabel}>Completed</Text>
+                    )}
+                  </View>
+                </View>
+              );
+            })}
           </View>
         </View>
 
