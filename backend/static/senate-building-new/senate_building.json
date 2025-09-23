@@ -1,0 +1,4046 @@
+{
+  "building": "Senate",
+  "floors": {
+    "F0": {
+      "nodes": {
+        "northEntrance": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "southEntrance": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "Reception": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "spine_S": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "spine_C": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "spine_N": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "eastCorridor": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "westCorridor": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "lift_F0_North": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "lift_F0_West": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "staircase_F0_east": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "staircase_F0_west": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "Toilets_F0": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "Catering_Servery_Space_F0": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "SN001_Bloomberg_Finance_Lab": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "SN002": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "SN003": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "Research_Enterprise": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "plantRoom_SN005": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "foodPreparationArea": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        },
+        "emergencyExit": {
+          "x": 0,
+          "y": 0,
+          "floor": "F0",
+          "building": "Senate"
+        }
+      },
+      "graph": {
+        "southEntrance": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "spine_S": [
+          {
+            "to": "southEntrance",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "spine_C": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Reception",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "spine_N": [
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "northEntrance",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F0_North",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "northEntrance": [
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Reception": [
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "eastCorridor": [
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Toilets_F0",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Catering_Servery_Space_F0",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN001_Bloomberg_Finance_Lab",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN002",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN003",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Research_Enterprise",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "staircase_F0_east",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Toilets_F0": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Catering_Servery_Space_F0": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN001_Bloomberg_Finance_Lab": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN002": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN003": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Research_Enterprise": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "staircase_F0_east": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "staircase_F1_east",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "up",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "westCorridor": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F0_West",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "staircase_F0_west",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "plantRoom_SN005",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "foodPreparationArea",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "emergencyExit",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "lift_F0_West": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F1_West",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "up",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "staircase_F0_west": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "staircase_F1_west",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "up",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "plantRoom_SN005": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "foodPreparationArea": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "emergencyExit": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "lift_F0_North": [
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F1_North",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "up",
+                "distance": 0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "F1": {
+      "nodes": {
+        "spine_S": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "spine_C": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "spine_N": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "eastCorridor": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "westCorridor": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "northEntrance_F1": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "southEntrance_F1": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "lift_F1_North": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "lift_F1_West": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "staircase_F1_east": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "staircase_F1_west": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "Reception_F1": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "Toilets_F1": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "Catering_Servery_Space_F1": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "Research_Students_F1": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "Research_Enterprise_F1": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "Morley_Room": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "External_Terrace_F1": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "Facilities_Back_of_House_F1": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "General_Teaching_F1": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "Academic_Workspace_F1": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "Office_of_the_Vice_Chancellor_F1": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "SN101": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "SN102": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "SN103": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "SN104": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "SN105": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "SN106": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "SN107": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "SN108": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "SN109": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        },
+        "SN110": {
+          "x": 0,
+          "y": 0,
+          "floor": "F1",
+          "building": "Senate"
+        }
+      },
+      "graph": {
+        "southEntrance_F1": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "spine_S": [
+          {
+            "to": "southEntrance_F1",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "spine_C": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Reception_F1",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "spine_N": [
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "northEntrance_F1",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F1_North",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "northEntrance_F1": [
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Reception_F1": [
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "eastCorridor": [
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Toilets_F1",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Catering_Servery_Space_F1",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Research_Students_F1",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Research_Enterprise_F1",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Morley_Room",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "External_Terrace_F1",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "staircase_F1_east",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN101",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN102",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN103",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN104",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN105",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN106",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN107",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN108",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN109",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN110",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Toilets_F1": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Catering_Servery_Space_F1": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Research_Students_F1": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Research_Enterprise_F1": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Morley_Room": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "External_Terrace_F1": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "staircase_F1_east": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F2_east",
+            "weight": 0,
+            "path": [{ "dir": "up", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F0_east",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+        "westCorridor": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F1_West",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "staircase_F1_west",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Facilities_Back_of_House_F1",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "General_Teaching_F1",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Academic_Workspace_F1",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Office_of_the_Vice_Chancellor_F1",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Facilities_Back_of_House_F1": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "General_Teaching_F1": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Academic_Workspace_F1": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Office_of_the_Vice_Chancellor_F1": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "lift_F1_West": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F2_West",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "up",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F0_West",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "down",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "staircase_F1_west": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F2_west",
+            "weight": 0,
+            "path": [{ "dir": "up", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F0_west",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+        "lift_F1_North": [
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F2_North",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "up",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F0_North",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "down",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN101": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN102": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN103": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN104": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN105": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN106": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN107": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN108": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN109": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN110": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "F2": {
+      "nodes": {
+        "spine_S": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "spine_C": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "spine_N": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "eastCorridor": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "westCorridor": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "northEntrance_F2": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "southEntrance_F2": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "lift_F2_North": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "lift_F2_West": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "staircase_F2_east": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "staircase_F2_west": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "Research_Students_F2": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "Research_Enterprise_F2": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "External_Terrace_F2": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "Facilities_Back_of_House_F2": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "General_Teaching_F2": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "Academic_Workspace_F2": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "Office_of_the_Vice_Chancellor_F2": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN201": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN202": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN203": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN204": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN205": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN206": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN207": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN208": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN209": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN210": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN211": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN212": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN213": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN214": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        },
+        "SN215": {
+          "x": 0,
+          "y": 0,
+          "floor": "F2",
+          "building": "Senate"
+        }
+      },
+      "graph": {
+        "southEntrance_F2": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "spine_S": [
+          {
+            "to": "southEntrance_F2",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "spine_C": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "spine_N": [
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "northEntrance_F2",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F2_North",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "northEntrance_F2": [
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "eastCorridor": [
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Toilets_F2",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Catering_Servery_Space_F2",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Research_Students_F2",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Research_Enterprise_F2",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "External_Terrace_F2",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "staircase_F2_east",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN201",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN202",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN203",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN204",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN205",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN206",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN207",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN208",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN209",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN210",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN211",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN212",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN213",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN214",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN215",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Toilets_F2": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Catering_Servery_Space_F2": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Research_Students_F2": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Research_Enterprise_F2": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "External_Terrace_F2": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "staircase_F2_east": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F3_east",
+            "weight": 0,
+            "path": [{ "dir": "up", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F1_east",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+        "westCorridor": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F2_West",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "staircase_F2_west",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Facilities_Back_of_House_F2",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "General_Teaching_F2",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Academic_Workspace_F2",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Office_of_the_Vice_Chancellor_F2",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Facilities_Back_of_House_F2": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "General_Teaching_F2": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Academic_Workspace_F2": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Office_of_the_Vice_Chancellor_F2": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "lift_F2_West": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "lift_F3_West",
+            "weight": 0,
+            "path": [{ "dir": "up", "distance": 0 }]
+          },
+          {
+            "to": "lift_F1_West",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+        "staircase_F2_west": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F3_west",
+            "weight": 0,
+            "path": [{ "dir": "up", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F1_west",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+        "lift_F2_North": [
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "lift_F3_North",
+            "weight": 0,
+            "path": [{ "dir": "up", "distance": 0 }]
+          },
+          {
+            "to": "lift_F1_North",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+        "SN201": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN202": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN203": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN204": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN205": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN206": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN207": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN208": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN209": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN210": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN211": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN212": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN213": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN214": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN215": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "F3": {
+      "nodes": {
+        "spine_S": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "spine_C": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "spine_N": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "eastCorridor": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "westCorridor": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "northEntrance_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "southEntrance_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "lift_F3_North": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "lift_F3_West": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "staircase_F3_east": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "staircase_F3_west": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "Toilets_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "Catering_Servery_Space_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "Research_Students_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "Research_Enterprise_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "Facilities_Back_of_House_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "General_Teaching_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "Academic_Workspace_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "Office_of_the_Vice_Chancellor_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "Meeting_Rooms_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "Collaboration_Circulation_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "External_Terrace_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "Void_F3": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN301": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN302": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN303": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN304": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN305": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN306": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN307": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN308": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN309": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN310": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN311": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN312": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN313": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN314": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        },
+        "SN315": {
+          "x": 0,
+          "y": 0,
+          "floor": "F3",
+          "building": "Senate"
+        }
+      },
+      "graph": {
+        "southEntrance_F3": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "spine_S": [
+          {
+            "to": "southEntrance_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "spine_C": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "spine_N": [
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "northEntrance_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "north",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F3_North",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "northEntrance_F3": [
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "south",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "eastCorridor": [
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Toilets_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Catering_Servery_Space_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Research_Students_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Research_Enterprise_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "External_Terrace_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Meeting_Rooms_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Collaboration_Circulation_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "staircase_F3_east",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN301",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN302",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN303",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN304",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN305",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN306",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN307",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN308",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN309",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN310",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN311",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN312",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN313",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN314",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "SN315",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Toilets_F3": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Catering_Servery_Space_F3": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Research_Students_F3": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Research_Enterprise_F3": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "External_Terrace_F3": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Meeting_Rooms_F3": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Collaboration_Circulation_F3": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "staircase_F3_east": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F4_east",
+            "weight": 0,
+            "path": [{ "dir": "up", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F2_east",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+        "westCorridor": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "lift_F3_West",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "staircase_F3_west",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Facilities_Back_of_House_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "General_Teaching_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Academic_Workspace_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          },
+          {
+            "to": "Office_of_the_Vice_Chancellor_F3",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Facilities_Back_of_House_F3": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "General_Teaching_F3": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Academic_Workspace_F3": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "Office_of_the_Vice_Chancellor_F3": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "east",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "lift_F3_West": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "lift_F4_West",
+            "weight": 0,
+            "path": [{ "dir": "up", "distance": 0 }]
+          },
+          {
+            "to": "lift_F2_West",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+        "staircase_F3_west": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F4_west",
+            "weight": 0,
+            "path": [{ "dir": "up", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F2_west",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+        "lift_F3_North": [
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "lift_F4_North",
+            "weight": 0,
+            "path": [{ "dir": "up", "distance": 0 }]
+          },
+          {
+            "to": "lift_F2_North",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+        "SN301": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN302": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN303": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN304": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN305": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN306": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN307": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN308": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN309": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN310": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN311": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN312": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN313": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN314": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ],
+        "SN315": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [
+              {
+                "dir": "west",
+                "distance": 0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "F4": {
+      "nodes": {
+        "spine_S": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+        "spine_C": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+        "spine_N": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+
+        "eastCorridor": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+        "westCorridor": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+
+        "northEntrance_F4": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+        "southEntrance_F4": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+
+        "lift_F4_North": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+        "lift_F4_West": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+        "staircase_F4_east": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+        "staircase_F4_west": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+        "Research_Students_F4": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+        "Research_Enterprise_F4": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+        "External_Terrace_F4": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+
+        "Facilities_Back_of_House_F4": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+        "General_Teaching_F4": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+        "Academic_Workspace_F4": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+        "Office_of_the_Vice_Chancellor_F4": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+
+        "Meeting_Rooms_F4": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+        "Collaboration_Circulation_F4": {
+          "x": 0,
+          "y": 0,
+          "floor": "F4",
+          "building": "Senate"
+        },
+        "Void_F4": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+
+        "SN401": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+        "SN402": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+        "SN403": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+        "SN404": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+        "SN405": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+        "SN406": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" },
+        "SN407": { "x": 0, "y": 0, "floor": "F4", "building": "Senate" }
+      },
+      "graph": {
+        "southEntrance_F4": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [{ "dir": "north", "distance": 0 }]
+          }
+        ],
+        "spine_S": [
+          {
+            "to": "southEntrance_F4",
+            "weight": 0,
+            "path": [{ "dir": "south", "distance": 0 }]
+          },
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [{ "dir": "north", "distance": 0 }]
+          },
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "spine_C": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [{ "dir": "south", "distance": 0 }]
+          },
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [{ "dir": "north", "distance": 0 }]
+          },
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          }
+        ],
+        "spine_N": [
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [{ "dir": "south", "distance": 0 }]
+          },
+          {
+            "to": "northEntrance_F4",
+            "weight": 0,
+            "path": [{ "dir": "north", "distance": 0 }]
+          },
+          {
+            "to": "lift_F4_North",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          }
+        ],
+        "northEntrance_F4": [
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [{ "dir": "south", "distance": 0 }]
+          }
+        ],
+
+        "eastCorridor": [
+          {
+            "to": "spine_C",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "Toilets_F4",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "Catering_Servery_Space_F4",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "Research_Students_F4",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "Research_Enterprise_F4",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "External_Terrace_F4",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "Meeting_Rooms_F4",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "Collaboration_Circulation_F4",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F4_east",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+
+          {
+            "to": "SN401",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "SN402",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "SN403",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "SN404",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "SN405",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "SN406",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "SN407",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          }
+        ],
+        "Toilets_F4": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "Catering_Servery_Space_F4": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "Research_Students_F4": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "Research_Enterprise_F4": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "External_Terrace_F4": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "Meeting_Rooms_F4": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "Collaboration_Circulation_F4": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "staircase_F4_east": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F3_east",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+
+        "westCorridor": [
+          {
+            "to": "spine_S",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "lift_F4_West",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F4_west",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "Facilities_Back_of_House_F4",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "General_Teaching_F4",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "Academic_Workspace_F4",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "Office_of_the_Vice_Chancellor_F4",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "Facilities_Back_of_House_F4": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          }
+        ],
+        "General_Teaching_F4": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          }
+        ],
+        "Academic_Workspace_F4": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          }
+        ],
+        "Office_of_the_Vice_Chancellor_F4": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          }
+        ],
+
+        "lift_F4_West": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "lift_F3_West",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+        "staircase_F4_west": [
+          {
+            "to": "westCorridor",
+            "weight": 0,
+            "path": [{ "dir": "east", "distance": 0 }]
+          },
+          {
+            "to": "staircase_F3_west",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+        "lift_F4_North": [
+          {
+            "to": "spine_N",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          },
+          {
+            "to": "lift_F3_North",
+            "weight": 0,
+            "path": [{ "dir": "down", "distance": 0 }]
+          }
+        ],
+
+        "SN401": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "SN402": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "SN403": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "SN404": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "SN405": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "SN406": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ],
+        "SN407": [
+          {
+            "to": "eastCorridor",
+            "weight": 0,
+            "path": [{ "dir": "west", "distance": 0 }]
+          }
+        ]
+      }
+    }
+  }
+}
