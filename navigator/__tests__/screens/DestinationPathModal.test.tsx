@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react-native";
-import DestinationPathModal from "./destinationPathModal";
-import { Travelling, Route } from "../_types";
+import DestinationPathModal from "@/app/navigation/destinationPathModal";
+import { Travelling, Route } from "@/app/_types";
 
 // Mock the constants
 jest.mock("@/constants/navigation", () => ({

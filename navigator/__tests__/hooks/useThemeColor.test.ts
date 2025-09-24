@@ -1,12 +1,12 @@
-import { useThemeColor } from "./useThemeColor"; // adjust path
+import { useThemeColor } from "@/hooks/useThemeColor"; // adjust path
 import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
-// Mock the useColorScheme hook
-jest.mock("./useColorScheme", () => ({
-  useColorScheme: jest.fn(),
-}));
+// // Mock the useColorScheme hook
+// jest.mock("../../hooks/useColorScheme", () => ({
+//   useColorScheme: jest.fn(),
+// }));
 
-import { useColorScheme } from "./useColorScheme";
 
 describe("useThemeColor", () => {
   beforeEach(() => {

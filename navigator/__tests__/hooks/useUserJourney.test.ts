@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import { useUserJourney } from "./useUserJourney"; 
+import { useUserJourney } from "@/hooks/useUserJourney"; 
 jest.useFakeTimers();
 
 describe("useUserJourney", () => {
