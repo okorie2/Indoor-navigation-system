@@ -1,6 +1,5 @@
 import * as Location from "expo-location";
-import React from "react";
-import { useEffect } from "react";
+import React , { useEffect }from "react";
 
 export default function useHeading() {
   const [trueHeading, setTrueHeading] = React.useState<number | null>(null);

@@ -17,5 +17,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "jest.config.js"
-  ]
+, "jest.setup.ts"  ]
 }

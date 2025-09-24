@@ -1,6 +1,13 @@
-import { renderHook, act } from "@testing-library/react";
-import useHeading from "@/hooks/useHeading";
 import * as Location from "expo-location";
+import { renderHook, act } from "@testing-library/react-hooks";
+import useHeading from "@/hooks/useHeading";
+
+// Mock expo-location
+jest.mock("expo-location", () => ({
+  requestForegroundPermissionsAsync: jest.fn(),
+  watchHeadingAsync: jest.fn(),
+}));
+
 
 describe("useHeading", () => {
   beforeEach(() => {
@@ -18,6 +25,7 @@ describe("useHeading", () => {
     });
 
     renderHook(() => useHeading());
+
     expect(Location.watchHeadingAsync).not.toHaveBeenCalled();
   });
 
@@ -48,7 +56,7 @@ describe("useHeading", () => {
     });
 
     const removeMock = jest.fn();
-    (Location.watchHeadingAsync as jest.Mock).mockResolvedValueOnce(() => ({
+    (Location.watchHeadingAsync as jest.Mock).mockImplementationOnce(() => ({
       remove: removeMock,
     }));
 

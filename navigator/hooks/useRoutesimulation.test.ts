@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react";
+import { renderHook } from "@testing-library/react-hooks";
 import { useRouteSimulator } from "./useRoutesimulation";
 import { Position, Travelling } from "@/app/_types";
 
