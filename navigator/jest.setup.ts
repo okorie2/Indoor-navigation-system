@@ -1,12 +1,14 @@
 import "@testing-library/jest-native/extend-expect";
 
-// 👇 mock expo-location globally so native code never runs
+// 🔹 Mock Expo modules that cause "winter runtime" crash
+jest.mock("expo", () => ({}));
+jest.mock("expo-modules-core", () => ({}));
 jest.mock("expo-location", () => ({
   requestForegroundPermissionsAsync: jest.fn(),
   watchHeadingAsync: jest.fn(),
 }));
 
-// Optional: silence noisy console.error logs during test
+// Optional: silence console warnings
 const originalError = console.error;
 beforeAll(() => {
   console.error = (...args) => {
