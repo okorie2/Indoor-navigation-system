@@ -4,5 +4,3 @@ backend/__pycache__/
 backend/__pycache__/
 
 *.py[cod]
-
-node_modules/
