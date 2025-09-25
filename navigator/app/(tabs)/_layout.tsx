@@ -25,7 +25,7 @@ export default function TabLayout() {
           tabBarIcon: ({ size, color }) => <MapPin size={size} color={color} />,
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="search"
         options={{
           title: "Search",
@@ -40,7 +40,7 @@ export default function TabLayout() {
             <Settings size={size} color={color} />
           ),
         }}
-      />
+      /> */}
     </Tabs>
   );
 }

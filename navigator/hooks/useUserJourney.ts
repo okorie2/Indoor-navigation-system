@@ -23,95 +23,87 @@ const mstaticRoute: Position[][] = [
   ],
 ];
 
-const t = [
-  [{ meters: "21.0", turn: "Right" }],
-  [
-    { meters: "14.5", turn: "Right" },
-    { meters: "13.2", turn: "Right" },
-    { meters: "9.3", turn: "Left" },
+const l = {
+  start: "northEntrance",
+  edges: [
+    {
+      to: "southEnthrance",
+      weight: 2,
+      path: [{ dir: "north", distance: 19.62 }],
+    },
+    {
+      to: "lift_F0_West",
+      weight: 2,
+      path: [
+        { dir: "north", distance: 1 },
+        { dir: "west", distance: 1 },
+        { dir: "south", distance: 1 },
+      ],
+    },
+    { to: "lift_F4_West", weight: 1, path: [{ dir: "north", distance: 1 }] },
+    {
+      to: "passage_F4_west",
+      weight: 1,
+      path: [{ dir: "west", distance: 1.5 }],
+    },
+    {
+      to: "office of the vc",
+      weight: 1,
+      path: [{ dir: "north", distance: 2.73 }],
+    },
   ],
-];
+};
+
 export function useUserJourney(getRouteNodesXYPosition: () => Position[][]) {
   const [userPosition, setUserPosition] = useState<Position | null>(null);
-  const [phase, setPhase] = useState<"onPath" | "derailed" | "resumed">(
-    "onPath"
-  );
-  const [stepIndex, setStepIndex] = useState(0);
+  const [heading, setHeading] = useState<Position | null>(null);
   const staticRoute = React.useMemo(
     () => getRouteNodesXYPosition(),
     [getRouteNodesXYPosition]
   );
 
-  // Flatten the route into a single sequence of positions
-
-  // useEffect(() => {
-  //   if (staticRoute.length === 0) return;
-  //   const flatRoute = staticRoute.flat();
-
-  //   // Phase 1: Start on the path
-  //   setUserPosition(flatRoute[0]);
-
-  //   const timers: ReturnType<typeof setTimeout>[] = [];
-
-  //   // Phase 2: After 5s, derail
-  //   timers.push(
-  //     setTimeout(() => {
-  //       setPhase("derailed");
-  //       setUserPosition({
-  //         x: flatRoute[0].x + 500, // arbitrary offset to simulate derail
-  //         y: flatRoute[0].y + 500,
-  //       });
-  //     }, 5000)
-  //   );
-
-  //   // Phase 3: After 10s, resume route and continue
-  //   timers.push(
-  //     setTimeout(() => {
-  //       setPhase("resumed");
-  //       setStepIndex(1);
-  //       setUserPosition(flatRoute[1]);
-  //     }, 10000)
-  //   );
-
-  //   // Walk through the remaining steps every 5s after resuming
-  //   flatRoute.slice(2).forEach((pos, i) => {
-  //     timers.push(
-  //       setTimeout(() => {
-  //         setStepIndex(2 + i);
-  //         setUserPosition(pos);
-  //       }, 10000 + (i + 1) * 5000)
-  //     );
-  //   });
-
-  //   return () => {
-  //     timers.forEach(clearTimeout);
-  //   };
-  // }, [staticRoute]);
-  //CASE:continuous walk along the route, no derail
   useEffect(() => {
     if (staticRoute.length === 0) return;
 
     const flatRoute = staticRoute.flat();
-    if (flatRoute.length === 0) return;
+    if (flatRoute.length < 2) return;
 
-    // Total journey time = 20s
-    const totalDuration = 60000;
-    const stepDuration = totalDuration / flatRoute.length;
-
-    let step = 0;
-    setUserPosition(flatRoute[step]);
+    let segmentIndex = 0;
+    let progress = 0;
+    const stepSize = 0.02; // 50 steps per segment
+    const stepInterval = 1200; // ms per step
 
     const interval = setInterval(() => {
-      step++;
-      if (step >= flatRoute.length) {
+      const from = flatRoute[segmentIndex];
+      const to = flatRoute[segmentIndex + 1];
+      if (!to) {
         clearInterval(interval);
         return;
       }
-      setUserPosition(flatRoute[step]);
-    }, stepDuration);
+
+      // Interpolated position
+      const x = from.x + (to.x - from.x) * progress;
+      const y = from.y + (to.y - from.y) * progress;
+      setUserPosition({ x, y, node: progress >= 1 ? to.node : from.node });
+
+      // Compute heading vector (constant for each segment)
+      const dx = to.x - from.x;
+      const dy = to.y - from.y;
+      const len = Math.sqrt(dx * dx + dy * dy);
+      if (len > 0) {
+        setHeading({ x: dx / len, y: dy / len });
+      }
+
+      progress += stepSize;
+      if (progress >= 1) {
+        // move to next segment
+        segmentIndex++;
+        progress = 0;
+      }
+    }, stepInterval);
 
     return () => clearInterval(interval);
   }, [staticRoute]);
 
-  return { userPosition };
+  return { userPosition, heading };
 }

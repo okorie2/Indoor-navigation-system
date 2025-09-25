@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   StatusBar,
 } from "react-native";
+import * as Speech from "expo-speech";
 import {
   X,
   CircleCheck as CheckCircle,
@@ -17,6 +18,8 @@ import {
   ArrowUp,
   AlignLeft as TurnLeft,
   AlignRight as TurnRight,
+  Volume2,
+  VolumeX,
 } from "lucide-react-native";
 import { Travelling, Route } from "../_types";
 import { styles } from "./styles/destinationParthStyles";
@@ -36,8 +39,12 @@ export default function DestinationPathModal(props: {
   messaging: string;
   arrivedDestination: boolean;
 }) {
-  // Mock states for demonstration - these would come from your navigation logic
+  // Voice functionality states
+  const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const lastSpokenMessageRef = useRef<string>("");
 
+  // Mock states for demonstration - these would come from your navigation logic
   const completedSteps = 0; // Mock completion
 
   // Course correction logic
@@ -79,6 +86,94 @@ export default function DestinationPathModal(props: {
 
   const navigationStatus = getNavigationMessage();
 
+  // Voice functionality functions
+  const speak = async (text: string) => {
+    if (!isVoiceEnabled || !text || isSpeaking) return;
+
+    try {
+      setIsSpeaking(true);
+      await Speech.speak(text, {
+        language: "en-US",
+        pitch: 1.0,
+        rate: 0.9,
+        onDone: () => setIsSpeaking(false),
+        onStopped: () => setIsSpeaking(false),
+      });
+    } catch (error) {
+      console.error("Speech error:", error);
+      setIsSpeaking(false);
+    }
+  };
+
+  const stopSpeaking = async () => {
+    try {
+      await Speech.stop();
+      setIsSpeaking(false);
+    } catch (error) {
+      console.error("Stop speech error:", error);
+    }
+  };
+
+  const toggleVoice = () => {
+    if (isVoiceEnabled && isSpeaking) {
+      stopSpeaking();
+    }
+    setIsVoiceEnabled(!isVoiceEnabled);
+  };
+
+  // Generate voice guidance message based on navigation status
+  const getVoiceMessage = () => {
+    if (props.arrivedDestination) {
+      return "You have arrived at your destination. Navigation complete.";
+    }
+
+    if (needsReplanning) {
+      return "You have deviated too far from the route. Please scan a QR code to replan your journey.";
+    }
+
+    if (!props.isOnTrack) {
+      const currentStep = props.currentSteps[props.nodeSubIndex];
+      if (currentStep) {
+        return `Course correction needed. ${currentStep.turn} for ${currentStep.meters} meters to get back on track.`;
+      }
+      return "Course correction needed. Please follow the correction steps on screen.";
+    }
+
+    // On track - provide next step guidance
+    const currentStep = props.currentSteps[props.nodeSubIndex];
+    if (currentStep) {
+      return `Continue ${currentStep.turn} for ${currentStep.meters} meters. You're on the right track.`;
+    }
+
+    return navigationStatus.message;
+  };
+
+  // Effect to speak navigation updates
+  useEffect(() => {
+    if (isVoiceEnabled && !isSpeaking) {
+      const voiceMessage = getVoiceMessage();
+
+      // Only speak if the message has changed to avoid repetition
+      if (voiceMessage && voiceMessage !== lastSpokenMessageRef.current) {
+        lastSpokenMessageRef.current = voiceMessage;
+        speak(voiceMessage);
+      }
+    }
+  }, [
+    props.isOnTrack,
+    props.nodeSubIndex,
+    props.arrivedDestination,
+    needsReplanning,
+    isVoiceEnabled,
+  ]);
+
+  // Cleanup speech on unmount
+  useEffect(() => {
+    return () => {
+      stopSpeaking();
+    };
+  }, []);
+
   return (
     <View style={styles.modalContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#1F2937" />
@@ -94,12 +189,21 @@ export default function DestinationPathModal(props: {
             </Text>
           </View>
         </View>
-        <TouchableOpacity
-          style={styles.closeButton}
-          onPress={props.toggleModal}
-        >
-          <X size={24} color="#6B7280" />
-        </TouchableOpacity>
+        <View style={styles.headerControls}>
+          <TouchableOpacity onPress={toggleVoice} style={styles.voiceButton}>
+            {isVoiceEnabled ? (
+              <Volume2 size={24} color="#4CAF50" />
+            ) : (
+              <VolumeX size={24} color="#999" />
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={props.toggleModal}
+          >
+            <X size={24} color="#6B7280" />
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Prominent Navigation Status Message */}
@@ -207,7 +311,7 @@ export default function DestinationPathModal(props: {
         {/* Enhanced Route Progress */}
         <View style={styles.routeProgressSection}>
           <View style={styles.progressHeader}>
-            <Text style={styles.sectionTitle}>Route Progress</Text>
+            <Text style={styles.sectionTitle}>Turn Steps</Text>
             <View style={styles.progressStats}>
               <Text style={styles.progressText}>
                 {completedSteps}/{props.currentSteps.length} steps
