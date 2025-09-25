@@ -20,6 +20,7 @@ import { getDistance } from "@/utils/getDistance";
 import { SVG_ANGLE_MAP, PX_SCALE, CM_SCALE } from "@/constants/navigation";
 import { normalize } from "@/utils/normalizeVector";
 import { getTurnDirection } from "@/utils/getTurnDirection";
+import { API_URL } from "@/constants";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -47,15 +48,12 @@ export default function NavigationScreen() {
   const getFastestPath = async (startNode: string, endNode: string) => {
     //fetch user path from backend
     try {
-      const response = await axios.get(
-        "http://localhost:8000/pathfindingWithEdges",
-        {
-          params: {
-            start: startNode,
-            end: endNode,
-          },
-        }
-      );
+      const response = await axios.get(`${API_URL}/pathfindingWithEdges`, {
+        params: {
+          start: startNode,
+          end: endNode,
+        },
+      });
       const data = response.data;
       return data.path;
     } catch (error) {
@@ -67,7 +65,7 @@ export default function NavigationScreen() {
   const loadMapData = async () => {
     console.log("loading map data");
     try {
-      const res = await axios.get("http://localhost:8000/static/senate.json");
+      const res = await axios.get(`${API_URL}/static/senate.json`);
       const data = res.data;
       setMapData(data);
     } catch (err) {
@@ -242,6 +240,7 @@ export default function NavigationScreen() {
   React.useEffect(() => {
     loadMapData();
   }, []);
+
   React.useEffect(() => {
     getFastestPath(currentLocation!, destination!).then((data) => {
       setRoute(data);
@@ -254,6 +253,8 @@ export default function NavigationScreen() {
       getAllNodesRelativeToAnchor("northEntrance");
     }
   }, [mapData]);
+
+  console.log(allNodes?.[0], "one");
 
   return (
     <View style={styles.fullScreenContainer}>

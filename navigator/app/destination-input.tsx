@@ -15,6 +15,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { ArrowLeft, MapPin, Navigation, Keyboard } from "lucide-react-native";
 import axios from "axios";
 import { debounce } from "lodash";
+import { API_URL } from "@/constants";
 
 export default function DestinationInputScreen() {
   const { currentLocation } = useLocalSearchParams<{
@@ -36,7 +37,7 @@ export default function DestinationInputScreen() {
   const handleNodeSearch = async (query: string) => {
     setInputHelperText("Searching...");
     try {
-      const response = await axios.get("http://localhost:8000/searchNodes", {
+      const response = await axios.get(`${API_URL}/searchNodes`, {
         params: { query },
       });
 
