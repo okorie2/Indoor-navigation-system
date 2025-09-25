@@ -1,17 +1,12 @@
 // InfiniteGrid.tsx
 import React, { useMemo, useRef, useState } from "react";
-import { View, StyleSheet } from "react-native";
-import Svg, {
-  Defs,
-  Pattern,
-  Path,
-  Rect,
-  G,
-  Circle,
-  Text as SvgText,
-} from "react-native-svg";
+import { View, StyleSheet, Text } from "react-native";
+import Svg, { Defs, Pattern, Path, Rect } from "react-native-svg";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { Position } from "@/app/_types";
+import { MapPin, PersonStandingIcon, ToiletIcon } from "lucide-react-native";
+import StairsIcon from "@/assets/jsx/stairs";
+import OfficeDeskIcon from "@/assets/jsx/office-desk";
 
 type Props = {
   widthPx: number; // e.g. screenWidth - 48
@@ -113,24 +108,17 @@ export default function InfiniteGrid({
   const gridStroke = 1 / scale;
   // console.log(camX, camY, vw, vh, BIG);
 
-  const Nodes = (
-    <>
-      {nodePositions.map((n, i) => (
-        <G key={`main-${n.node}-${i}`}>
-          <Circle cx={n.x} cy={n.y} r={20} fill="tomato" />
-          <SvgText
-            x={n.x + 8}
-            y={n.y}
-            fontSize={12}
-            fill="#111827"
-            alignmentBaseline="middle"
-          >
-            {n.node}
-          </SvgText>
-        </G>
-      ))}
-    </>
-  );
+  // Convert world → screen coordinates
+  const worldToScreen = (x: number, y: number) => {
+    const scaleX = widthPx / vw;
+    const scaleY = heightPx / vh;
+    const uniform = Math.min(scaleX, scaleY);
+    const offsetX = (widthPx - uniform * vw) / 2;
+    const offsetY = (heightPx - uniform * vh) / 2;
+    const screenX = offsetX + (x - camX) * uniform;
+    const screenY = offsetY + (y - camY) * uniform;
+    return { screenX, screenY };
+  };
 
   return (
     <GestureDetector gesture={composed}>
@@ -142,6 +130,7 @@ export default function InfiniteGrid({
           overflow: "hidden",
         }}
       >
+        {/* Grid + user circle */}
         <Svg
           width={widthPx}
           height={heightPx}
@@ -165,9 +154,6 @@ export default function InfiniteGrid({
             </Pattern>
           </Defs>
 
-          <Circle cx={userPosition.x} cy={userPosition.y} r={30} fill="blue" />
-
-          {/* "Infinite" grid: always cover well beyond the current view */}
           <Rect
             x={camX - BIG}
             y={camY - BIG}
@@ -175,9 +161,48 @@ export default function InfiniteGrid({
             height={vh + BIG * 2}
             fill="url(#grid)"
           />
-
-          {Nodes}
         </Svg>
+        {[{ x: userPosition.x, y: userPosition.y }].map((n, i) => {
+          const { screenX, screenY } = worldToScreen(n.x, n.y);
+          return (
+            <View
+              key={`user-${i}`}
+              style={{
+                position: "absolute",
+                left: screenX - 12, // offset so icon is centered
+                top: screenY - 12,
+              }}
+            >
+              <PersonStandingIcon size={36} color="blue" />
+            </View>
+          );
+        })}
+
+        {/* Overlay icons in absolute positions */}
+        {nodePositions.map((n, i) => {
+          const { screenX, screenY } = worldToScreen(n.x, n.y);
+          return (
+            <View
+              key={`node-${i}`}
+              style={{
+                position: "absolute",
+                left: screenX - 12, // offset so icon is centered
+                top: screenY - 12,
+              }}
+            >
+              {n.node?.includes("toilet") ? (
+                <ToiletIcon size={24} color="green" />
+              ) : n.node?.includes("staircase") ? (
+                <StairsIcon width={24} height={24} color="purple" />
+              ) : n.node?.startsWith("SN") ? (
+                <OfficeDeskIcon width={24} height={24} color="orange" />
+              ) : (
+                <MapPin size={24} color="red" />
+              )}
+              <Text style={{ color: "#111827" }}>{n.node}</Text>
+            </View>
+          );
+        })}
       </View>
     </GestureDetector>
   );
