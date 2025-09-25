@@ -13,7 +13,7 @@ import axios from "axios";
 import { Connection, PathStep, Position, Route } from "../_types";
 import InfiniteGrid from "@/components/InfiniteGrid";
 import { getCurrentFloor } from "@/utils/getCurrentfloor";
-import { useRouteSimulator } from "@/hooks/useRoutesimulation";
+import { useRouteNavigator } from "@/hooks/useRouteNavigator";
 import DestinationPathModal from "./destinationPathModal";
 import { useUserJourney } from "@/hooks/useUserJourney";
 import { getDistance } from "@/utils/getDistance";
@@ -235,7 +235,7 @@ export default function NavigationScreen() {
     nodeSubIndex,
     nodeMainIndex,
     arrivedDestination,
-  } = useRouteSimulator(
+  } = useRouteNavigator(
     getTurnDirectionsThroughDestinationPath,
     userPosition!,
     heading!,

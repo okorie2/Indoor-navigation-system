@@ -17,19 +17,6 @@ function normalizeVector(x: number, y: number) {
   return normalize(x, y);
 }
 
-// function getTurnToNextNodeWithTolerance(
-//   userPosition: Position,
-//   heading: Position | null,
-//   nextNode: Position
-// ): string | null {
-//   const userVector = heading ?? { x: 0, y: 0 };
-//   const nextVector = normalizeVector(
-//     nextNode.x - userPosition.x,
-//     nextNode.y - userPosition.y
-//   );
-
-//   return getTurnDirection(userVector, nextVector);
-// }
 function getTurnToNextNodeWithTolerance(
   userPosition: Position,
   heading: Position | null,
@@ -89,7 +76,7 @@ function formatMessaging(
   return `Continue straight for ${Math.round(distance)} meters.`;
 }
 
-export function useRouteSimulator(
+export function useRouteNavigator(
   getTurnDirectionsThroughDestinationPath: () => Travelling[][],
   userPosition: Position,
   heading: Position | null,

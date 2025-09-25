@@ -23,6 +23,37 @@ const mstaticRoute: Position[][] = [
   ],
 ];
 
+const l = {
+  start: "northEntrance",
+  edges: [
+    {
+      to: "southEnthrance",
+      weight: 2,
+      path: [{ dir: "north", distance: 19.62 }],
+    },
+    {
+      to: "lift_F0_West",
+      weight: 2,
+      path: [
+        { dir: "north", distance: 1 },
+        { dir: "west", distance: 1 },
+        { dir: "south", distance: 1 },
+      ],
+    },
+    { to: "lift_F4_West", weight: 1, path: [{ dir: "north", distance: 1 }] },
+    {
+      to: "passage_F4_west",
+      weight: 1,
+      path: [{ dir: "west", distance: 1.5 }],
+    },
+    {
+      to: "office of the vc",
+      weight: 1,
+      path: [{ dir: "north", distance: 2.73 }],
+    },
+  ],
+};
+
 export function useUserJourney(getRouteNodesXYPosition: () => Position[][]) {
   const [userPosition, setUserPosition] = useState<Position | null>(null);
   const [heading, setHeading] = useState<Position | null>(null);
@@ -40,7 +71,7 @@ export function useUserJourney(getRouteNodesXYPosition: () => Position[][]) {
     let segmentIndex = 0;
     let progress = 0;
     const stepSize = 0.02; // 50 steps per segment
-    const stepInterval = 2000; // ms per step
+    const stepInterval = 1200; // ms per step
 
     const interval = setInterval(() => {
       const from = flatRoute[segmentIndex];

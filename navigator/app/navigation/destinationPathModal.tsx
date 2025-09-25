@@ -89,18 +89,18 @@ export default function DestinationPathModal(props: {
   // Voice functionality functions
   const speak = async (text: string) => {
     if (!isVoiceEnabled || !text || isSpeaking) return;
-    
+
     try {
       setIsSpeaking(true);
       await Speech.speak(text, {
-        language: 'en-US',
+        language: "en-US",
         pitch: 1.0,
         rate: 0.9,
         onDone: () => setIsSpeaking(false),
         onStopped: () => setIsSpeaking(false),
       });
     } catch (error) {
-      console.error('Speech error:', error);
+      console.error("Speech error:", error);
       setIsSpeaking(false);
     }
   };
@@ -110,7 +110,7 @@ export default function DestinationPathModal(props: {
       await Speech.stop();
       setIsSpeaking(false);
     } catch (error) {
-      console.error('Stop speech error:', error);
+      console.error("Stop speech error:", error);
     }
   };
 
@@ -126,11 +126,11 @@ export default function DestinationPathModal(props: {
     if (props.arrivedDestination) {
       return "You have arrived at your destination. Navigation complete.";
     }
-    
+
     if (needsReplanning) {
       return "You have deviated too far from the route. Please scan a QR code to replan your journey.";
     }
-    
+
     if (!props.isOnTrack) {
       const currentStep = props.currentSteps[props.nodeSubIndex];
       if (currentStep) {
@@ -138,13 +138,13 @@ export default function DestinationPathModal(props: {
       }
       return "Course correction needed. Please follow the correction steps on screen.";
     }
-    
+
     // On track - provide next step guidance
     const currentStep = props.currentSteps[props.nodeSubIndex];
     if (currentStep) {
       return `Continue ${currentStep.turn} for ${currentStep.meters} meters. You're on the right track.`;
     }
-    
+
     return navigationStatus.message;
   };
 
@@ -152,14 +152,20 @@ export default function DestinationPathModal(props: {
   useEffect(() => {
     if (isVoiceEnabled && !isSpeaking) {
       const voiceMessage = getVoiceMessage();
-      
+
       // Only speak if the message has changed to avoid repetition
       if (voiceMessage && voiceMessage !== lastSpokenMessageRef.current) {
         lastSpokenMessageRef.current = voiceMessage;
         speak(voiceMessage);
       }
     }
-  }, [props.isOnTrack, props.nodeSubIndex, props.arrivedDestination, needsReplanning, isVoiceEnabled]);
+  }, [
+    props.isOnTrack,
+    props.nodeSubIndex,
+    props.arrivedDestination,
+    needsReplanning,
+    isVoiceEnabled,
+  ]);
 
   // Cleanup speech on unmount
   useEffect(() => {
