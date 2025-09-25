@@ -3751,6 +3751,11 @@ expo-router@~6.0.8:
     use-latest-callback "^0.2.1"
     vaul "^1.1.2"
 
+expo-speech@^14.0.7:
+  version "14.0.7"
+  resolved "https://registry.yarnpkg.com/expo-speech/-/expo-speech-14.0.7.tgz#be259723819a0a4471511307d27e51a9985c7dc2"
+  integrity sha512-Ff/seq4tfj6AnGZj8Mj83EGnHj636f2mO30bPr3qQJzF9zn3ArakuUQTK8UrkVy0OS0E12z28d+9Fe+AgSUB0w==
+
 expo-splash-screen@~31.0.10:
   version "31.0.10"
   resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-31.0.10.tgz#e0edd9782715b82a8eed34d5ebde778b79f850b4"
