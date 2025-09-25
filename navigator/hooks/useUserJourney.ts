@@ -22,6 +22,15 @@ const mstaticRoute: Position[][] = [
     { x: 1127.7, y: 0 },
   ],
 ];
+
+const t = [
+  [{ meters: "21.0", turn: "Right" }],
+  [
+    { meters: "14.5", turn: "Right" },
+    { meters: "13.2", turn: "Right" },
+    { meters: "9.3", turn: "Left" },
+  ],
+];
 export function useUserJourney(getRouteNodesXYPosition: () => Position[][]) {
   const [userPosition, setUserPosition] = useState<Position | null>(null);
   const [phase, setPhase] = useState<"onPath" | "derailed" | "resumed">(
@@ -35,49 +44,74 @@ export function useUserJourney(getRouteNodesXYPosition: () => Position[][]) {
 
   // Flatten the route into a single sequence of positions
 
+  // useEffect(() => {
+  //   if (staticRoute.length === 0) return;
+  //   const flatRoute = staticRoute.flat();
+
+  //   // Phase 1: Start on the path
+  //   setUserPosition(flatRoute[0]);
+
+  //   const timers: ReturnType<typeof setTimeout>[] = [];
+
+  //   // Phase 2: After 5s, derail
+  //   timers.push(
+  //     setTimeout(() => {
+  //       setPhase("derailed");
+  //       setUserPosition({
+  //         x: flatRoute[0].x + 500, // arbitrary offset to simulate derail
+  //         y: flatRoute[0].y + 500,
+  //       });
+  //     }, 5000)
+  //   );
+
+  //   // Phase 3: After 10s, resume route and continue
+  //   timers.push(
+  //     setTimeout(() => {
+  //       setPhase("resumed");
+  //       setStepIndex(1);
+  //       setUserPosition(flatRoute[1]);
+  //     }, 10000)
+  //   );
+
+  //   // Walk through the remaining steps every 5s after resuming
+  //   flatRoute.slice(2).forEach((pos, i) => {
+  //     timers.push(
+  //       setTimeout(() => {
+  //         setStepIndex(2 + i);
+  //         setUserPosition(pos);
+  //       }, 10000 + (i + 1) * 5000)
+  //     );
+  //   });
+
+  //   return () => {
+  //     timers.forEach(clearTimeout);
+  //   };
+  // }, [staticRoute]);
+  //CASE:continuous walk along the route, no derail
   useEffect(() => {
     if (staticRoute.length === 0) return;
+
     const flatRoute = staticRoute.flat();
+    if (flatRoute.length === 0) return;
 
-    // Phase 1: Start on the path
-    setUserPosition(flatRoute[0]);
+    // Total journey time = 20s
+    const totalDuration = 60000;
+    const stepDuration = totalDuration / flatRoute.length;
 
-    const timers: ReturnType<typeof setTimeout>[] = [];
+    let step = 0;
+    setUserPosition(flatRoute[step]);
 
-    // Phase 2: After 5s, derail
-    timers.push(
-      setTimeout(() => {
-        setPhase("derailed");
-        setUserPosition({
-          x: flatRoute[0].x + 500, // arbitrary offset to simulate derail
-          y: flatRoute[0].y + 500,
-        });
-      }, 5000)
-    );
+    const interval = setInterval(() => {
+      step++;
+      if (step >= flatRoute.length) {
+        clearInterval(interval);
+        return;
+      }
+      setUserPosition(flatRoute[step]);
+    }, stepDuration);
 
-    // Phase 3: After 10s, resume route and continue
-    timers.push(
-      setTimeout(() => {
-        setPhase("resumed");
-        setStepIndex(1);
-        setUserPosition(flatRoute[1]);
-      }, 10000)
-    );
-
-    // Walk through the remaining steps every 5s after resuming
-    flatRoute.slice(2).forEach((pos, i) => {
-      timers.push(
-        setTimeout(() => {
-          setStepIndex(2 + i);
-          setUserPosition(pos);
-        }, 10000 + (i + 1) * 5000)
-      );
-    });
-
-    return () => {
-      timers.forEach(clearTimeout);
-    };
+    return () => clearInterval(interval);
   }, [staticRoute]);
 
-  return { userPosition, phase, stepIndex };
+  return { userPosition };
 }

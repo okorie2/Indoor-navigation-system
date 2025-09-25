@@ -227,10 +227,12 @@ export default function NavigationScreen() {
 
   const {
     currentSteps,
-    turnMainIndex,
     messaging,
     isUserOnTrack,
     deviationDistance,
+    nodeSubIndex,
+    nodeMainIndex,
+    arrivedDestination,
   } = useRouteSimulator(
     getTurnDirectionsThroughDestinationPath,
     userPosition!,
@@ -296,10 +298,12 @@ export default function NavigationScreen() {
           userRoute={route}
           currentSteps={currentSteps}
           handleGoBack={handleGoBack}
-          currentPathIndex={turnMainIndex}
+          nodeMainIndex={nodeMainIndex}
           isOnTrack={isUserOnTrack}
           deviationDistance={deviationDistance}
           messaging={messaging}
+          nodeSubIndex={nodeSubIndex}
+          arrivedDestination={arrivedDestination}
         />
       </Modal>
     </View>

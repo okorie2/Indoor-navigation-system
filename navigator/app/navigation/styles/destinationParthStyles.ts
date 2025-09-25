@@ -399,7 +399,7 @@ export const styles = StyleSheet.create({
   journeyStep: {
     flexDirection: "row",
     alignItems: "flex-start",
-    marginBottom: 16,
+    marginBottom: 8,
   },
   journeyStepIndicator: {
     alignItems: "center",
@@ -422,14 +422,20 @@ export const styles = StyleSheet.create({
   journeyDotDestination: {
     backgroundColor: "#EF4444",
   },
+  journeyDotStart: {
+    backgroundColor: "#F59E0B",
+  },
   journeyLine: {
     width: 2,
-    height: 24,
+    height: 32,
     backgroundColor: "#E5E7EB",
     marginTop: 4,
   },
   journeyLineCompleted: {
     backgroundColor: "#10B981",
+  },
+  journeyLineCurrent: {
+    backgroundColor: "#3B82F6",
   },
   journeyStepContent: {
     flex: 1,
@@ -447,9 +453,35 @@ export const styles = StyleSheet.create({
   journeyStepTextDestination: {
     color: "#EF4444",
   },
+  journeyStepTextStart: {
+    color: "#F59E0B",
+  },
+
+  // Path segment styles
+  pathSegment: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+    marginLeft: 10,
+  },
+  pathSegmentIndicator: {
+    alignItems: "center",
+    marginRight: 16,
+  },
+  pathSegmentContent: {
+    flex: 1,
+    paddingLeft: 4,
+  },
+
+  // Labels
   destinationLabel: {
     fontSize: 12,
     color: "#EF4444",
+    fontWeight: "500",
+  },
+  startLabel: {
+    fontSize: 12,
+    color: "#F59E0B",
     fontWeight: "500",
   },
   currentLabel: {
@@ -460,6 +492,11 @@ export const styles = StyleSheet.create({
   completedLabel: {
     fontSize: 12,
     color: "#10B981",
+    fontWeight: "500",
+  },
+  upcomingLabel: {
+    fontSize: 12,
+    color: "#6B7280",
     fontWeight: "500",
   },
 
