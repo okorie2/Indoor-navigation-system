@@ -24,6 +24,7 @@ import {
 import { Travelling, Route } from "../_types";
 import { styles } from "./styles/destinationParthStyles";
 import { CORRECTIBLE_DEVIATION } from "@/constants/navigation";
+import { steps } from "react-native-reanimated";
 
 export default function DestinationPathModal(props: {
   toggleModal: () => void;
@@ -337,10 +338,12 @@ export default function DestinationPathModal(props: {
         {/* Enhanced Route Progress */}
         <View style={styles.routeProgressSection}>
           <View style={styles.progressHeader}>
-            <Text style={styles.sectionTitle}>Turn Steps</Text>
+            <Text style={styles.sectionTitle}>Steps to Next Turn</Text>
             <View style={styles.progressStats}>
               <Text style={styles.progressText}>
-                {completedSteps}/{props.currentSteps.length} steps
+                {completedSteps}/
+                {metersToSteps(props.currentSteps[props.nodeSubIndex].meters)}{" "}
+                steps
               </Text>
               <View style={styles.progressBar}>
                 <View
