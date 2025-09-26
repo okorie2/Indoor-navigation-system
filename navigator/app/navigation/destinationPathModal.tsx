@@ -24,6 +24,7 @@ import {
 import { Travelling, Route } from "../_types";
 import { styles } from "./styles/destinationParthStyles";
 import { CORRECTIBLE_DEVIATION } from "@/constants/navigation";
+import { steps } from "react-native-reanimated";
 
 export default function DestinationPathModal(props: {
   toggleModal: () => void;
@@ -47,13 +48,37 @@ export default function DestinationPathModal(props: {
   // Mock states for demonstration - these would come from your navigation logic
   const completedSteps = 0; // Mock completion
 
+  // Helper function to convert meters to steps (average step length ~0.75m)
+  const metersToSteps = (meters: number): number => {
+    return Math.round(meters / 0.75);
+  };
+
+  // Helper function to format distance in steps with appropriate text
+  const formatDistanceInSteps = (meters: number): string => {
+    const steps = metersToSteps(meters);
+    if (steps < 5) {
+      return "a few steps";
+    } else if (steps < 15) {
+      return "about 10 steps";
+    } else if (steps < 25) {
+      return "about 20 steps";
+    } else if (steps < 35) {
+      return "about 30 steps";
+    } else {
+      return `about ${Math.round(steps / 10) * 10} steps`;
+    }
+  };
+
   // Course correction logic
   const needsReplanning = props.deviationDistance >= CORRECTIBLE_DEVIATION;
   const correctionSteps = [
     { direction: "Turn left", distance: 3, icon: TurnLeft },
     { direction: "Walk straight", distance: 5, icon: ArrowUp },
     { direction: "Turn right", distance: 0, icon: TurnRight },
-  ];
+  ].map((step) => ({
+    ...step,
+    stepsText: formatDistanceInSteps(step.distance),
+  }));
   const journey = [{ to: props.userRoute.start }, ...props.userRoute.edges];
 
   const getNavigationMessage = () => {
@@ -134,7 +159,8 @@ export default function DestinationPathModal(props: {
     if (!props.isOnTrack) {
       const currentStep = props.currentSteps[props.nodeSubIndex];
       if (currentStep) {
-        return `Course correction needed. ${currentStep.turn} for ${currentStep.meters} meters to get back on track.`;
+        const stepsText = formatDistanceInSteps(currentStep.meters);
+        return `Course correction needed. ${currentStep.turn} for ${stepsText} to get back on track.`;
       }
       return "Course correction needed. Please follow the correction steps on screen.";
     }
@@ -142,7 +168,8 @@ export default function DestinationPathModal(props: {
     // On track - provide next step guidance
     const currentStep = props.currentSteps[props.nodeSubIndex];
     if (currentStep) {
-      return `Continue ${currentStep.turn} for ${currentStep.meters} meters. You're on the right track.`;
+      const stepsText = formatDistanceInSteps(currentStep.meters);
+      return `Continue ${currentStep.turn} for ${stepsText}. You're on the right track.`;
     }
 
     return navigationStatus.message;
@@ -280,7 +307,7 @@ export default function DestinationPathModal(props: {
                         </Text>
                         {step.distance > 0 && (
                           <Text style={styles.correctionStepDistance}>
-                            for {step.distance} meters
+                            for {step.stepsText}
                           </Text>
                         )}
                       </View>
@@ -311,10 +338,12 @@ export default function DestinationPathModal(props: {
         {/* Enhanced Route Progress */}
         <View style={styles.routeProgressSection}>
           <View style={styles.progressHeader}>
-            <Text style={styles.sectionTitle}>Turn Steps</Text>
+            <Text style={styles.sectionTitle}>Steps to Next Turn</Text>
             <View style={styles.progressStats}>
               <Text style={styles.progressText}>
-                {completedSteps}/{props.currentSteps.length} steps
+                {completedSteps}/
+                {metersToSteps(props.currentSteps[props.nodeSubIndex].meters)}{" "}
+                steps
               </Text>
               <View style={styles.progressBar}>
                 <View
@@ -378,7 +407,9 @@ export default function DestinationPathModal(props: {
                     >
                       {step.turn}
                     </Text>
-                    <Text style={styles.stepDistance}>{step.meters}m</Text>
+                    <Text style={styles.stepDistance}>
+                      {formatDistanceInSteps(step.meters)}
+                    </Text>
                   </View>
                   {index < props.currentSteps.length - 1 && (
                     <View
