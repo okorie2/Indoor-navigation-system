@@ -231,7 +231,9 @@ export default function NavigationScreen() {
     route,
   });
 
-  const { userPosition, heading } = useUserJourney(routeCoords);
+  const { userPosition: uiUserPosition, heading: uiHeading } =
+    useUserJourney(routeCoords);
+  const { userPosition, heading } = useUserJourney(routeNodesXYPosition);
 
   const {
     currentSteps,
@@ -279,7 +281,9 @@ export default function NavigationScreen() {
         heightPx={screenHeight}
         gridSize={25}
         nodePositions={allNodes || []}
-        userPosition={userPosition || { x: -5.960049809750381e-13, y: -3244.5 }}
+        userPosition={
+          uiUserPosition || { x: -5.960049809750381e-13, y: -3244.5 }
+        }
         route={route}
       />
       {/* Back Button */}

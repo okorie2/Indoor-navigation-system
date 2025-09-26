@@ -54,14 +54,14 @@ const l = {
   ],
 };
 
-export function useUserJourney(staticRoute: Position[]) {
+export function useUserJourney(staticRoute: Position[] | Position[][]) {
   const [userPosition, setUserPosition] = useState<Position | null>(null);
   const [heading, setHeading] = useState<Position | null>(null);
 
   useEffect(() => {
     if (staticRoute.length === 0) return;
 
-    const flatRoute = [...staticRoute];
+    const flatRoute = staticRoute.flat();
     if (flatRoute.length < 2) return;
 
     let segmentIndex = 0;

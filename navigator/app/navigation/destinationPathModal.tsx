@@ -24,7 +24,6 @@ import {
 import { Travelling, Route } from "../_types";
 import { styles } from "./styles/destinationParthStyles";
 import { CORRECTIBLE_DEVIATION } from "@/constants/navigation";
-import { steps } from "react-native-reanimated";
 
 export default function DestinationPathModal(props: {
   toggleModal: () => void;
