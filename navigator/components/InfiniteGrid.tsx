@@ -1,20 +1,39 @@
-// InfiniteGrid.tsx
 import React, { useMemo, useRef, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import Svg, { Defs, Pattern, Path, Rect } from "react-native-svg";
+import Svg, {
+  Defs,
+  Pattern,
+  Path,
+  Rect,
+  Polyline,
+  Circle,
+} from "react-native-svg";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { Position } from "@/app/_types";
+import { Position, Route } from "@/app/_types";
 import { MapPin, PersonStandingIcon, ToiletIcon } from "lucide-react-native";
 import StairsIcon from "@/assets/jsx/stairs";
 import OfficeDeskIcon from "@/assets/jsx/office-desk";
+import { CM_SCALE, SVG_ANGLE_MAP } from "@/constants/navigation";
+import LiftIcon from "@/assets/jsx/lift";
+import useFloorCoords from "@/hooks/useFloorCoords";
 
 type Props = {
   widthPx: number; // e.g. screenWidth - 48
   heightPx: number; // e.g. 400
   gridSize?: number; // world units per cell (default 25)
   nodePositions: Position[];
-  userPosition: { x: number; y: number };
+  userPosition: { x: number; y: number; node?: string };
+  route: Route | null;
 };
+
+interface VisibleNode extends Position {
+  screenX: number;
+  screenY: number;
+  priority: number;
+  iconSize: number;
+  fontSize: number;
+  showLabel: boolean;
+}
 
 export default function InfiniteGrid({
   widthPx,
@@ -22,103 +41,76 @@ export default function InfiniteGrid({
   gridSize = 25,
   nodePositions,
   userPosition,
+  route,
 }: Props) {
-  const PAD_CELLS = 4; // 4 grid cells of padding
-  const pad = PAD_CELLS * gridSize;
+  const {
+    floorBorders,
+    floorOffsets,
+    visibleFloorLabels,
+    visibleNodes,
+    camX,
+    camY,
+    vw,
+    vh,
+    routeCoords,
+    worldToScreen,
+    scale,
+    BIG,
+    gridStroke,
+    composed,
+    getFloor,
+  } = useFloorCoords({
+    widthPx,
+    heightPx,
+    nodePositions,
+    route,
+  });
 
-  const initialBounds = useMemo(() => {
-    if (!nodePositions.length) {
-      return { minX: -250, maxX: 250, minY: -250, maxY: 250 };
-    }
-    const xs = nodePositions.map((n) => n.x);
-    const ys = nodePositions.map((n) => n.y);
-    return {
-      minX: Math.min(...xs) - pad,
-      maxX: Math.max(...xs) + pad,
-      minY: Math.min(...ys) - pad,
-      maxY: Math.max(...ys) + pad,
+  const userFloor = useMemo(() => getFloor(userPosition.node), [userPosition]);
+
+  const renderNodeIcon = (node: VisibleNode) => {
+    const iconProps = {
+      size: node.iconSize,
     };
-  }, [nodePositions, pad]);
 
-  const baseWidth = initialBounds.maxX - initialBounds.minX || 500;
-  const baseHeight = initialBounds.maxY - initialBounds.minY || 500;
-
-  const [scale, setScale] = useState(1);
-  const [camX, setCamX] = useState(initialBounds.minX);
-  const [camY, setCamY] = useState(initialBounds.minY);
-
-  const vw = baseWidth / scale;
-  const vh = baseHeight / scale;
-
-  // Convert pan deltas (px) to world units.
-  const pxToWorldX = (dxPx: number) => (dxPx * vw) / widthPx;
-  const pxToWorldY = (dyPx: number) => (dyPx * vh) / heightPx;
-
-  // 4) Keep a giant rect always covering more than the viewBox.
-  const BIG = gridSize * 2000; // effectively "infinite" coverage
-
-  // 5) Gestures: Pan + Pinch (zoom around center for simplicity)
-  const panStart = useRef({ x: 0, y: 0 });
-  const pinchStart = useRef({ scale: 1, centerX: 0, centerY: 0 });
-
-  const pan = Gesture.Pan()
-    .onStart(() => {
-      panStart.current = { x: camX, y: camY };
-    })
-    .onChange((e) => {
-      // Dragging finger right should move world left, so camera x decreases by dx in world units
-      const nextX = panStart.current.x - pxToWorldX(e.translationX);
-      const nextY = panStart.current.y - pxToWorldY(e.translationY);
-      setCamX(nextX);
-      setCamY(nextY);
-    })
-    .runOnJS(true);
-
-  const clamp = (v: number, min: number, max: number) =>
-    Math.max(min, Math.min(max, v));
-
-  const pinch = Gesture.Pinch()
-    .onStart(() => {
-      // cache start values
-      pinchStart.current.scale = scale;
-      // keep the world center fixed during zoom (center-anchored)
-      pinchStart.current.centerX = camX + vw / 2;
-      pinchStart.current.centerY = camY + vh / 2;
-    })
-    .onChange((e) => {
-      // new scale
-      const newScale = clamp(pinchStart.current.scale * e.scale, 0.2, 20);
-      const newVw = baseWidth / newScale;
-      const newVh = baseHeight / newScale;
-
-      // keep same world center
-      const newCamX = pinchStart.current.centerX - newVw / 2;
-      const newCamY = pinchStart.current.centerY - newVh / 2;
-
-      setScale(newScale);
-      setCamX(newCamX);
-      setCamY(newCamY);
-    })
-    .runOnJS(true);
-
-  const composed = Gesture.Simultaneous(pan, pinch);
-
-  // 6) Grid pattern: keep lines roughly same thickness across zoom
-  //    (scale the stroke width by 1/scale so it stays crisp)
-  const gridStroke = 1 / scale;
-  // console.log(camX, camY, vw, vh, BIG);
-
-  // Convert world → screen coordinates
-  const worldToScreen = (x: number, y: number) => {
-    const scaleX = widthPx / vw;
-    const scaleY = heightPx / vh;
-    const uniform = Math.min(scaleX, scaleY);
-    const offsetX = (widthPx - uniform * vw) / 2;
-    const offsetY = (heightPx - uniform * vh) / 2;
-    const screenX = offsetX + (x - camX) * uniform;
-    const screenY = offsetY + (y - camY) * uniform;
-    return { screenX, screenY };
+    if (node.node?.includes("toilet")) {
+      return <ToiletIcon {...iconProps} color="#059669" />;
+    } else if (node.node?.includes("staircase")) {
+      return (
+        <StairsIcon
+          width={node.iconSize}
+          height={node.iconSize}
+          color="#7C3AED"
+        />
+      );
+    } else if (node.node?.startsWith("SN")) {
+      return (
+        <OfficeDeskIcon
+          width={node.iconSize}
+          height={node.iconSize}
+          color="#EA580C"
+        />
+      );
+    } else if (node.node?.startsWith("lift")) {
+      return (
+        <LiftIcon
+          width={node.iconSize}
+          height={node.iconSize}
+          color="#EA580C"
+        />
+      );
+    } else {
+      return <MapPin {...iconProps} color="#DC2626" />;
+    }
   };
+
+  console.log(route, "route");
+  console.log(routeCoords, "route coords");
+
+  const adjustedUserPosition = useMemo(() => {
+    const offset = floorOffsets.get(userFloor) || 0;
+    return { x: userPosition.x, y: userPosition.y + offset };
+  }, [userPosition, userFloor, floorOffsets]);
 
   return (
     <GestureDetector gesture={composed}>
@@ -130,7 +122,6 @@ export default function InfiniteGrid({
           overflow: "hidden",
         }}
       >
-        {/* Grid + user circle */}
         <Svg
           width={widthPx}
           height={heightPx}
@@ -161,52 +152,137 @@ export default function InfiniteGrid({
             height={vh + BIG * 2}
             fill="url(#grid)"
           />
+
+          {floorBorders.map((border, i) => (
+            <Rect
+              key={`border-${i}`}
+              x={border.x}
+              y={border.y}
+              width={border.width}
+              height={border.height}
+              fill="none"
+              stroke="#374151"
+              strokeWidth={Math.max(2 / scale, 0.5)}
+              strokeOpacity={0.5}
+            />
+          ))}
         </Svg>
+
         {[{ x: userPosition.x, y: userPosition.y }].map((n, i) => {
           const { screenX, screenY } = worldToScreen(n.x, n.y);
+          const userIconSize = Math.max(
+            24,
+            Math.min(48, 32 * Math.sqrt(scale))
+          );
+
           return (
             <View
               key={`user-${i}`}
               style={{
                 position: "absolute",
-                left: screenX - 12, // offset so icon is centered
-                top: screenY - 12,
+                left: screenX - userIconSize / 2,
+                top: screenY - userIconSize / 2,
+                zIndex: 1000,
               }}
             >
-              <PersonStandingIcon size={36} color="blue" />
+              <View
+                style={[
+                  navigationStyles.userIconContainer,
+                  {
+                    width: userIconSize + 8,
+                    height: userIconSize + 8,
+                  },
+                ]}
+              >
+                <PersonStandingIcon size={userIconSize} color="#1D4ED8" />
+              </View>
             </View>
           );
         })}
 
-        {/* Overlay icons in absolute positions */}
-        {nodePositions.map((n, i) => {
-          const { screenX, screenY } = worldToScreen(n.x, n.y);
+        {routeCoords.map((p, i) => {
+          if (i === routeCoords.length - 1) return null;
+          const { screenX: x1, screenY: y1 } = worldToScreen(p.x, p.y);
+          const { screenX: x2, screenY: y2 } = worldToScreen(
+            routeCoords[i + 1].x,
+            routeCoords[i + 1].y
+          );
+          const dx = x2 - x1;
+          const dy = y2 - y1;
+          const length = Math.sqrt(dx * dx + dy * dy);
+          const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+
           return (
             <View
-              key={`node-${i}`}
-              style={{
-                position: "absolute",
-                left: screenX - 12, // offset so icon is centered
-                top: screenY - 12,
-              }}
-            >
-              {n.node?.includes("toilet") ? (
-                <ToiletIcon size={24} color="green" />
-              ) : n.node?.includes("staircase") ? (
-                <StairsIcon width={24} height={24} color="purple" />
-              ) : n.node?.startsWith("SN") ? (
-                <OfficeDeskIcon width={24} height={24} color="orange" />
-              ) : (
-                <MapPin size={24} color="red" />
-              )}
-              <Text style={{ color: "#111827" }}>{n.node}</Text>
-            </View>
+              key={`line-${i}`}
+              style={[
+                navigationStyles.routeLine,
+                {
+                  width: length,
+                  height: Math.max(3, 4 * Math.sqrt(scale)),
+                  top: y1,
+                  left: x1,
+                  transform: [{ rotate: `${angle}deg` }],
+                },
+              ]}
+            />
           );
         })}
+
+        {visibleNodes.map((n, i) => (
+          <View
+            key={`node-${i}`}
+            style={{
+              position: "absolute",
+              left: n.screenX - n.iconSize / 2,
+              top: n.screenY - n.iconSize / 2,
+              alignItems: "center",
+              zIndex: 100 + n.priority,
+            }}
+          >
+            <View style={navigationStyles.iconContainer}>
+              {renderNodeIcon(n)}
+            </View>
+
+            {n.showLabel && n.node && (
+              <View style={navigationStyles.labelContainer}>
+                <Text
+                  style={[navigationStyles.labelText, { fontSize: n.fontSize }]}
+                  numberOfLines={1}
+                >
+                  {n.node}
+                </Text>
+              </View>
+            )}
+          </View>
+        ))}
+
+        {visibleFloorLabels.map((label, i) => (
+          <View
+            key={`floor-label-${i}`}
+            style={{
+              position: "absolute",
+              left: label.screenX,
+              top: label.screenY - label.fontSize / 2,
+              zIndex: 1000,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: label.fontSize,
+                fontWeight: "bold",
+                color: "#111",
+              }}
+            >
+              Floor {label.floor}
+            </Text>
+          </View>
+        ))}
       </View>
     </GestureDetector>
   );
 }
+
 const navigationStyles = StyleSheet.create({
   floorPlanContainer: {
     backgroundColor: "#F9FAFB",
@@ -216,5 +292,56 @@ const navigationStyles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
+  },
+  userIconContainer: {
+    backgroundColor: "#DBEAFE",
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: "#1D4ED8",
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 6,
+  },
+  routeLine: {
+    position: "absolute",
+    backgroundColor: "#DC2626",
+    transformOrigin: "left center",
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  iconContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    borderRadius: 12,
+    padding: 2,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: "rgba(0, 0, 0, 0.1)",
+  },
+  labelContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 6,
+    marginTop: 2,
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 2,
+    elevation: 3,
+    borderWidth: 0.5,
+    borderColor: "rgba(0, 0, 0, 0.1)",
+    maxWidth: 120,
+  },
+  labelText: {
+    color: "#374151",
+    fontWeight: "500",
+    textAlign: "center",
   },
 });
