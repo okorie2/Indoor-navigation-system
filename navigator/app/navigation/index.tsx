@@ -257,8 +257,6 @@ export default function NavigationScreen() {
     }
   }, [mapData]);
 
-  console.log(allNodes?.[0], "one");
-
   return (
     <View style={styles.fullScreenContainer}>
       <StatusBar

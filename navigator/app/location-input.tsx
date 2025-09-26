@@ -234,6 +234,7 @@ export default function LocationInputScreen() {
                     >
                       {locationOptions.map((item, index) => (
                         <TouchableOpacity
+                          testID={item}
                           key={index}
                           style={destinationInputStyles.dropdownItem}
                           onPress={() => {

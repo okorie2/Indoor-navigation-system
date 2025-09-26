@@ -24,6 +24,7 @@ import {
 import { Travelling, Route } from "../_types";
 import { styles } from "./styles/destinationParthStyles";
 import { CORRECTIBLE_DEVIATION } from "@/constants/navigation";
+import { useAccelerometer } from "@/hooks/useAccelerometer";
 
 export default function DestinationPathModal(props: {
   toggleModal: () => void;
@@ -55,6 +56,41 @@ export default function DestinationPathModal(props: {
     { direction: "Turn right", distance: 0, icon: TurnRight },
   ];
   const journey = [{ to: props.userRoute.start }, ...props.userRoute.edges];
+  const [data, setData] = useState({ x: 0, y: 0, z: 0 });
+  const [velocity, setVelocity] = useState({ x: 0, y: 0, z: 0 });
+  const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
+  const [lastTimestamp, setlastTimestamp] = useState(Date.now());
+
+  useAccelerometer((accelData) => {
+    const now = Date.now();
+    const dt = (now - lastTimestamp) / 1000; // seconds
+    setlastTimestamp(now);
+
+    const ax = accelData.x * 9.81; // m/s² (Expo gives Gs)
+    const ay = accelData.y * 9.81;
+    const az = accelData.z * 9.81;
+
+    const currVelocity = {
+      x: velocity.x + ax * dt,
+      y: velocity.y + ay * dt,
+      z: velocity.z + az * dt,
+    };
+    // Simple integration (gravity not removed!)
+    setVelocity((v) => ({
+      x: v.x + ax * dt,
+      y: v.y + ay * dt,
+      z: v.z + az * dt,
+    }));
+
+    setPosition((p) => ({
+      x: p.x + currVelocity.x * dt,
+      y: p.y + currVelocity.y * dt,
+      z: p.z + currVelocity.z * dt,
+    }));
+    setData(accelData);
+  });
+
+  // console.log("Position: x:", position.x, "y:", position.y, "z:", position.z);
 
   const getNavigationMessage = () => {
     if (props.isOnTrack) {
@@ -190,7 +226,11 @@ export default function DestinationPathModal(props: {
           </View>
         </View>
         <View style={styles.headerControls}>
-          <TouchableOpacity onPress={toggleVoice} style={styles.voiceButton}>
+          <TouchableOpacity
+            onPress={toggleVoice}
+            style={styles.voiceButton}
+            testID="voice-toggle"
+          >
             {isVoiceEnabled ? (
               <Volume2 size={24} color="#4CAF50" />
             ) : (
@@ -200,6 +240,7 @@ export default function DestinationPathModal(props: {
           <TouchableOpacity
             style={styles.closeButton}
             onPress={props.toggleModal}
+            testID="close-modal"
           >
             <X size={24} color="#6B7280" />
           </TouchableOpacity>
