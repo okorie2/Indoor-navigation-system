@@ -23,6 +23,7 @@ import {
 import { styles as destinationInputStyles } from "./destination-input";
 import axios from "axios";
 import debounce from "lodash/debounce";
+import { API_URL } from "@/constants";
 
 export default function LocationInputScreen() {
   const [showCamera, setShowCamera] = useState(false);
@@ -44,7 +45,7 @@ export default function LocationInputScreen() {
   const handleNodeSearch = async (query: string) => {
     setInputHelperText("Searching...");
     try {
-      const response = await axios.get("http://localhost:8000/searchNodes", {
+      const response = await axios.get(`${API_URL}/searchNodes`, {
         params: { query },
       });
 
@@ -233,6 +234,7 @@ export default function LocationInputScreen() {
                     >
                       {locationOptions.map((item, index) => (
                         <TouchableOpacity
+                          testID={item}
                           key={index}
                           style={destinationInputStyles.dropdownItem}
                           onPress={() => {

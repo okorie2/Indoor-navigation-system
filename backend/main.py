@@ -4,6 +4,7 @@ from pathfinder import a_star
 from pathfinderWithEdges import a_star as a_star_with_edges
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
+from fastapi.middleware.cors import CORSMiddleware
 
 # Load the retrofitted JSON
 BASE_DIR = Path(__file__).resolve().parent
@@ -11,6 +12,15 @@ with open(BASE_DIR / "static" / "senate.json") as f:
     data = json.load(f)
 
 app = FastAPI()
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins - you can specify specific origins if needed
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 # Mount the "static" directory
 app.mount("/static", StaticFiles(directory="static"), name="static")

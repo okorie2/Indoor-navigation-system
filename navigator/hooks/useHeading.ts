@@ -18,7 +18,6 @@ export default function useHeading() {
         setTrueHeading(heading.trueHeading);
         console.log("Magnetic heading:", heading.magHeading);
         console.log("True heading:", heading.trueHeading);
-        console.log("Accuracy:", heading.accuracy);
       });
     })();
 

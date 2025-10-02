@@ -13,13 +13,15 @@ import axios from "axios";
 import { Connection, PathStep, Position, Route } from "../_types";
 import InfiniteGrid from "@/components/InfiniteGrid";
 import { getCurrentFloor } from "@/utils/getCurrentfloor";
-import { useRouteSimulator } from "@/hooks/useRoutesimulation";
+import { useRouteNavigator } from "@/hooks/useRouteNavigator";
 import DestinationPathModal from "./destinationPathModal";
 import { useUserJourney } from "@/hooks/useUserJourney";
 import { getDistance } from "@/utils/getDistance";
 import { SVG_ANGLE_MAP, PX_SCALE, CM_SCALE } from "@/constants/navigation";
 import { normalize } from "@/utils/normalizeVector";
 import { getTurnDirection } from "@/utils/getTurnDirection";
+import { API_URL } from "@/constants";
+import useFloorCoords from "@/hooks/useFloorCoords";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -47,15 +49,12 @@ export default function NavigationScreen() {
   const getFastestPath = async (startNode: string, endNode: string) => {
     //fetch user path from backend
     try {
-      const response = await axios.get(
-        "http://localhost:8000/pathfindingWithEdges",
-        {
-          params: {
-            start: startNode,
-            end: endNode,
-          },
-        }
-      );
+      const response = await axios.get(`${API_URL}/pathfindingWithEdges`, {
+        params: {
+          start: startNode,
+          end: endNode,
+        },
+      });
       const data = response.data;
       return data.path;
     } catch (error) {
@@ -67,7 +66,7 @@ export default function NavigationScreen() {
   const loadMapData = async () => {
     console.log("loading map data");
     try {
-      const res = await axios.get("http://localhost:8000/static/senate.json");
+      const res = await axios.get(`${API_URL}/static/senate.json`);
       const data = res.data;
       setMapData(data);
     } catch (err) {
@@ -83,7 +82,7 @@ export default function NavigationScreen() {
     return { dx, dy };
   };
 
-  const getRouteNodesXYPosition = React.useCallback((): Position[][] => {
+  const routeNodesXYPosition = React.useMemo((): Position[][] => {
     const positions: Position[][] = [];
     if (!route || !route.edges) return positions;
     const startNodePos = allNodes?.find((n) => n.node === route.start);
@@ -117,7 +116,7 @@ export default function NavigationScreen() {
      * - Returns a 2D array of directions, grouped by edges in the route.
      */
     try {
-      const positions = getRouteNodesXYPosition();
+      const positions = routeNodesXYPosition;
       if (positions.length === 0) return [];
       const directions: { meters: number; turn: string }[][] = [];
       positions.forEach((pos, mainIndex) => {
@@ -164,7 +163,7 @@ export default function NavigationScreen() {
       console.error("Error in getTurnDirectionsThroughDestinationPath:", err);
       return [];
     }
-  }, [getRouteNodesXYPosition]);
+  }, [routeNodesXYPosition]);
 
   const getAggregatedEdgePositions = React.useCallback(
     (start: Position | null, pathSteps: PathStep[] | null) => {
@@ -225,7 +224,16 @@ export default function NavigationScreen() {
     [getAggregatedEdgePositions, mapData]
   );
 
-  const { userPosition, heading } = useUserJourney(getRouteNodesXYPosition);
+  const { routeCoords } = useFloorCoords({
+    widthPx: screenWidth,
+    heightPx: screenHeight,
+    nodePositions: allNodes || [],
+    route,
+  });
+
+  const { userPosition: uiUserPosition, heading: uiHeading } =
+    useUserJourney(routeCoords);
+  const { userPosition, heading } = useUserJourney(routeNodesXYPosition);
 
   const {
     currentSteps,
@@ -235,16 +243,17 @@ export default function NavigationScreen() {
     nodeSubIndex,
     nodeMainIndex,
     arrivedDestination,
-  } = useRouteSimulator(
+  } = useRouteNavigator(
     getTurnDirectionsThroughDestinationPath,
     userPosition!,
     heading!,
-    getRouteNodesXYPosition()
+    routeNodesXYPosition
   );
 
   React.useEffect(() => {
     loadMapData();
   }, []);
+
   React.useEffect(() => {
     getFastestPath(currentLocation!, destination!).then((data) => {
       setRoute(data);
@@ -272,7 +281,10 @@ export default function NavigationScreen() {
         heightPx={screenHeight}
         gridSize={25}
         nodePositions={allNodes || []}
-        userPosition={{ x: -5.960049809750381e-13, y: -3244.5 }}
+        userPosition={
+          uiUserPosition || { x: -5.960049809750381e-13, y: -3244.5 }
+        }
+        route={route}
       />
       {/* Back Button */}
       <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
