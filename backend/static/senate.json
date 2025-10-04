@@ -48,6 +48,10 @@
           {
             "dir": "north",
             "distance": 7.95
+          },
+          {
+            "dir": "west",
+            "distance": 5.43
           }
         ]
       },
@@ -1686,7 +1690,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "west",
+            "dir": "east",
             "distance": 9.57
           }
         ]
@@ -1696,7 +1700,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "west",
+            "dir": "east",
             "distance": 6.03
           }
         ]
@@ -1706,7 +1710,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "west",
+            "dir": "east",
             "distance": 4.77
           }
         ]
@@ -1726,7 +1730,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "south",
+            "dir": "east",
             "distance": 9.39
           }
         ]
@@ -1896,7 +1900,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 5.25
           }
         ]
@@ -1906,7 +1910,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 6.36
           }
         ]
@@ -1916,7 +1920,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 10.2
           }
         ]
@@ -1926,7 +1930,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 10.2
           }
         ]
@@ -2012,15 +2016,15 @@
         "weight": 2,
         "path": [
           {
-            "dir": "south",
+            "dir": "west",
             "distance": 10.29
           },
           {
-            "dir": "east",
+            "dir": "south",
             "distance": 7.56
           },
           {
-            "dir": "north",
+            "dir": "east",
             "distance": 1.44
           }
         ]
@@ -2062,7 +2066,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "west",
+            "dir": "east",
             "distance": 8.94
           }
         ]
@@ -2249,7 +2253,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "south",
+            "dir": "west",
             "distance": 9.57
           }
         ]
@@ -2286,7 +2290,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 10.32
           }
         ]
@@ -2316,7 +2320,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "north",
+            "dir": "west",
             "distance": 11.5
           }
         ]
@@ -2342,11 +2346,11 @@
         "weight": 2,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 7.17
           },
           {
-            "dir": "north",
+            "dir": "south",
             "distance": 10.83
           }
         ]
@@ -2369,11 +2373,11 @@
         "weight": 2,
         "path": [
           {
-            "dir": "north",
+            "dir": "west",
             "distance": 7.56
           },
           {
-            "dir": "west",
+            "dir": "south",
             "distance": 10.83
           }
         ]
@@ -2395,15 +2399,15 @@
         "weight": 2,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 4.29
           },
           {
-            "dir": "north",
+            "dir": "south",
             "distance": 7.56
           },
           {
-            "dir": "west",
+            "dir": "east",
             "distance": 10.83
           }
         ]
@@ -2425,15 +2429,15 @@
         "weight": 2,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 5.37
           },
           {
-            "dir": "north",
+            "dir": "south",
             "distance": 7.56
           },
           {
-            "dir": "west",
+            "dir": "east",
             "distance": 10.83
           }
         ]
@@ -2624,7 +2628,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 5.25
           }
         ]
@@ -2634,7 +2638,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 6.36
           }
         ]
@@ -2644,7 +2648,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 10.2
           }
         ]
@@ -2654,7 +2658,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 10.2
           }
         ]
@@ -2664,7 +2668,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "east",
+            "dir": "west",
             "distance": 10.2
           }
         ]
@@ -2801,7 +2805,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "north",
+            "dir": "east",
             "distance": 3.81
           }
         ]
@@ -2825,7 +2829,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "west",
+            "dir": "east",
             "distance": 8.94
           }
         ]
@@ -3237,7 +3241,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "west",
+            "dir": "east",
             "distance": 9.57
           }
         ]
@@ -3247,7 +3251,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "west",
+            "dir": "east",
             "distance": 6.03
           }
         ]
@@ -3257,7 +3261,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "west",
+            "dir": "east",
             "distance": 4.77
           }
         ]
@@ -3397,7 +3401,7 @@
         "weight": 1,
         "path": [
           {
-            "dir": "north",
+            "dir": "west",
             "distance": 9.57
           }
         ]
