@@ -1,5 +1,5 @@
 import { Position, Route } from "@/app/_types";
-import React, { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Gesture } from "react-native-gesture-handler";
 import { CM_SCALE, SVG_ANGLE_MAP } from "@/constants/navigation";
 

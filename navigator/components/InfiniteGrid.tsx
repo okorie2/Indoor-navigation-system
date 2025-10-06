@@ -1,19 +1,11 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import Svg, {
-  Defs,
-  Pattern,
-  Path,
-  Rect,
-  Polyline,
-  Circle,
-} from "react-native-svg";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Svg, { Defs, Pattern, Path, Rect } from "react-native-svg";
+import { GestureDetector } from "react-native-gesture-handler";
 import { Position, Route } from "@/app/_types";
 import { MapPin, PersonStandingIcon, ToiletIcon } from "lucide-react-native";
 import StairsIcon from "@/assets/jsx/stairs";
 import OfficeDeskIcon from "@/assets/jsx/office-desk";
-import { CM_SCALE, SVG_ANGLE_MAP } from "@/constants/navigation";
 import LiftIcon from "@/assets/jsx/lift";
 import useFloorCoords from "@/hooks/useFloorCoords";
 
