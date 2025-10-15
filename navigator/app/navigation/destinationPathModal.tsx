@@ -24,7 +24,6 @@ import {
 import { Travelling, Route } from "../_types";
 import { styles } from "./styles/destinationParthStyles";
 import { CORRECTIBLE_DEVIATION } from "@/constants/navigation";
-import { steps } from "react-native-reanimated";
 
 export default function DestinationPathModal(props: {
   toggleModal: () => void;
@@ -39,6 +38,7 @@ export default function DestinationPathModal(props: {
   deviationDistance: number;
   messaging: string;
   arrivedDestination: boolean;
+  distanceToNextTurn: number | null;
 }) {
   // Voice functionality states
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
@@ -46,28 +46,37 @@ export default function DestinationPathModal(props: {
   const lastSpokenMessageRef = useRef<string>("");
 
   // Mock states for demonstration - these would come from your navigation logic
-  const completedSteps = 0; // Mock completion
 
   // Helper function to convert meters to steps (average step length ~0.75m)
   const metersToSteps = (meters: number): number => {
     return Math.round(meters / 0.75);
   };
+  const currentStepsInMeters = props.currentSteps[props.nodeSubIndex].meters;
 
   // Helper function to format distance in steps with appropriate text
   const formatDistanceInSteps = (meters: number): string => {
     const steps = metersToSteps(meters);
-    if (steps < 5) {
-      return "a few steps";
-    } else if (steps < 15) {
-      return "about 10 steps";
-    } else if (steps < 25) {
-      return "about 20 steps";
-    } else if (steps < 35) {
-      return "about 30 steps";
-    } else {
-      return `about ${Math.round(steps / 10) * 10} steps`;
-    }
+    return `about ${metersToSteps(currentStepsInMeters)} steps`;
+    // if (steps < 5) {
+    //   return "a few steps";
+    // } else if (steps < 15) {
+    //   return "about 10 steps";
+    // } else if (steps < 25) {
+    //   return "about 20 steps";
+    // } else if (steps < 35) {
+    //   return `about ${metersToSteps(
+    //     currentStepsInMeters
+    //   )} steps`;
+    // } else {
+    //   return `about ${Math.round(steps / 10) * 10} steps`;
+    // }
   };
+
+  const stepsTravelled = React.useMemo(() => {
+    const cSteps = metersToSteps(currentStepsInMeters);
+    const distanceLeftInSteps = metersToSteps(props.distanceToNextTurn!);
+    return cSteps - distanceLeftInSteps;
+  }, [props.distanceToNextTurn, currentStepsInMeters]);
 
   // Course correction logic
   const needsReplanning = props.deviationDistance >= CORRECTIBLE_DEVIATION;
@@ -323,7 +332,7 @@ export default function DestinationPathModal(props: {
                 <View style={styles.correctionProgress}>
                   <Text style={styles.correctionProgressText}>
                     Once completed, you&apos;ll rejoin your original route at
-                    step {completedSteps + 1}
+                    step {stepsTravelled + 1}
                   </Text>
                 </View>
               </View>
@@ -341,9 +350,7 @@ export default function DestinationPathModal(props: {
             <Text style={styles.sectionTitle}>Steps to Next Turn</Text>
             <View style={styles.progressStats}>
               <Text style={styles.progressText}>
-                {completedSteps}/
-                {metersToSteps(props.currentSteps[props.nodeSubIndex].meters)}{" "}
-                steps
+                {stepsTravelled}/{metersToSteps(currentStepsInMeters)} steps
               </Text>
               <View style={styles.progressBar}>
                 <View
@@ -351,7 +358,8 @@ export default function DestinationPathModal(props: {
                     styles.progressFill,
                     {
                       width: `${
-                        (completedSteps / props.currentSteps.length) * 100
+                        (stepsTravelled / metersToSteps(currentStepsInMeters)) *
+                        100
                       }%`,
                     },
                   ]}

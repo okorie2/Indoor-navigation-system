@@ -97,6 +97,9 @@ export function useRouteNavigator(
   const [isUserOnTrack, setIsUserOnTrack] = useState(true);
   const [deviationDistance, setDeviationDistance] = useState(0);
   const [arrivedDestination, setArrivedDestination] = useState(false);
+  const [distanceToNextTurn, setDistanceToNextTurn] = useState<number | null>(
+    null
+  );
 
   const getNodeXY = useCallback(
     (mainIndex: number, subIndex: number) =>
@@ -156,10 +159,12 @@ export function useRouteNavigator(
     const currentNode = getNodeXY(nodeMainIndex, nodeSubIndex);
     if (!currentNode) return;
 
-    const distanceToNode =
+    const distanceToTurn =
       getDistance(currentNode, userPosition) / (PX_SCALE * CM_SCALE);
 
-    if (distanceToNode < DISTANCE_TOLERANCE) {
+    setDistanceToNextTurn(distanceToTurn);
+
+    if (distanceToTurn < DISTANCE_TOLERANCE) {
       setDeviationDistance(0);
       setIsUserOnTrack(true);
 
@@ -183,8 +188,8 @@ export function useRouteNavigator(
     const offCourse = turnDirection !== "Straight";
 
     setIsUserOnTrack(!offCourse);
-    setDeviationDistance(distanceToNode);
-    setMessaging(formatMessaging(turnDirection, distanceToNode, offCourse));
+    setDeviationDistance(distanceToTurn);
+    setMessaging(formatMessaging(turnDirection, distanceToTurn, offCourse));
   }, [
     userPosition,
     heading,
@@ -205,5 +210,6 @@ export function useRouteNavigator(
     nodeSubIndex,
     nodeMainIndex,
     arrivedDestination,
+    distanceToNextTurn,
   };
 }

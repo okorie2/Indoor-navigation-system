@@ -233,6 +233,7 @@ export default function NavigationScreen() {
     nodeSubIndex,
     nodeMainIndex,
     arrivedDestination,
+    distanceToNextTurn,
   } = useRouteNavigator(
     getTurnDirectionsThroughDestinationPath,
     userPosition!,
@@ -305,6 +306,7 @@ export default function NavigationScreen() {
           messaging={messaging}
           nodeSubIndex={nodeSubIndex}
           arrivedDestination={arrivedDestination}
+          distanceToNextTurn={distanceToNextTurn}
         />
       </Modal>
     </View>
