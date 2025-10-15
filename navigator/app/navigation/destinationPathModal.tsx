@@ -24,7 +24,6 @@ import {
 import { Travelling, Route } from "../_types";
 import { styles } from "./styles/destinationParthStyles";
 import { CORRECTIBLE_DEVIATION } from "@/constants/navigation";
-import { useAccelerometer } from "@/hooks/useAccelerometer";
 
 export default function DestinationPathModal(props: {
   toggleModal: () => void;
@@ -39,6 +38,7 @@ export default function DestinationPathModal(props: {
   deviationDistance: number;
   messaging: string;
   arrivedDestination: boolean;
+  distanceToNextTurn: number | null;
 }) {
   // Voice functionality states
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
@@ -46,28 +46,37 @@ export default function DestinationPathModal(props: {
   const lastSpokenMessageRef = useRef<string>("");
 
   // Mock states for demonstration - these would come from your navigation logic
-  const completedSteps = 0; // Mock completion
 
   // Helper function to convert meters to steps (average step length ~0.75m)
   const metersToSteps = (meters: number): number => {
     return Math.round(meters / 0.75);
   };
+  const currentStepsInMeters = props.currentSteps[props.nodeSubIndex].meters;
 
   // Helper function to format distance in steps with appropriate text
   const formatDistanceInSteps = (meters: number): string => {
     const steps = metersToSteps(meters);
-    if (steps < 5) {
-      return "a few steps";
-    } else if (steps < 15) {
-      return "about 10 steps";
-    } else if (steps < 25) {
-      return "about 20 steps";
-    } else if (steps < 35) {
-      return "about 30 steps";
-    } else {
-      return `about ${Math.round(steps / 10) * 10} steps`;
-    }
+    return `about ${metersToSteps(meters)} steps`;
+    // if (steps < 5) {
+    //   return "a few steps";
+    // } else if (steps < 15) {
+    //   return "about 10 steps";
+    // } else if (steps < 25) {
+    //   return "about 20 steps";
+    // } else if (steps < 35) {
+    //   return `about ${metersToSteps(
+    //     currentStepsInMeters
+    //   )} steps`;
+    // } else {
+    //   return `about ${Math.round(steps / 10) * 10} steps`;
+    // }
   };
+
+  const stepsTravelled = React.useMemo(() => {
+    const cSteps = metersToSteps(currentStepsInMeters);
+    const distanceLeftInSteps = metersToSteps(props.distanceToNextTurn!);
+    return cSteps - distanceLeftInSteps;
+  }, [props.distanceToNextTurn, currentStepsInMeters]);
 
   // Course correction logic
   const needsReplanning = props.deviationDistance >= CORRECTIBLE_DEVIATION;
@@ -80,41 +89,6 @@ export default function DestinationPathModal(props: {
     stepsText: formatDistanceInSteps(step.distance),
   }));
   const journey = [{ to: props.userRoute.start }, ...props.userRoute.edges];
-  const [data, setData] = useState({ x: 0, y: 0, z: 0 });
-  const [velocity, setVelocity] = useState({ x: 0, y: 0, z: 0 });
-  const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
-  const [lastTimestamp, setlastTimestamp] = useState(Date.now());
-
-  useAccelerometer((accelData) => {
-    const now = Date.now();
-    const dt = (now - lastTimestamp) / 1000; // seconds
-    setlastTimestamp(now);
-
-    const ax = accelData.x * 9.81; // m/s² (Expo gives Gs)
-    const ay = accelData.y * 9.81;
-    const az = accelData.z * 9.81;
-
-    const currVelocity = {
-      x: velocity.x + ax * dt,
-      y: velocity.y + ay * dt,
-      z: velocity.z + az * dt,
-    };
-    // Simple integration (gravity not removed!)
-    setVelocity((v) => ({
-      x: v.x + ax * dt,
-      y: v.y + ay * dt,
-      z: v.z + az * dt,
-    }));
-
-    setPosition((p) => ({
-      x: p.x + currVelocity.x * dt,
-      y: p.y + currVelocity.y * dt,
-      z: p.z + currVelocity.z * dt,
-    }));
-    setData(accelData);
-  });
-
-  // console.log("Position: x:", position.x, "y:", position.y, "z:", position.z);
 
   const getNavigationMessage = () => {
     if (props.isOnTrack) {
@@ -147,23 +121,26 @@ export default function DestinationPathModal(props: {
   const navigationStatus = getNavigationMessage();
 
   // Voice functionality functions
-  const speak = async (text: string) => {
-    if (!isVoiceEnabled || !text || isSpeaking) return;
+  const speak = React.useCallback(
+    async (text: string) => {
+      if (!isVoiceEnabled || !text || isSpeaking) return;
 
-    try {
-      setIsSpeaking(true);
-      await Speech.speak(text, {
-        language: "en-US",
-        pitch: 1.0,
-        rate: 0.9,
-        onDone: () => setIsSpeaking(false),
-        onStopped: () => setIsSpeaking(false),
-      });
-    } catch (error) {
-      console.error("Speech error:", error);
-      setIsSpeaking(false);
-    }
-  };
+      try {
+        setIsSpeaking(true);
+        await Speech.speak(text, {
+          language: "en-US",
+          pitch: 1.0,
+          rate: 0.9,
+          onDone: () => setIsSpeaking(false),
+          onStopped: () => setIsSpeaking(false),
+        });
+      } catch (error) {
+        console.error("Speech error:", error);
+        setIsSpeaking(false);
+      }
+    },
+    [isVoiceEnabled, isSpeaking]
+  );
 
   const stopSpeaking = async () => {
     try {
@@ -182,33 +159,39 @@ export default function DestinationPathModal(props: {
   };
 
   // Generate voice guidance message based on navigation status
-  const getVoiceMessage = () => {
+  const getVoiceMessage = React.useCallback(() => {
     if (props.arrivedDestination) {
       return "You have arrived at your destination. Navigation complete.";
     }
 
     if (needsReplanning) {
-      return "You have deviated too far from the route. Please scan a QR code to replan your journey.";
+      return "You have deviated too far from the route. ";
     }
-
+    const currentStep = props.currentSteps[props.nodeSubIndex];
+    const steps = metersToSteps(currentStep.meters) - stepsTravelled;
+    const stepsText = steps > 0 ? `${steps} steps` : "a few steps";
     if (!props.isOnTrack) {
-      const currentStep = props.currentSteps[props.nodeSubIndex];
       if (currentStep) {
-        const stepsText = formatDistanceInSteps(currentStep.meters);
         return `Course correction needed. ${currentStep.turn} for ${stepsText} to get back on track.`;
       }
       return "Course correction needed. Please follow the correction steps on screen.";
     }
 
-    // On track - provide next step guidance
-    const currentStep = props.currentSteps[props.nodeSubIndex];
     if (currentStep) {
-      const stepsText = formatDistanceInSteps(currentStep.meters);
+      const stepsText = steps > 0 ? `${steps} steps` : "a few steps";
       return `Continue ${currentStep.turn} for ${stepsText}. You're on the right track.`;
     }
 
     return navigationStatus.message;
-  };
+  }, [
+    props.arrivedDestination,
+    props.currentSteps,
+    props.nodeSubIndex,
+    props.isOnTrack,
+    needsReplanning,
+    stepsTravelled,
+    navigationStatus.message,
+  ]);
 
   // Effect to speak navigation updates
   useEffect(() => {
@@ -221,12 +204,18 @@ export default function DestinationPathModal(props: {
         speak(voiceMessage);
       }
     }
+    return () => {
+      stopSpeaking();
+    };
   }, [
     props.isOnTrack,
     props.nodeSubIndex,
     props.arrivedDestination,
     needsReplanning,
     isVoiceEnabled,
+    isSpeaking,
+    getVoiceMessage,
+    speak,
   ]);
 
   // Cleanup speech on unmount
@@ -252,11 +241,7 @@ export default function DestinationPathModal(props: {
           </View>
         </View>
         <View style={styles.headerControls}>
-          <TouchableOpacity
-            onPress={toggleVoice}
-            style={styles.voiceButton}
-            testID="voice-toggle"
-          >
+          <TouchableOpacity onPress={toggleVoice} style={styles.voiceButton}>
             {isVoiceEnabled ? (
               <Volume2 size={24} color="#4CAF50" />
             ) : (
@@ -266,7 +251,6 @@ export default function DestinationPathModal(props: {
           <TouchableOpacity
             style={styles.closeButton}
             onPress={props.toggleModal}
-            testID="close-modal"
           >
             <X size={24} color="#6B7280" />
           </TouchableOpacity>
@@ -363,7 +347,7 @@ export default function DestinationPathModal(props: {
                 <View style={styles.correctionProgress}>
                   <Text style={styles.correctionProgressText}>
                     Once completed, you&apos;ll rejoin your original route at
-                    step {completedSteps + 1}
+                    step {stepsTravelled + 1}
                   </Text>
                 </View>
               </View>
@@ -381,9 +365,7 @@ export default function DestinationPathModal(props: {
             <Text style={styles.sectionTitle}>Steps to Next Turn</Text>
             <View style={styles.progressStats}>
               <Text style={styles.progressText}>
-                {completedSteps}/
-                {metersToSteps(props.currentSteps[props.nodeSubIndex].meters)}{" "}
-                steps
+                {stepsTravelled}/{metersToSteps(currentStepsInMeters)} steps
               </Text>
               <View style={styles.progressBar}>
                 <View
@@ -391,7 +373,8 @@ export default function DestinationPathModal(props: {
                     styles.progressFill,
                     {
                       width: `${
-                        (completedSteps / props.currentSteps.length) * 100
+                        (stepsTravelled / metersToSteps(currentStepsInMeters)) *
+                        100
                       }%`,
                     },
                   ]}

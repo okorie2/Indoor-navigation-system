@@ -67,7 +67,7 @@ export function useUserJourney(staticRoute: Position[] | Position[][]) {
     let segmentIndex = 0;
     let progress = 0;
     const stepSize = 0.1; // 50 steps per segment
-    const stepInterval = 1200; // ms per step
+    const stepInterval = 2000; // ms per step
 
     const interval = setInterval(() => {
       const from = flatRoute[segmentIndex];
