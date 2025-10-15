@@ -56,7 +56,7 @@ export default function DestinationPathModal(props: {
   // Helper function to format distance in steps with appropriate text
   const formatDistanceInSteps = (meters: number): string => {
     const steps = metersToSteps(meters);
-    return `about ${metersToSteps(currentStepsInMeters)} steps`;
+    return `about ${metersToSteps(meters)} steps`;
     // if (steps < 5) {
     //   return "a few steps";
     // } else if (steps < 15) {
@@ -121,23 +121,26 @@ export default function DestinationPathModal(props: {
   const navigationStatus = getNavigationMessage();
 
   // Voice functionality functions
-  const speak = async (text: string) => {
-    if (!isVoiceEnabled || !text || isSpeaking) return;
+  const speak = React.useCallback(
+    async (text: string) => {
+      if (!isVoiceEnabled || !text || isSpeaking) return;
 
-    try {
-      setIsSpeaking(true);
-      await Speech.speak(text, {
-        language: "en-US",
-        pitch: 1.0,
-        rate: 0.9,
-        onDone: () => setIsSpeaking(false),
-        onStopped: () => setIsSpeaking(false),
-      });
-    } catch (error) {
-      console.error("Speech error:", error);
-      setIsSpeaking(false);
-    }
-  };
+      try {
+        setIsSpeaking(true);
+        await Speech.speak(text, {
+          language: "en-US",
+          pitch: 1.0,
+          rate: 0.9,
+          onDone: () => setIsSpeaking(false),
+          onStopped: () => setIsSpeaking(false),
+        });
+      } catch (error) {
+        console.error("Speech error:", error);
+        setIsSpeaking(false);
+      }
+    },
+    [isVoiceEnabled, isSpeaking]
+  );
 
   const stopSpeaking = async () => {
     try {
@@ -156,33 +159,39 @@ export default function DestinationPathModal(props: {
   };
 
   // Generate voice guidance message based on navigation status
-  const getVoiceMessage = () => {
+  const getVoiceMessage = React.useCallback(() => {
     if (props.arrivedDestination) {
       return "You have arrived at your destination. Navigation complete.";
     }
 
     if (needsReplanning) {
-      return "You have deviated too far from the route. Please scan a QR code to replan your journey.";
+      return "You have deviated too far from the route. ";
     }
-
+    const currentStep = props.currentSteps[props.nodeSubIndex];
+    const steps = metersToSteps(currentStep.meters) - stepsTravelled;
+    const stepsText = steps > 0 ? `${steps} steps` : "a few steps";
     if (!props.isOnTrack) {
-      const currentStep = props.currentSteps[props.nodeSubIndex];
       if (currentStep) {
-        const stepsText = formatDistanceInSteps(currentStep.meters);
         return `Course correction needed. ${currentStep.turn} for ${stepsText} to get back on track.`;
       }
       return "Course correction needed. Please follow the correction steps on screen.";
     }
 
-    // On track - provide next step guidance
-    const currentStep = props.currentSteps[props.nodeSubIndex];
     if (currentStep) {
-      const stepsText = formatDistanceInSteps(currentStep.meters);
+      const stepsText = steps > 0 ? `${steps} steps` : "a few steps";
       return `Continue ${currentStep.turn} for ${stepsText}. You're on the right track.`;
     }
 
     return navigationStatus.message;
-  };
+  }, [
+    props.arrivedDestination,
+    props.currentSteps,
+    props.nodeSubIndex,
+    props.isOnTrack,
+    needsReplanning,
+    stepsTravelled,
+    navigationStatus.message,
+  ]);
 
   // Effect to speak navigation updates
   useEffect(() => {
@@ -195,12 +204,18 @@ export default function DestinationPathModal(props: {
         speak(voiceMessage);
       }
     }
+    return () => {
+      stopSpeaking();
+    };
   }, [
     props.isOnTrack,
     props.nodeSubIndex,
     props.arrivedDestination,
     needsReplanning,
     isVoiceEnabled,
+    isSpeaking,
+    getVoiceMessage,
+    speak,
   ]);
 
   // Cleanup speech on unmount

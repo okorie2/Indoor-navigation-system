@@ -48,6 +48,7 @@ export default function LocationInputScreen() {
       const response = await axios.get(`${API_URL}/searchNodes`, {
         params: { query },
       });
+      setInputHelperText("");
 
       setLocationOptions(response.data.nodes || []);
       setShowDropdown(true);
@@ -58,6 +59,7 @@ export default function LocationInputScreen() {
       }
     } catch (error: any) {
       console.error("Error fetching nodes:", error);
+      setInputHelperText("");
       setInputHelperText(error.message || "Error fetching locations");
     }
   };
@@ -234,6 +236,7 @@ export default function LocationInputScreen() {
                     >
                       {locationOptions.map((item, index) => (
                         <TouchableOpacity
+                          testID={item}
                           key={index}
                           style={destinationInputStyles.dropdownItem}
                           onPress={() => {

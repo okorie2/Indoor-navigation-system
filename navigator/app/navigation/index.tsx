@@ -21,6 +21,7 @@ import { SVG_ANGLE_MAP, PX_SCALE, CM_SCALE } from "@/constants/navigation";
 import { normalize } from "@/utils/normalizeVector";
 import { getTurnDirection } from "@/utils/getTurnDirection";
 import { API_URL } from "@/constants";
+import useFloorCoords from "@/hooks/useFloorCoords";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -81,7 +82,7 @@ export default function NavigationScreen() {
     return { dx, dy };
   };
 
-  const getRouteNodesXYPosition = React.useCallback((): Position[][] => {
+  const routeNodesXYPosition = React.useMemo((): Position[][] => {
     const positions: Position[][] = [];
     if (!route || !route.edges) return positions;
     const startNodePos = allNodes?.find((n) => n.node === route.start);
@@ -115,7 +116,7 @@ export default function NavigationScreen() {
      * - Returns a 2D array of directions, grouped by edges in the route.
      */
     try {
-      const positions = getRouteNodesXYPosition();
+      const positions = routeNodesXYPosition;
       if (positions.length === 0) return [];
       const directions: { meters: number; turn: string }[][] = [];
       positions.forEach((pos, mainIndex) => {
@@ -162,7 +163,7 @@ export default function NavigationScreen() {
       console.error("Error in getTurnDirectionsThroughDestinationPath:", err);
       return [];
     }
-  }, [getRouteNodesXYPosition]);
+  }, [routeNodesXYPosition]);
 
   const getAggregatedEdgePositions = React.useCallback(
     (start: Position | null, pathSteps: PathStep[] | null) => {
@@ -223,7 +224,16 @@ export default function NavigationScreen() {
     [getAggregatedEdgePositions, mapData]
   );
 
-  const { userPosition, heading } = useUserJourney(getRouteNodesXYPosition);
+  const { routeCoords } = useFloorCoords({
+    widthPx: screenWidth,
+    heightPx: screenHeight,
+    nodePositions: allNodes || [],
+    route,
+  });
+
+  const { userPosition: uiUserPosition, heading: uiHeading } =
+    useUserJourney(routeCoords);
+  const { userPosition, heading } = useUserJourney(routeNodesXYPosition);
 
   const {
     currentSteps,
@@ -238,7 +248,7 @@ export default function NavigationScreen() {
     getTurnDirectionsThroughDestinationPath,
     userPosition!,
     heading!,
-    getRouteNodesXYPosition()
+    routeNodesXYPosition
   );
 
   React.useEffect(() => {
@@ -258,8 +268,6 @@ export default function NavigationScreen() {
     }
   }, [mapData]);
 
-  console.log(allNodes?.[0], "one");
-
   return (
     <View style={styles.fullScreenContainer}>
       <StatusBar
@@ -274,7 +282,10 @@ export default function NavigationScreen() {
         heightPx={screenHeight}
         gridSize={25}
         nodePositions={allNodes || []}
-        userPosition={{ x: -5.960049809750381e-13, y: -3244.5 }}
+        userPosition={
+          uiUserPosition || { x: -5.960049809750381e-13, y: -3244.5 }
+        }
+        route={route}
       />
       {/* Back Button */}
       <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
