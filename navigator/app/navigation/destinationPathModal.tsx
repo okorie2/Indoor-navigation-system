@@ -90,9 +90,9 @@ export default function DestinationPathModal(props: {
     const dt = (now - lastTimestamp) / 1000; // seconds
     setlastTimestamp(now);
 
-    const ax = accelData.x * 9.81; // m/s² (Expo gives Gs)
-    const ay = accelData.y * 9.81;
-    const az = accelData.z * 9.81;
+    const ax = accelData.x; // m/s² (Expo gives Gs)
+    const ay = accelData.y;
+    const az = accelData.z;
 
     const currVelocity = {
       x: velocity.x + ax * dt,
@@ -100,11 +100,7 @@ export default function DestinationPathModal(props: {
       z: velocity.z + az * dt,
     };
     // Simple integration (gravity not removed!)
-    setVelocity((v) => ({
-      x: v.x + ax * dt,
-      y: v.y + ay * dt,
-      z: v.z + az * dt,
-    }));
+    setVelocity(currVelocity);
 
     setPosition((p) => ({
       x: p.x + currVelocity.x * dt,
@@ -113,6 +109,7 @@ export default function DestinationPathModal(props: {
     }));
     setData(accelData);
   });
+  console.log("accell guy", data.y);
 
   // console.log("Position: x:", position.x, "y:", position.y, "z:", position.z);
 
