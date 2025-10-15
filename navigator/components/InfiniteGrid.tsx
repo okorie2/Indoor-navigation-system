@@ -96,9 +96,6 @@ export default function InfiniteGrid({
     }
   };
 
-  console.log(route, "route");
-  console.log(routeCoords, "route coords");
-
   const adjustedUserPosition = useMemo(() => {
     const offset = floorOffsets.get(userFloor) || 0;
     return { x: userPosition.x, y: userPosition.y + offset };

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Accelerometer } from "expo-sensors";
+import { DeviceMotion } from "expo-sensors";
 export type AccelerometerData = {
   x: number;
   y: number;
@@ -17,12 +17,19 @@ export const useAccelerometer = (
   });
 
   const _subscribe = () => {
-    return Accelerometer.addListener(accelerometer_thing);
+    return DeviceMotion.addListener((measurement) =>
+      accelerometer_thing({
+        x: measurement.acceleration?.x ?? 0,
+        y: measurement.acceleration?.y ?? 0,
+        z: measurement.acceleration?.z ?? 0,
+        timestamp: measurement.acceleration?.timestamp ?? 0,
+      })
+    );
   };
 
   useEffect(() => {
     const subscription = _subscribe();
-    Accelerometer.setUpdateInterval(500);
+    DeviceMotion.setUpdateInterval(500);
     return () => subscription.remove();
   }, []);
 
